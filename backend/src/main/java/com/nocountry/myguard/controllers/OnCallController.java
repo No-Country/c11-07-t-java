@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
-@RequestMapping("/oncalls")
+@RequestMapping("/oncalls/")
 public class OnCallController {
 
     @Autowired
@@ -32,6 +34,32 @@ public class OnCallController {
             return ResponseEntity.badRequest().build();
 
         return ResponseEntity.ok(onCallService.update(id, onCallUpdate));
+
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<OnCall> findById(@PathVariable Long id) throws Exception {
+
+        if (id == 0)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(onCallService.findById(id));
+
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<OnCall>> findAll(){
+
+        return ResponseEntity.ok(onCallService.findAll());
+
+    }
+
+    @DeleteMapping("/{id]")
+    ResponseEntity<OnCall> Delete(Long id){
+
+        if (id == 0)
+            return ResponseEntity.badRequest().build();
+
+        return ResponseEntity.noContent().build();
 
     }
 }
