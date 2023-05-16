@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Logo } from "../util";
 import "./loginForm.css";
-import { Button } from "../util/Button";
+import { Button } from "../util";
 
 export const LoginForm = () => {
   const [dni, setDni] = useState("");

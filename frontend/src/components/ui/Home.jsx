@@ -1,4 +1,5 @@
-import {LoginForm} from "../auth/LoginForm"
+import {LoginForm} from "../auth";
+
 
 
 export const Home = () => {
