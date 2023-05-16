@@ -1,7 +1,11 @@
-import React from 'react'
+import { BrowserRouter } from "react-router-dom";
+import { Footer, Home } from "./components/ui";
 
 export const MyGuard = () => {
   return (
-    <div>MyGuard</div>
-  )
-}
+    <BrowserRouter>
+      <Home />
+      <Footer />
+    </BrowserRouter>
+  );
+};

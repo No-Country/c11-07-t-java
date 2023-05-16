@@ -1,0 +1,18 @@
+.button-green {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: olive;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .button-green:hover {
+    background-color: darkolivegreen;
+  }
+  
+  .button-green:active {
+    background-color: var(--verdeOliva)
+  }
