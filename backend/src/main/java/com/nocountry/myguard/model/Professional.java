@@ -1,9 +1,8 @@
 package com.nocountry.myguard.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.nocountry.myguard.enums.Role;
+import com.nocountry.myguard.enums.Specialization;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Professional {
+public class Professional { //TODO Extend class User when it is ready
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
@@ -23,6 +22,10 @@ public class Professional {
     String email;
     String enrolment;
     String dni;
-    String password;
-    //Role role;
+    String password; //TODO Change it to class User
+
+    @Enumerated(EnumType.STRING) private Specialization specialization;
+
+    Role role; //TODO Change it to class User
+    //@ManyToMany private List<Mes> meses; //TODO Add when class Month is ready
 }
