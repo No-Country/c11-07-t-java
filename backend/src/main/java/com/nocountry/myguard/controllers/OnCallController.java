@@ -34,7 +34,6 @@ public class OnCallController {
             return ResponseEntity.badRequest().build();
 
         return ResponseEntity.ok(onCallService.update(id, onCallUpdate));
-
     }
 
     @GetMapping("/get/{id}")
@@ -53,7 +52,7 @@ public class OnCallController {
 
     }
 
-    @DeleteMapping("/{id]")
+    @DeleteMapping("/{id}")
     ResponseEntity<OnCall> Delete(Long id){
 
         if (id == 0)
