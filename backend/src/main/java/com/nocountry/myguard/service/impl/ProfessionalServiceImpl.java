@@ -44,7 +44,7 @@ public class ProfessionalServiceImpl implements ProfessionalService {
     }
     @Override
     public Optional<Professional> findByDni(String dni) {
-        return professionalRepository.findByDni(dni);
+        return professionalRepository.findByPersonalID(dni);
     }
     /*@Override
     public Professional findByOnCalls(Long onCalls) {
@@ -63,14 +63,14 @@ public class ProfessionalServiceImpl implements ProfessionalService {
 
     @Override
     public Professional update(Long id, Professional professionalUpdate) throws Exception {
+
         Professional professional = findById(id);
 
         professional.setName(professionalUpdate.getName());
         professional.setLastName(professionalUpdate.getLastName());
-        professional.setDni(professionalUpdate.getDni());
+        professional.setPersonalID(professionalUpdate.getPersonalID());
         professional.setEmail(professionalUpdate.getEmail());
         professional.setEnrolment(professionalUpdate.getEnrolment());
-        professional.setDni(professionalUpdate.getDni());
         professional.setPassword(professionalUpdate.getPassword());
 
         return professionalRepository.save(professional);

@@ -12,6 +12,6 @@ public interface ProfessionalRepository extends JpaRepository<Professional, Long
     Optional<Professional> findByName(String name);
     Optional<Professional> findByEnrolment(String enrolment);
     Optional<Professional> findByEmail(String email);
-    Optional<Professional> findByDni(String dni);
+    Optional<Professional> findByPersonalID(String personalID);
     //Optional<Professional> findByOnCalls(String onCalls);
 }

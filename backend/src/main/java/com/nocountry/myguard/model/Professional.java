@@ -19,12 +19,19 @@ public class Professional { //TODO Extend class User when it is ready
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
+
     String name;
+
     String lastName;
+
     String email;
+
     String enrolment;
-    String dni;
+
+    String personalID;
+
     @Enumerated(EnumType.STRING) private Specialization specialization;
+
     @ManyToMany private List<Month> months;
 
 

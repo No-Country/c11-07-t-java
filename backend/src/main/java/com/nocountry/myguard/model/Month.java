@@ -29,5 +29,5 @@ public class Month {
 
     @OneToMany(mappedBy = "mes", cascade = CascadeType.ALL) private List<OnCall> onCalls;
 
-    //@OneToMany(mappedBy = "mes", cascade = CascadeType.ALL) private List<Unavailability> unavailabilities; //TODO Add when class Unavailavility is ready
+    //@OneToMany(mappedBy = "mes", cascade = CascadeType.ALL) private List<Unavailability> unavailabilities; TODO Add when class Unavailavility is ready
 }
