@@ -53,9 +53,9 @@ public class ProfessionalServiceImpl implements ProfessionalService {
 
     @Override
     public Professional create(Professional professional) throws Exception{
-        Optional<Professional> optOnCall = professionalRepository.findById(professional.getId());
+        Optional<Professional> professionalOptional = professionalRepository.findById(professional.getId());
 
-        if (optOnCall.isPresent())
+        if (professionalOptional.isPresent())
             throw new RuntimeException("There's already a professional with this id.");
 
         return professionalRepository.save(professional);
