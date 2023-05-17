@@ -34,7 +34,6 @@ public class OnCallController {
             return ResponseEntity.badRequest().build();
 
         return ResponseEntity.ok(onCallService.update(id, onCallUpdate));
-
     }
 
     @GetMapping("/get/{id}")
