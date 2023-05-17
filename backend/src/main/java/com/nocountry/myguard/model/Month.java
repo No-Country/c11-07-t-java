@@ -23,11 +23,11 @@ public class Month {
 
     //@Enumerated(EnumType.STRING) private Specialization specialization; //TODO Review: this is placed according to the UML, we are going to divide Month by Specialization?
 
-    @ManyToMany(mappedBy = "meses") private List<Professional> professionals;
+    @ManyToMany(mappedBy = "months") private List<Professional> professionals;
 
     @OneToOne(cascade = CascadeType.ALL) private Counter counter;
 
-    @OneToMany(mappedBy = "mes", cascade = CascadeType.ALL) private List<OnCall> onCalls;
+    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<OnCall> onCalls;
 
-    //@OneToMany(mappedBy = "mes", cascade = CascadeType.ALL) private List<Unavailability> unavailabilities; TODO Add when class Unavailavility is ready
+    //@OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<Unavailability> unavailabilities; TODO Add when class Unavailavility is ready
 }

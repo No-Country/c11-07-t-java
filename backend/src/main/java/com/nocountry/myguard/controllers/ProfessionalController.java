@@ -35,7 +35,7 @@ public class ProfessionalController {
 
     }
 
-    @GetMapping("")
+    @GetMapping("getByParam")
     public ResponseEntity<Professional> findByParam(@RequestParam(required = false) String name,
                                                  @RequestParam(required = false) String enrolment,
                                                  @RequestParam(required = false) String email,
@@ -79,7 +79,7 @@ public class ProfessionalController {
         }
     }
 
-    @DeleteMapping("/{id]")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Professional> Delete(Long id){
 
         if (id < 1) return ResponseEntity.badRequest().build();

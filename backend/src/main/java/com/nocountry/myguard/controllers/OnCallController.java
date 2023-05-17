@@ -52,7 +52,7 @@ public class OnCallController {
 
     }
 
-    @DeleteMapping("/{id]")
+    @DeleteMapping("/{id}")
     ResponseEntity<OnCall> Delete(Long id){
 
         if (id == 0)
