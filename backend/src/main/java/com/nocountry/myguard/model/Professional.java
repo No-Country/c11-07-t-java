@@ -21,7 +21,7 @@ public class Professional {
     String name;
     String lastName;
     String email;
-    String professionalCredential;
+    String enrolment;
     String dni;
     String password;
     //Role role;

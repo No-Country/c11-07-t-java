@@ -4,10 +4,12 @@ import com.nocountry.myguard.model.OnCall;
 import com.nocountry.myguard.model.Professional;
 import com.nocountry.myguard.service.ProfessionalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -25,59 +27,78 @@ public class ProfessionalController {
     public ResponseEntity<Professional> findById(@PathVariable Long id){
         if (id < 1) return ResponseEntity.badRequest().build();
 
-        return ResponseEntity.ok(professionalService.findById(id));
+        try{
+            return ResponseEntity.ok(professionalService.findById(id));
+        } catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
 
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<Professional> findByParam(@RequestParam(required = false) String name,
                                                  @RequestParam(required = false) String enrolment,
                                                  @RequestParam(required = false) String email,
-                                                 @RequestParam(required = false) Long onCalls) {
-
-        Professional professional;
+                                                    @RequestParam(required = false) String dni
+                                                //,@RequestParam(required = false) Long onCalls
+                                                 ) {
 
         if (name != null) {
-            professional = professionalService.findByFullName(name);
+            return this.releaseProfessionalInResponseEntity(professionalService.findByName(name));
         } else if (enrolment != null) {
-            professional = professionalService.findByEnrolment(enrolment);
+            return this.releaseProfessionalInResponseEntity(professionalService.findByEnrolment(enrolment));
         } else if (email != null) {
-            professional = professionalService.findByEmail(email);
-        } else if (onCalls != null) {
-            professional = professionalService.findByOnCalls(onCalls);
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
+            return this.releaseProfessionalInResponseEntity(professionalService.findByEmail(email));
+        } else if (dni != null) {
+            return this.releaseProfessionalInResponseEntity(professionalService.findByDni(dni));
+        }//else if (onCalls != null) {return this.releaseProfessionalInResponseEntity(professionalService.findByOnCalls(onCalls));}
 
-        if (professional != null) {
-            return ResponseEntity.ok(professional);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return (ResponseEntity<Professional>) ResponseEntity.notFound();
     }
 
     @PostMapping
     public ResponseEntity<Professional> create(@RequestBody Professional professional){
         if (professional == null) return ResponseEntity.badRequest().build();
 
-        return ResponseEntity.ok(professionalService.create(professional));
+        try {
+            return ResponseEntity.ok(professionalService.create(professional));
+        } catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping
-    public ResponseEntity<Professional> update(@RequestParam Long id , @RequestBody Professional professional) throws Exception{
+    public ResponseEntity<Professional> update(@RequestParam Long id , @RequestBody Professional professional){
 
         if (id < 1 || professional == null) return ResponseEntity.badRequest().build();
 
-        return ResponseEntity.ok(professionalService.update(id, professional));
+        try {
+            return ResponseEntity.ok(professionalService.update(id, professional));
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/{id]")
     public ResponseEntity<Professional> Delete(Long id){
 
-        if (id == 0)
-            return ResponseEntity.badRequest().build();
+        if (id < 1) return ResponseEntity.badRequest().build();
 
-        return ResponseEntity.noContent().build();
+        try {
+            professionalService.Delete(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
 
+
+    }
+
+    private ResponseEntity<Professional> releaseProfessionalInResponseEntity(Optional<Professional> professionalOptional){
+        if (professionalOptional.isPresent()){
+            return ResponseEntity.ok(professionalOptional.get());
+        } else {
+            return (ResponseEntity<Professional>) ResponseEntity.notFound();
+        }
     }
 }
