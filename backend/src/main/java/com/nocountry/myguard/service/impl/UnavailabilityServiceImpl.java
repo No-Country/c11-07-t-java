@@ -37,7 +37,7 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
         unavailability.setDuration(unavailabilityUpdated.getDuration());
         unavailability.setShift(unavailabilityUpdated.getShift());
 
-        return UnavailabilityRepository.save(unavailability);
+        return unavailabilityRepository.save(unavailability);
     }
 
     @Override
