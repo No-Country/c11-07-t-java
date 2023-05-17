@@ -1,7 +1,9 @@
 package com.nocountry.myguard.service.impl;
 
+import com.nocountry.myguard.model.Month;
 import com.nocountry.myguard.model.Professional;
 import com.nocountry.myguard.repository.ProfessionalRepository;
+import com.nocountry.myguard.service.MonthService;
 import com.nocountry.myguard.service.ProfessionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +13,10 @@ import java.util.Optional;
 
 @Service
 public class ProfessionalServiceImpl implements ProfessionalService {
+
     @Autowired
     private ProfessionalRepository professionalRepository;
+    private MonthServiceImpl monthService;
 
     @Override
     public Professional findById(Long id) throws Exception {
@@ -77,9 +81,22 @@ public class ProfessionalServiceImpl implements ProfessionalService {
     }
 
     @Override
-    public void Delete(Long id) throws Exception {
+    public void delete(Long id) throws Exception {
 
         professionalRepository.delete(findById(id));
+
+    }
+
+    @Override
+    public Professional addMonth2Professional(Long idProfessional, Long idMonth) throws Exception {
+
+
+        Professional professional = findById(idProfessional);
+
+        professional.addMonth(monthService.findById(idMonth));
+
+        return professionalRepository.save(professional);
+
 
     }
 }

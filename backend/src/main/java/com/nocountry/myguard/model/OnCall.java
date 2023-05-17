@@ -26,7 +26,7 @@ public class OnCall {
 
     int duration;
 
-    String shift;
+    String shift; //day - night
 
     @ManyToOne
     Month month;

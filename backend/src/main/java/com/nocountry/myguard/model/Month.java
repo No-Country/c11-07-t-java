@@ -19,9 +19,13 @@ public class Month {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    String type; //Weekend, Holiday
+    String name;
 
-    //@Enumerated(EnumType.STRING) private Specialization specialization; //TODO Review: this is placed according to the UML, we are going to divide Month by Specialization?
+    int year;
+
+    String type; //Week, Weekend/Holiday
+
+    @Enumerated(EnumType.STRING) private List<Specialization> specializations; //TODO Review: this is placed according to the UML, we are going to divide Month by Specialization?
 
     @ManyToMany(mappedBy = "months") private List<Professional> professionals;
 

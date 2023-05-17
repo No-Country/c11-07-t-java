@@ -85,7 +85,7 @@ public class ProfessionalController {
         if (id < 1) return ResponseEntity.badRequest().build();
 
         try {
-            professionalService.Delete(id);
+            professionalService.delete(id);
             return ResponseEntity.noContent().build();
         } catch (Exception e){
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);

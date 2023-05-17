@@ -15,5 +15,6 @@ public interface ProfessionalService {
     //Professional findByOnCalls(Long onCalls);
     Professional create(Professional professional) throws Exception;
     Professional update(Long id, Professional professional) throws Exception;
-    void Delete(Long id) throws Exception;
+    void delete(Long id) throws Exception;
+    public Professional addMonth2Professional(Long idProfessional, Long idMonth) throws Exception;
 }

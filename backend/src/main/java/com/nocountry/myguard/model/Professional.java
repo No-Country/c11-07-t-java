@@ -38,4 +38,16 @@ public class Professional { //TODO Extend class User when it is ready
     String password; //TODO Change it to class User
     Role role; //TODO Change it to class User
 
+    public void addMonth(Month month) {
+        // Add a month to the Professional List
+        this.months.add(month);
+        month.getProfessionals().add(this);
+    }
+
+    public void removeMonth(Month month) {
+        // Remove a month to the Professional List
+        this.months.remove(month);
+        month.getProfessionals().remove(this);
+    }
+
 }
