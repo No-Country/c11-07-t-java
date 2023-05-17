@@ -1,6 +1,8 @@
 package com.nocountry.myguard.controllers;
 
 import com.nocountry.myguard.model.OnCall;
+import com.nocountry.myguard.model.Professional;
+import com.nocountry.myguard.service.ProfessionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -78,43 +80,4 @@ public class ProfessionalController {
         return ResponseEntity.noContent().build();
 
     }
-}
-
-class ProfessionalService{
-    public Professional findById(Long id) {
-        return null;
-    }
-
-    public List<Professional> getAll() {
-        return null;
-    }
-
-    public Professional findByFullName(String name) {
-        return null;
-    }
-
-    public Professional findByEnrolment(String enrolment) {
-        return null;
-    }
-
-    public Professional findByEmail(String email) {
-        return null;
-    }
-
-    public Professional findByOnCalls(Long onCalls) {
-        return null;
-    }
-
-
-    public Professional create(Professional professional) {
-        return null;
-    }
-
-    public Professional update(Long id, Professional professional) {
-        return null;
-    }
-}
-
-class Professional{
-
 }
