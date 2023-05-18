@@ -7,7 +7,8 @@ img{
 }
 form{
     display: flex;
-    flex-direction: column;justify-content: center;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     gap: 0.8rem;
     padding-top: 1.5rem;
@@ -19,13 +20,16 @@ form{
     align-items: center;
 
 }
+
 .welcome{
   width: 80%;
   text-align: center;
 }
+
 .welcome-bienvenido{
     text-transform: uppercase;
 }
+
 p{
     font-size: 12px;
     text-decoration: underline;

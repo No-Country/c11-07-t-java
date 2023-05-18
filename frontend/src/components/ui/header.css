@@ -14,6 +14,7 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    z-index: 10;
 }
 
 .container-logo {
@@ -21,3 +22,18 @@ header {
     flex-direction: column;
     justify-content: center;
 }
+.toggle-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .toggle-icon {
+    color: #333;
+    font-size: 24px;
+    transition: color 0.3s;
+  }
+  
+  .toggle-icon:hover {
+    color: #666;
+  }
