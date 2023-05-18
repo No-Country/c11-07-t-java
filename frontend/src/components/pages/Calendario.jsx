@@ -1,31 +1,4 @@
-// import "./calendario.css"
-// // eslint-disable-next-line no-unused-vars
-// import React, { useState } from 'react';
-// import DatePicker from 'react-datepicker'
-// import 'react-datepicker/dist/react-datepicker.css'
 
-// export const Calendario = () => {
-//     const [startDate, setStartDate] = useState(new Date());
-    
-//   return (
-//     <div className="contenedor">
-//         <div className="calendario">
-//             <DatePicker
-//                 selected={startDate}
-//                 onChange={(date) => setStartDate(date)}
-//                 dateFormat="dd/MM/yyyy"
-//                 open={true}
-//                 showTimeSelect={false} />
-
-//         </div>
-//     </div>
-
-
-    
-    
-   
-//   );
-// };
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';

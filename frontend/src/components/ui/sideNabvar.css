@@ -1,11 +1,16 @@
 
 .sidenav{
     background-color: var(--blancoVerdoso);
-    
+    margin-top:71px;
+    left: -58px;
+
 }
 
 .texto-negro {
     color: var(--verdeOliva) !important;
     font-weight: 700;
     text-decoration: none;
+  }
+  .sidenav---sidenav---_2tBP{
+    min-width: 0px;
   }
