@@ -15,7 +15,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Professional { //TODO Extend class User when it is ready
+public class Professional extends User { //TODO Extend class User when it is ready
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;

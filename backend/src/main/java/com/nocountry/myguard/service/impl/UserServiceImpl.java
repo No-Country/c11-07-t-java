@@ -4,7 +4,10 @@ import com.nocountry.myguard.enums.Role;
 import com.nocountry.myguard.model.User;
 import com.nocountry.myguard.repository.UserRepository;
 import com.nocountry.myguard.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +18,21 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-@Autowired
-private UserRepository userRepository;
-    @Override
-    public User save(User user) {
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
-        Optional<User> optionalUser = userRepository.findById(user.getId());
+    @Transactional
+    @Override
+    public User save(User user) throws RuntimeException {
+
+    /*    Optional<User> optionalUser = userRepository.findById(user.getId());
+
+        if (optionalUser.isPresent())
+            throw new RuntimeException("User already exists!"); */
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userRepository.save(user);
     }
@@ -50,6 +62,13 @@ private UserRepository userRepository;
 
     @Override
     public void Delete(Long id) throws Exception {
+
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username){
+
+        return userRepository.findByUsername(username);
 
     }
 }

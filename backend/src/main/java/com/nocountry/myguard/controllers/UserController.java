@@ -7,19 +7,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users/")
 public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
 
-    @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user){
+    @PostMapping()
+    public ResponseEntity<User> create(@RequestBody User user) throws Exception {
 
         if (user == null)
             return ResponseEntity.badRequest().build();
 
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(userService.save(user));
 
     }
 

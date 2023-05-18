@@ -21,7 +21,7 @@ public class UnavailabilityController {
         if (unavailability == null)
             return ResponseEntity.badRequest().build();
 
-        return ResponseEntity.ok(unavailability);
+        return ResponseEntity.ok(unavailabilityService.save(unavailability));
 
     }
 
@@ -51,7 +51,7 @@ public class UnavailabilityController {
 
     }
 
-    @DeleteMapping("/{id]")
+    @DeleteMapping("/{id}")
     ResponseEntity<Unavailability> Delete(Long id){
 
         if (id == 0)
