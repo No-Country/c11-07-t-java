@@ -1,3 +1,23 @@
-header{
-    height: 4rem;
+.container-header {
+    height: 4.5rem;
+    background-color: var(--blancoVerdoso);
+
+}
+
+.logo-header {
+    width: 45px;
+    height: 45px;
+}
+
+header {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.container-logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

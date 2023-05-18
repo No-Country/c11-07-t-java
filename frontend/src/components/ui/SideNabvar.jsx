@@ -7,13 +7,17 @@ import SideNav, {
   NavText,
 } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
-import "./SideNav.css";
+import "./sideNabvar.css";
+import { useNavigate } from "react-router-dom";
 
-export const MySideNav = () => {
+export const SideNabvar = () => {
+
+  const navigate = useNavigate();
+
   return (
     <SideNav
       onSelect={(selected) => {
-        console.log(selected);
+        navigate(selected)
       }}
       className="sidenav"
     >
@@ -42,4 +46,3 @@ export const MySideNav = () => {
   );
 };
 
-export default MySideNav;

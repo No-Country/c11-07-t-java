@@ -31,7 +31,8 @@ import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendario.css';
-import { Header } from '../ui';
+import { Header, SideNabvar } from '../ui';
+
 
 
 export const Calendario = () => {
@@ -69,6 +70,7 @@ export const Calendario = () => {
   return (
     <div className="calendario">
     <Header/>
+    <SideNabvar/>
      <div className="container">
       <Calendar
         value={selectedDate}
