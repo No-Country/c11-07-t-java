@@ -2,14 +2,18 @@ import { useState } from "react";
 import { Logo } from "../util";
 import "./loginForm.css";
 import { Button } from "../util";
+import { useNavigate } from 'react-router-dom';
 
 export const LoginForm = () => {
   const [dni, setDni] = useState("");
   const [password, setPassword] = useState("");
 
+const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(`DNI: ${dni}, Contraseña: ${password}`);
+    navigate('/calendar')
   };
 
   return (
@@ -22,7 +26,7 @@ export const LoginForm = () => {
           <h1>Bienvenido</h1>
           <h3>Iniciar Sesion</h3>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form>
           <div>
             <input
               placeholder="DNI"
@@ -42,7 +46,7 @@ export const LoginForm = () => {
             />
           </div>
           <p>Olvidaste tu contraseña?</p>
-          <div>
+          <div onClick={handleSubmit}>
             <Button title={"Iniciar Sesion"} />
           </div>
         </form>
