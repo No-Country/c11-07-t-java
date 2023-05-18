@@ -1,5 +1,11 @@
 
 .sidenav{
-    background-color: var(--verdeOliva);
-    box-shadow: 3px 2px 3px gray transparent;
+    background-color: var(--blancoVerdoso);
+    
 }
+
+.texto-negro {
+    color: var(--verdeOliva) !important;
+    font-weight: 700;
+    text-decoration: none;
+  }

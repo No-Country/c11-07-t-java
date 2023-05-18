@@ -8,38 +8,38 @@ import SideNav, {
 } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "./sideNabvar.css";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const SideNabvar = () => {
 
-  const navigate = useNavigate();
+
 
   return (
     <SideNav
       onSelect={(selected) => {
-        navigate(selected)
+        console.log(selected);
       }}
       className="sidenav"
     >
-      <SideNav.Toggle />
+    <Toggle />
       <SideNav.Nav defaultSelected="home" className="icons">
         <NavItem eventKey="home">
           <NavIcon>
             <i className="fa fa-fw fa-home"></i>
           </NavIcon>
-          <NavText>Home</NavText>
+          <NavText><Link to="/home" className="texto-negro">Home</Link></NavText>
         </NavItem>
         <NavItem eventKey="profile">
           <NavIcon>
             <i className="fa fa-fw fa-user"></i>
           </NavIcon>
-          <NavText>Perfil</NavText>
+          <NavText><Link to="/home" className="texto-negro">Perfil</Link></NavText>
         </NavItem>
         <NavItem eventKey="settings">
           <NavIcon>
             <i className="fa fa-fw fa-cog"></i>
           </NavIcon>
-          <NavText>Configuración</NavText>
+          <NavText><Link to="/home" className="texto-negro">Configuracion</Link></NavText>
         </NavItem>
       </SideNav.Nav>
     </SideNav>
