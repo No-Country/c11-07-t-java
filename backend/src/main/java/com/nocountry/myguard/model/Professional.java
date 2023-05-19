@@ -17,10 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Professional extends User { //TODO Extend class User when it is ready
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-
     String name;
 
     String lastName;
@@ -35,9 +31,6 @@ public class Professional extends User { //TODO Extend class User when it is rea
 
     @ManyToMany private List<Month> months;
 
-
-    String password; //TODO Change it to class User
-    Role role; //TODO Change it to class User
 
     public void addMonth(Month month) {
         // Add a month to the Professional List

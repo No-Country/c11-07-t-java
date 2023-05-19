@@ -17,4 +17,6 @@ public interface ProfessionalService {
     Professional update(Long id, Professional professional) throws Exception;
     void delete(Long id) throws Exception;
     public Professional addMonth2Professional(Long idProfessional, Long idMonth) throws Exception;
+
+    public Professional removeMonth2Professional(Long idProfessional, Long idMonth) throws Exception;
 }

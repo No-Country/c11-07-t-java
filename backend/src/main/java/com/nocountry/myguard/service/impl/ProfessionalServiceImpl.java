@@ -5,6 +5,7 @@ import com.nocountry.myguard.model.Professional;
 import com.nocountry.myguard.repository.ProfessionalRepository;
 import com.nocountry.myguard.service.MonthService;
 import com.nocountry.myguard.service.ProfessionalService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,12 +56,15 @@ public class ProfessionalServiceImpl implements ProfessionalService {
         return null;
     }*/
 
+    @Transactional
     @Override
     public Professional create(Professional professional) throws Exception{
-        Optional<Professional> professionalOptional = professionalRepository.findById(professional.getId());
 
-        if (professionalOptional.isPresent())
-            throw new RuntimeException("There's already a professional with this id.");
+
+        Optional<Professional> optLaptop = professionalRepository.findById(professional.getId());
+
+        if (optLaptop.isPresent())
+            throw new Exception("There's already an element with this id");
 
         return professionalRepository.save(professional);
     }
@@ -94,6 +98,19 @@ public class ProfessionalServiceImpl implements ProfessionalService {
         Professional professional = findById(idProfessional);
 
         professional.addMonth(monthService.findById(idMonth));
+
+        return professionalRepository.save(professional);
+
+
+    }
+
+    @Override
+    public Professional removeMonth2Professional(Long idProfessional, Long idMonth) throws Exception {
+
+
+        Professional professional = findById(idProfessional);
+
+        professional.removeMonth(monthService.findById(idMonth));
 
         return professionalRepository.save(professional);
 

@@ -1,8 +1,7 @@
 package com.nocountry.myguard.controllers;
 
-import com.nocountry.myguard.model.OnCall;
 import com.nocountry.myguard.model.Professional;
-import com.nocountry.myguard.service.ProfessionalService;
+import com.nocountry.myguard.service.impl.ProfessionalServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,7 @@ import java.util.Optional;
 @RequestMapping("/professionals")
 public class ProfessionalController {
     @Autowired
-    private ProfessionalService professionalService;
+    private ProfessionalServiceImpl professionalService;
 
     @GetMapping("")
     public ResponseEntity<List<Professional>> getProfessionals(){
@@ -57,14 +56,15 @@ public class ProfessionalController {
     }
 
     @PostMapping
-    public ResponseEntity<Professional> create(@RequestBody Professional professional){
-        if (professional == null) return ResponseEntity.badRequest().build();
+    public ResponseEntity<Professional> create(@RequestBody Professional professional) throws Exception {
 
-        try {
-            return ResponseEntity.ok(professionalService.create(professional));
-        } catch (Exception e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+
+        if (professional == null)
+            return ResponseEntity.badRequest().build();
+
+        return ResponseEntity.ok(professionalService.create(professional));
+
+
     }
 
     @PutMapping
@@ -101,4 +101,23 @@ public class ProfessionalController {
             return (ResponseEntity<Professional>) ResponseEntity.notFound();
         }
     }
+
+    private ResponseEntity<Professional> addMonth2Professional(Long idProfessional, Long idMonth) throws Exception {
+
+        if (idMonth == 0 || idProfessional == 0)
+            return ResponseEntity.badRequest().build();
+
+        return  ResponseEntity.ok(professionalService.addMonth2Professional(idProfessional, idMonth));
+
+    }
+
+    private ResponseEntity<Professional> removeMonth2Professional(Long idProfessional, Long idMonth) throws Exception {
+
+        if (idMonth == 0 || idProfessional == 0)
+            return ResponseEntity.badRequest().build();
+
+        return  ResponseEntity.ok(professionalService.removeMonth2Professional(idProfessional, idMonth));
+
+    }
+
 }

@@ -6,11 +6,8 @@ import com.nocountry.myguard.repository.UserRepository;
 import com.nocountry.myguard.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +17,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    PasswordEncoder passwordEncoder;
+
 
     @Transactional
     @Override
@@ -32,7 +28,7 @@ public class UserServiceImpl implements UserService {
         if (optionalUser.isPresent())
             throw new RuntimeException("User already exists!"); */
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(user.getPassword());
 
         return userRepository.save(user);
     }
