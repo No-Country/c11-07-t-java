@@ -1,9 +1,9 @@
-import './button.css'
+import "./button.css";
 
-export const Button = ({title}) => {
+export const Button = ({ title }) => {
   return (
-    <div className="button-green">
-    {title}
-    </div>
-  )
-}
+    <button className="button-green" type="submit">
+      {title}
+    </button>
+  );
+};
