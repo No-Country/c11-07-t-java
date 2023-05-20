@@ -2,7 +2,12 @@
 .container {
     background-color: var(--blanco);
     padding: 20px;
-    background-color: var(--blancoVerdoso)
+    background-color: var(--blancoVerdoso);
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
   }
   
   .event {
@@ -81,5 +86,8 @@
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
 }
-  
+.react-calendar{
+  width: 60rem;
+  height: 20rem;
+}
 
