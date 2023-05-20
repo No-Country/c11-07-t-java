@@ -41,15 +41,16 @@ export const Header = () => {
   return (
     <div className="container-header">
       <header>
-        <div className="container-logo">
-          <img src={logo} alt="logo" className="logo-header" />
-        </div>
-        <button className="toggle-button" onClick={handleToggleSideNav}>
+      <button className="toggle-button" onClick={handleToggleSideNav}>
           <FontAwesomeIcon
             icon={isSideNavOpen ? faTimes : faBars}
             className="toggle-icon"
           />
         </button>
+        <div className="container-logo">
+          <img src={logo} alt="logo" className="logo-header" />
+        </div>
+        
       </header>
       <SideNabvar isOpen={isSideNavOpen} />
     </div>

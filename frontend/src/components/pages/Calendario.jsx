@@ -50,8 +50,9 @@ export const Calendario = () => {
         onChange={handleDateChange}
         calendarType="ISO 8601"
       />
-
       <button className="save-button" onClick={handleAddEvent}>Agregar Guardia</button>
+
+      
 
       {events.map(event => (
         <div key={event.date.toString()} className="event">

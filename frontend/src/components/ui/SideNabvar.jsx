@@ -67,7 +67,7 @@ export const SideNabvar = ({ isOpen }) => {
           </NavIcon>
           <NavText>
             <Link to="/home" className="texto-negro">
-              Home
+                 Home
             </Link>
           </NavText>
         </NavItem>
@@ -77,7 +77,7 @@ export const SideNabvar = ({ isOpen }) => {
           </NavIcon>
           <NavText>
             <Link to="/home" className="texto-negro">
-              Perfil
+                  Perfil
             </Link>
           </NavText>
         </NavItem>
@@ -87,7 +87,7 @@ export const SideNabvar = ({ isOpen }) => {
           </NavIcon>
           <NavText>
             <Link to="/home" className="texto-negro">
-              Configuracion
+                Configuracion
             </Link>
           </NavText>
         </NavItem>
