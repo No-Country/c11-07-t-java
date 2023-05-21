@@ -19,11 +19,6 @@ public class OnCallServiceImpl implements OnCallService {
     @Override
     public OnCall save(OnCall onCall) {
 
-        Optional<OnCall> optOnCall = onCallRepository.findById(onCall.getId());
-
-        if (optOnCall.isPresent())
-            throw new RuntimeException("There's already an oncall with this id");
-
         return onCallRepository.save(onCall);
     }
 

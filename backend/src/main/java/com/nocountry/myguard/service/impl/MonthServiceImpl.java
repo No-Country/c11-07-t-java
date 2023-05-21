@@ -60,10 +60,10 @@ public class MonthServiceImpl implements MonthService {
     @Override
     public Month create(Month month) throws Exception {
 
-        Optional<Month> optMonth = monthRepository.findById(month.getId());
+        Optional<Month> optMonth = monthRepository.findByNameAndYear(month.getName(), month.getYear());
 
         if (optMonth.isPresent())
-            throw new RuntimeException("There's already a month with this id.");
+            throw new RuntimeException("There's already a month with this name and year.");
 
         return monthRepository.save(month);
     }

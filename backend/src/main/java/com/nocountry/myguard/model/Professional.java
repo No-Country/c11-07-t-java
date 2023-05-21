@@ -1,6 +1,5 @@
 package com.nocountry.myguard.model;
 
-import com.nocountry.myguard.enums.Role;
 import com.nocountry.myguard.enums.Specialization;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,6 +30,10 @@ public class Professional extends User { //TODO Extend class User when it is rea
 
     @ManyToMany private List<Month> months;
 
+
+    public void addSpecialization(Specialization specialization) {
+        this.specialization = specialization;
+    }
 
     public void addMonth(Month month) {
         // Add a month to the Professional List

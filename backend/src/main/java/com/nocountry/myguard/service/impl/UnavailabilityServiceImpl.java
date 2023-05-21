@@ -18,10 +18,7 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
     @Override
     public Unavailability save(Unavailability unavailability) {
 
-        Optional<Unavailability> optUnavailability = unavailabilityRepository.findById(unavailability.getId());
 
-        if (optUnavailability.isPresent())
-            throw new RuntimeException("There's already an oncall with this id");
 
         return unavailabilityRepository.save(unavailability);
     }

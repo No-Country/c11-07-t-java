@@ -5,6 +5,7 @@ import com.nocountry.myguard.model.User;
 import com.nocountry.myguard.repository.UserRepository;
 import com.nocountry.myguard.service.UserService;
 import jakarta.transaction.Transactional;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class  UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -21,14 +22,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User save(User user) throws RuntimeException {
+    public User save(User user) throws Exception {
 
-    /*    Optional<User> optionalUser = userRepository.findById(user.getId());
+        Optional<User> optUser = userRepository.findByUsername(user.getUsername());
 
-        if (optionalUser.isPresent())
-            throw new RuntimeException("User already exists!"); */
+        if (optUser.isPresent())
+            throw new ServiceException("There's already a user with that username");
 
-        user.setPassword(user.getPassword());
 
         return userRepository.save(user);
     }
@@ -48,7 +48,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) throws Exception {
-        return null;
+
+        if (!userRepository.existsById(id))
+            throw new RuntimeException("No user exists with that id");
+
+        return userRepository.findById(id).get();
+
+
+
     }
 
     @Override
