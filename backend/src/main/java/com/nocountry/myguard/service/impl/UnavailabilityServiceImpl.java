@@ -6,6 +6,7 @@ import com.nocountry.myguard.service.UnavailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +19,9 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
     @Override
     public Unavailability save(Unavailability unavailability) {
 
-        Optional<Unavailability> optUnavailability = unavailabilityRepository.findById(unavailability.getId());
-
-        if (optUnavailability.isPresent())
-            throw new RuntimeException("There's already an oncall with this id");
+        Duration duration = Duration.between(unavailability.getStartDate(), unavailability.getEndDate());
+        long hours = duration.toHours();
+        unavailability.setDuration((int) hours);
 
         return unavailabilityRepository.save(unavailability);
     }

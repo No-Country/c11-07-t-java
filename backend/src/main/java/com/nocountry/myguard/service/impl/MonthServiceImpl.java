@@ -60,12 +60,8 @@ public class MonthServiceImpl implements MonthService {
     @Override
     public Month create(Month month) throws Exception {
 
-        Optional<Month> optMonth = monthRepository.findById(month.getId());
-
-        if (optMonth.isPresent())
-            throw new RuntimeException("There's already a month with this id.");
-
         return monthRepository.save(month);
+
     }
 
     @Override
@@ -88,4 +84,6 @@ public class MonthServiceImpl implements MonthService {
         monthRepository.delete(findById(id));
 
     }
+
+
 }

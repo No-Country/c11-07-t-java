@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,12 +25,11 @@ public class OnCall {
 
     LocalDateTime endDate;
 
-    int duration;
+    int duration; // quantity of hours endDate - startDate
 
     String shift; //day - night
 
     @ManyToOne
     Month month;
-
 
 }

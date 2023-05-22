@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,11 +20,13 @@ public class OnCallServiceImpl implements OnCallService {
     @Override
     public OnCall save(OnCall onCall) {
 
-        Optional<OnCall> optOnCall = onCallRepository.findById(onCall.getId());
+        if (onCall.getStartDate() != null || onCall.getEndDate() != null) {
 
-        if (optOnCall.isPresent())
-            throw new RuntimeException("There's already an oncall with this id");
+            Duration duration = Duration.between(onCall.getStartDate(), onCall.getEndDate());
+            long hours = duration.toHours();
+            onCall.setDuration((int) hours);
 
+        }
         return onCallRepository.save(onCall);
     }
 
@@ -35,7 +38,9 @@ public class OnCallServiceImpl implements OnCallService {
 
         onCall.setStartDate(onCallUpdated.getStartDate());
         onCall.setEndDate(onCallUpdated.getEndDate());
-        onCall.setDuration(onCallUpdated.getDuration());
+        Duration duration = Duration.between(onCallUpdated.getStartDate(), onCallUpdated.getEndDate());
+        long hours = duration.toHours();
+        onCall.setDuration((int) hours);
         onCall.setShift(onCallUpdated.getShift());
 
         return onCallRepository.save(onCall);
