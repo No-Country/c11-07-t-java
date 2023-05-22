@@ -1,5 +1,6 @@
 package com.nocountry.myguard.service.impl;
 
+import com.nocountry.myguard.enums.Role;
 import com.nocountry.myguard.enums.Specialization;
 import com.nocountry.myguard.exceptions.NullIdException;
 import com.nocountry.myguard.model.Month;
@@ -68,6 +69,7 @@ public class ProfessionalServiceImpl implements ProfessionalService {
         if (optionalUser.isPresent())
             throw new RuntimeException("User already exists!");
 
+        professional.setRole(Role.PROFESSIONAL);
 
         return professionalRepository.save(professional);
     }

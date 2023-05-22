@@ -23,9 +23,7 @@ public class Month {
 
     int year;
 
-    String type; //Week, Weekend/Holiday
-
-    @Enumerated(EnumType.STRING) private List<Specialization> specializations; //TODO Review: this is placed according to the UML, we are going to divide Month by Specialization?
+    String type; //Week, Weekend/Holiday // feriado no le demos bola todavia
 
     @ManyToMany(mappedBy = "months") private List<Professional> professionals;
 
@@ -33,5 +31,5 @@ public class Month {
 
     @OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<OnCall> onCalls;
 
-    //@OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<Unavailability> unavailabilities; TODO Add when class Unavailavility is ready
+    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<Unavailability> unavailabilities;
 }
