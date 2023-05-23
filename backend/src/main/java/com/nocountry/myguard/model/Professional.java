@@ -17,15 +17,15 @@ import java.util.List;
 @NoArgsConstructor
 public class Professional extends User { //TODO Extend class User when it is ready
 
-    String name;
+    private String name;
 
-    String lastName;
+    private String lastName;
 
-    String email;
+    private String email;
 
-    String enrolment;
+    private String enrolment;
 
-    String personalID;
+    private String personalID;
 
     @Enumerated(EnumType.STRING) private Specialization specialization;
 

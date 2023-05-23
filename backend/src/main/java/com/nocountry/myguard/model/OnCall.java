@@ -19,17 +19,17 @@ public class OnCall {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
 
-    LocalDateTime startDate;
+    private LocalDateTime startDate;
 
-    LocalDateTime endDate;
+    private LocalDateTime endDate;
 
-    int duration; // quantity of hours endDate - startDate
+    private int duration; // quantity of hours endDate - startDate
 
-    String shift; //day - night
+    private String shift; //day - night
 
     @ManyToOne
-    Month month;
+    private Month month;
 
 }

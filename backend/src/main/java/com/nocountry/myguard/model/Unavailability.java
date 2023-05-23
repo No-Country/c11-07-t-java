@@ -17,18 +17,18 @@ import java.time.LocalDateTime;
 public class Unavailability {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
 
-    LocalDateTime startDate;
+    private LocalDateTime startDate;
 
-    LocalDateTime endDate;
+    private LocalDateTime endDate;
 
-    int duration;
+    private int duration;
 
-    String shift;
+    private String shift;
 
     @ManyToOne
-    Month month;
+    private Month month;
 
 
 }
