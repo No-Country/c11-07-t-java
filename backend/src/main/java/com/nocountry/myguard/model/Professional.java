@@ -1,6 +1,6 @@
 package com.nocountry.myguard.model;
 
-import com.nocountry.myguard.enums.Role;
+import com.nocountry.myguard.auth.model.User;
 import com.nocountry.myguard.enums.Specialization;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,10 +15,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Professional { //TODO Extend class User when it is ready
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+public class Professional extends User { //TODO Extend class User when it is ready
 
     String name;
 
@@ -35,7 +32,20 @@ public class Professional { //TODO Extend class User when it is ready
     @ManyToMany private List<Month> months;
 
 
-    String password; //TODO Change it to class User
-    Role role; //TODO Change it to class User
+    public void addSpecialization(Specialization specialization) {
+        this.specialization = specialization;
+    }
+
+    public void addMonth(Month month) {
+        // Add a month to the Professional List
+        this.months.add(month);
+        month.getProfessionals().add(this);
+    }
+
+    public void removeMonth(Month month) {
+        // Remove a month to the Professional List
+        this.months.remove(month);
+        month.getProfessionals().remove(this);
+    }
 
 }

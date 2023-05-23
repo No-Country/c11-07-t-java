@@ -23,7 +23,7 @@ public class OnCallController {
         if (onCall == null)
             return ResponseEntity.badRequest().build();
 
-        return ResponseEntity.ok(onCall);
+        return ResponseEntity.ok(onCallService.save(onCall));
 
     }
 

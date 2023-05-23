@@ -1,13 +1,11 @@
 package com.nocountry.myguard.model;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,8 +13,8 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OnCall {
 
+public class Unavailability {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
@@ -25,11 +23,13 @@ public class OnCall {
 
     LocalDateTime endDate;
 
-    int duration; // quantity of hours endDate - startDate
+    int duration;
 
-    String shift; //day - night
+    String shift;
 
     @ManyToOne
     Month month;
 
+
 }
+

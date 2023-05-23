@@ -1,5 +1,6 @@
 package com.nocountry.myguard.repository;
 
+import com.nocountry.myguard.model.Month;
 import com.nocountry.myguard.model.Professional;
 import com.nocountry.myguard.service.ProfessionalService;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +15,5 @@ public interface ProfessionalRepository extends JpaRepository<Professional, Long
     Optional<Professional> findByEmail(String email);
     Optional<Professional> findByPersonalID(String personalID);
     //Optional<Professional> findByOnCalls(String onCalls);
+
 }

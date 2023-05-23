@@ -1,5 +1,6 @@
 package com.nocountry.myguard.service;
 
+import com.nocountry.myguard.enums.Specialization;
 import com.nocountry.myguard.model.Professional;
 
 import java.util.List;
@@ -15,5 +16,11 @@ public interface ProfessionalService {
     //Professional findByOnCalls(Long onCalls);
     Professional create(Professional professional) throws Exception;
     Professional update(Long id, Professional professional) throws Exception;
-    void Delete(Long id) throws Exception;
+    void delete(Long id) throws Exception;
+    public Professional addMonth2Professional(Long idProfessional, Long idMonth) throws Exception;
+
+    public Professional removeMonth2Professional(Long idProfessional, Long idMonth) throws Exception;
+
+
+
 }
