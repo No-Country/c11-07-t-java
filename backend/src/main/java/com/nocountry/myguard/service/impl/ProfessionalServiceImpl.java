@@ -2,7 +2,7 @@ package com.nocountry.myguard.service.impl;
 
 import com.nocountry.myguard.enums.Role;
 import com.nocountry.myguard.enums.Specialization;
-import com.nocountry.myguard.exceptions.NullIdException;
+//import com.nocountry.myguard.exceptions.NullIdException;
 import com.nocountry.myguard.model.Month;
 import com.nocountry.myguard.model.Professional;
 import com.nocountry.myguard.repository.ProfessionalRepository;
