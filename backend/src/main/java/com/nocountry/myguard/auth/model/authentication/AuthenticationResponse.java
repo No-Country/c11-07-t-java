@@ -1,4 +1,4 @@
-package com.nocountry.myguard.controllers.security;
+package com.nocountry.myguard.auth.model.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,5 +1,6 @@
 package com.nocountry.myguard.model;
 
+import com.nocountry.myguard.auth.model.User;
 import com.nocountry.myguard.enums.Specialization;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

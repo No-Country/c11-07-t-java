@@ -1,7 +1,7 @@
 package com.nocountry.myguard.service.impl;
 
 import com.nocountry.myguard.enums.Role;
-import com.nocountry.myguard.model.User;
+import com.nocountry.myguard.auth.model.User;
 import com.nocountry.myguard.repository.UserRepository;
 import com.nocountry.myguard.service.UserService;
 import jakarta.transaction.Transactional;

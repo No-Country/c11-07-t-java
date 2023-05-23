@@ -1,16 +1,18 @@
-package com.nocountry.myguard.service.security;
+package com.nocountry.myguard.auth.service;
 
-import com.nocountry.myguard.controllers.security.AuthenticationRequest;
-import com.nocountry.myguard.controllers.security.AuthenticationResponse;
-import com.nocountry.myguard.controllers.security.RegisterRequest;
+import com.nocountry.myguard.auth.model.authentication.AuthenticationRequest;
+import com.nocountry.myguard.auth.model.authentication.AuthenticationResponse;
+import com.nocountry.myguard.auth.model.authentication.RegisterRequest;
 import com.nocountry.myguard.enums.Role;
-import com.nocountry.myguard.model.User;
+import com.nocountry.myguard.auth.model.User;
 import com.nocountry.myguard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +25,12 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+
+        Optional<User> optUser = repository.findByUsername(request.getUsername());
+
+        if (optUser.isPresent())
+            throw new RuntimeException("This username has been already taken.");
+
         var user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())

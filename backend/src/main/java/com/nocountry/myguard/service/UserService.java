@@ -1,7 +1,7 @@
 package com.nocountry.myguard.service;
 
 
-import com.nocountry.myguard.model.User;
+import com.nocountry.myguard.auth.model.User;
 
 import java.util.List;
 import java.util.Optional;

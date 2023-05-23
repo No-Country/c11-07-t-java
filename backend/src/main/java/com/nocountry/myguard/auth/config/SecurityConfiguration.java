@@ -1,7 +1,7 @@
-package com.nocountry.myguard.config;
+package com.nocountry.myguard.auth.config;
 
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,12 +18,13 @@ public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthFilter;
 
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf()
             .disable()
             .authorizeHttpRequests()
-            .requestMatchers("api/auth/**")
+            .requestMatchers("/api/auth/**")
             .permitAll()
             .anyRequest()
                 .authenticated()

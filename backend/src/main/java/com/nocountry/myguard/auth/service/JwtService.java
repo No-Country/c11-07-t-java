@@ -1,4 +1,4 @@
-package com.nocountry.myguard.service.security;
+package com.nocountry.myguard.auth.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
