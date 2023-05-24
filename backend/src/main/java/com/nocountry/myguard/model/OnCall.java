@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -31,5 +32,28 @@ public class OnCall {
 
     @ManyToOne
     private Month month;
+
+    public void calculateEndDate(LocalDateTime startDate, int duration) {
+        this.endDate = startDate.plusHours(duration);
+    }
+
+    public void calculateDuration(LocalDateTime startDate, LocalDateTime endDate) {
+        this.duration = (int) Duration.between(startDate, endDate).toHours();
+    }
+
+    public void calculateShift(LocalDateTime startDate) {
+
+        LocalTime startTime = startDate.toLocalTime();
+
+        LocalTime nightShiftStart = LocalTime.of(19, 59);
+        LocalTime dayShiftEnd = LocalTime.of(8, 0);
+
+        if (startTime.isAfter(nightShiftStart) || startTime.isBefore(dayShiftEnd)) {
+            this.shift = "night";
+
+        } else {
+            this.shift = "day";
+        }
+    }
 
 }
