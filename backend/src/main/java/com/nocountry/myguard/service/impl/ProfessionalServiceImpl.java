@@ -2,25 +2,40 @@ package com.nocountry.myguard.service.impl;
 
 import com.nocountry.myguard.enums.Role;
 import com.nocountry.myguard.enums.Specialization;
-import com.nocountry.myguard.exceptions.NullIdException;
 import com.nocountry.myguard.model.Month;
+import com.nocountry.myguard.model.OnCall;
 import com.nocountry.myguard.model.Professional;
+import com.nocountry.myguard.repository.MonthRepository;
+import com.nocountry.myguard.repository.OnCallRepository;
 import com.nocountry.myguard.repository.ProfessionalRepository;
-import com.nocountry.myguard.service.MonthService;
 import com.nocountry.myguard.service.ProfessionalService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProfessionalServiceImpl implements ProfessionalService {
 
+    private final ProfessionalRepository professionalRepository;
+    private final MonthServiceImpl monthService;
+    private final OnCallServiceImpl onCallService;
+
+    private final MonthRepository monthRepository;
+
+    private final OnCallRepository onCallRepository;
+
     @Autowired
-    private ProfessionalRepository professionalRepository;
-    private MonthServiceImpl monthService;
+    public ProfessionalServiceImpl(ProfessionalRepository professionalRepository, MonthServiceImpl monthService, OnCallServiceImpl onCallService, MonthRepository monthRepository, OnCallRepository onCallRepository) {
+        this.professionalRepository = professionalRepository;
+        this.monthService = monthService;
+        this.onCallService = onCallService;
+        this.monthRepository = monthRepository;
+        this.onCallRepository = onCallRepository;
+    }
 
     @Override
     public Professional findById(Long id) throws Exception {
@@ -142,5 +157,47 @@ public class ProfessionalServiceImpl implements ProfessionalService {
         }
 
     }
+
+    @Override
+    public OnCall createOnCall(Long idProfessional, Long idMonth, LocalDateTime startDate, int duration, LocalDateTime endDate) throws Exception {
+
+
+
+        Professional professional = findById(idProfessional);
+        Month month = monthService.findById(idMonth);
+
+        OnCall newOnCall = new OnCall();
+
+        newOnCall.setStartDate(startDate);
+
+        newOnCall.setDuration(duration);
+
+        if (newOnCall.getEndDate() == null && newOnCall.getStartDate() != null && newOnCall.getDuration() != 0) {
+            newOnCall.calculateEndDate(newOnCall.getStartDate(),newOnCall.getDuration());
+        }
+
+
+        if (newOnCall.getStartDate() != null || newOnCall.getEndDate() != null || newOnCall.getDuration() == 0) {
+
+            newOnCall.calculateDuration(newOnCall.getStartDate(), newOnCall.getEndDate());
+
+        }
+
+        newOnCall.setEndDate(endDate);
+
+        newOnCall.calculateShift(newOnCall.getStartDate());
+
+        month.getProfessionals().add(professional);
+        month.getOnCalls().add(newOnCall);
+        professional.getMonths().add(month);
+
+
+        monthRepository.save(month); // actualiza mes //TODO o crea uno nuevo
+        return onCallRepository.save(newOnCall); // persiste nueva guardia
+
+
+    }
+
+
 }
 

@@ -26,9 +26,12 @@ public class  UserServiceImpl implements UserService {
 
         Optional<User> optUser = userRepository.findByUsername(user.getUsername());
 
+
+
         if (optUser.isPresent())
             throw new ServiceException("There's already a user with that username");
 
+        user.setRole(Role.PROFESSIONAL);
 
         return userRepository.save(user);
     }

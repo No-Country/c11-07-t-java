@@ -1,6 +1,7 @@
 package com.nocountry.myguard.controllers;
 
 import com.nocountry.myguard.enums.Specialization;
+import com.nocountry.myguard.model.OnCall;
 import com.nocountry.myguard.model.Professional;
 import com.nocountry.myguard.service.impl.ProfessionalServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/professionals")
+@RequestMapping("/api/professionals")
 public class ProfessionalController {
     @Autowired
     private ProfessionalServiceImpl professionalService;
@@ -135,4 +137,19 @@ public class ProfessionalController {
 
 
     }
+
+    @PostMapping("/{professionalId}/onCalls")
+    public ResponseEntity<OnCall> addOnCall2Professional(@PathVariable Long professionalId, @RequestParam Long idMonth , @RequestParam LocalDateTime startDate, @RequestParam int duration, @RequestParam(required = false) LocalDateTime endDate) {
+
+
+        if (professionalId == null || idMonth == null || startDate == null || duration == 0) return ResponseEntity.badRequest().build();
+
+        try {
+            return ResponseEntity.ok(professionalService.createOnCall(professionalId, idMonth, startDate, duration, endDate));
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
 }

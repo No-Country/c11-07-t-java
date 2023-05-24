@@ -16,4 +16,8 @@ public interface OnCallService {
     void Delete(Long id) throws Exception;
 
     List<OnCall> findAllOnCallByDay(int day);
+
+
+
+
 }

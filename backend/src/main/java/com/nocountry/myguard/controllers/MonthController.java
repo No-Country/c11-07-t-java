@@ -12,7 +12,7 @@ import javax.management.ServiceNotFoundException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/months/")
+@RequestMapping("/api/months/")
 public class MonthController {
 
     @Autowired
