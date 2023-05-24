@@ -1,0 +1,18 @@
+
+.sidenav{
+    background-color: var(--blancoVerdoso);
+    margin-top:92px;
+    left: -58px;
+
+}
+
+.texto-negro {
+    color: var(--verdeOliva) !important;
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 1rem;
+  }
+  .sidenav---sidenav---_2tBP{
+    min-width: 0px;
+    
+  }

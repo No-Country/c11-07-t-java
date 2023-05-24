@@ -1,36 +1,11 @@
-// import "./calendario.css"
-// // eslint-disable-next-line no-unused-vars
-// import React, { useState } from 'react';
-// import DatePicker from 'react-datepicker'
-// import 'react-datepicker/dist/react-datepicker.css'
 
-// export const Calendario = () => {
-//     const [startDate, setStartDate] = useState(new Date());
-    
-//   return (
-//     <div className="contenedor">
-//         <div className="calendario">
-//             <DatePicker
-//                 selected={startDate}
-//                 onChange={(date) => setStartDate(date)}
-//                 dateFormat="dd/MM/yyyy"
-//                 open={true}
-//                 showTimeSelect={false} />
-
-//         </div>
-//     </div>
-
-
-    
-    
-   
-//   );
-// };
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './calendario.css';
+import { Header, SideNabvar } from '../ui';
+
 
 
 export const Calendario = () => {
@@ -66,14 +41,18 @@ export const Calendario = () => {
   };
 
   return (
-    <div className="container">
+    <div className="calendario">
+    <Header/>
+    <SideNabvar/>
+     <div className="container">
       <Calendar
         value={selectedDate}
         onChange={handleDateChange}
         calendarType="ISO 8601"
       />
-
       <button className="save-button" onClick={handleAddEvent}>Agregar Guardia</button>
+
+      
 
       {events.map(event => (
         <div key={event.date.toString()} className="event">
@@ -100,5 +79,7 @@ export const Calendario = () => {
         </div>
       )}
     </div>
+    </div>
+   
   );
 };

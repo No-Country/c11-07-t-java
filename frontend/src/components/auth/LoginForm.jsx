@@ -1,16 +1,29 @@
-import { useState } from "react";
+import {useDispatch} from 'react-redux';
 import { Logo } from "../util";
 import "./loginForm.css";
 import { Button } from "../util";
+import { useAuthStore, useForm } from "../../hooks";
+
+
+
+const loginForUser = {
+    loginUsername : "",
+    loginPassword: "",
+}
+
+
 
 export const LoginForm = () => {
-  const [dni, setDni] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+const { startLogin } = useAuthStore();
+ 
+const {loginUsername, loginPassword, onInputChange} = useForm(loginForUser);
+
+  const onLoginSubmit = (e) => {
     e.preventDefault();
-    console.log(`DNI: ${dni}, Contraseña: ${password}`);
+    startLogin({username: loginUsername, password: loginPassword})
   };
+
 
   return (
     <div className="contenedor">
@@ -22,23 +35,23 @@ export const LoginForm = () => {
           <h1>Bienvenido</h1>
           <h3>Iniciar Sesion</h3>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={onLoginSubmit}>
           <div>
             <input
-              placeholder="DNI"
+              placeholder="usuario"
               type="text"
-              id="dni"
-              value={dni}
-              onChange={(e) => setDni(e.target.value)}
+              onChange={onInputChange}
+              name="loginUsername"
+              value={loginUsername}
             />
           </div>
           <div>
             <input
               placeholder="Contraseña"
               type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={onInputChange}
+              name="loginPassword"
+              value={loginPassword}
             />
           </div>
           <p>Olvidaste tu contraseña?</p>

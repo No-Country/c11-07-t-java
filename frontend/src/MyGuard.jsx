@@ -1,11 +1,10 @@
-import { BrowserRouter } from "react-router-dom";
-import { Footer, Home } from "./components/ui";
+import { AppRoutes } from "./AppRoutes";
+
 
 export const MyGuard = () => {
   return (
-    <BrowserRouter>
-      <Home />
-      <Footer />
-    </BrowserRouter>
+
+      <AppRoutes/>
+
   );
 };
