@@ -1,26 +1,27 @@
 import {useDispatch} from 'react-redux';
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { Logo } from "../util";
 import "./loginForm.css";
 import { Button } from "../util";
-import { useForm } from "../../hooks";
-import { checkingAuthenticate } from '../../store/auth';
+import { useAuthStore, useForm } from "../../hooks";
+
+
+
+const loginForUser = {
+    loginUsername : "",
+    loginPassword: "",
+}
+
+
 
 export const LoginForm = () => {
 
-  const dispatch = useDispatch();
+const { startLogin } = useAuthStore();
+ 
+const {loginUsername, loginPassword, onInputChange} = useForm(loginForUser);
 
-  const { username, password, onInputChange } = useForm({
-    username: "rArenas",
-    password: "1234",
-  });
-
-  const onSubmit = (e) => {
+  const onLoginSubmit = (e) => {
     e.preventDefault();
-    console.log({ username, password });
-
-    dispatch(checkingAuthenticate());
+    startLogin({username: loginUsername, password: loginPassword})
   };
 
 
@@ -34,25 +35,23 @@ export const LoginForm = () => {
           <h1>Bienvenido</h1>
           <h3>Iniciar Sesion</h3>
         </div>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onLoginSubmit}>
           <div>
             <input
               placeholder="usuario"
               type="text"
-              id="username"
-              value={username}
               onChange={onInputChange}
-              name="username"
+              name="loginUsername"
+              value={loginUsername}
             />
           </div>
           <div>
             <input
               placeholder="Contraseña"
               type="password"
-              id="password"
-              value={password}
               onChange={onInputChange}
-              name="password"
+              name="loginPassword"
+              value={loginPassword}
             />
           </div>
           <p>Olvidaste tu contraseña?</p>
