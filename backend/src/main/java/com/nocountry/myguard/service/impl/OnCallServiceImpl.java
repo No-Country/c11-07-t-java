@@ -6,12 +6,8 @@ import com.nocountry.myguard.service.OnCallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OnCallServiceImpl implements OnCallService {
@@ -78,6 +74,11 @@ public class OnCallServiceImpl implements OnCallService {
 
         onCallRepository.delete(findById(id));
 
+    }
+
+    @Override
+    public List<OnCall> findAllOnCallByDay(int day) {
+        return onCallRepository.findAllByDay(day);
     }
 
 
