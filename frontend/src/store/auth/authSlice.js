@@ -11,18 +11,19 @@ export const authSlice = createSlice({
         onLogin: (state, { payload }) => {
             state.status = 'authenticated';
             state.user = payload;
-            errorMessage = null;
+            errorMessage = undefined;
         },
-        /*logout: (state, { payload }) => {
+        onLogout: (state, { payload }) => {
             state.status = 'not--authenticated';
-            state.username = null;
-            displayName = null;
-            photoURL = null;
-            errorMessage = payload.errorMessage;
-        },*/
+            state.user = null;
+            errorMessage = payload;
+        },
         onChecking: (state) => {
             state.status = 'checking';
             state.user = {};
+            state.errorMessage = undefined;
+        },
+        clearErrorMessage: (state) =>{
             state.errorMessage = undefined;
         }
 
@@ -31,4 +32,4 @@ export const authSlice = createSlice({
 
 
 
-export const { onLogin, onChecking} = authSlice.actions;
+export const { onLogin, onChecking, onLogout, clearErrorMessage } = authSlice.actions;

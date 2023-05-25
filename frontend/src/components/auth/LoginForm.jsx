@@ -1,29 +1,37 @@
-import {useDispatch} from 'react-redux';
 import { Logo } from "../util";
 import "./loginForm.css";
 import { Button } from "../util";
 import { useAuthStore, useForm } from "../../hooks";
-
-
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 const loginForUser = {
-    loginUsername : "",
-    loginPassword: "",
-}
-
-
+  loginUsername: "",
+  loginPassword: "",
+};
 
 export const LoginForm = () => {
+  const navigate = useNavigate();
+  const register = () => {
+    navigate("/register");
+  };
 
-const { startLogin } = useAuthStore();
- 
-const {loginUsername, loginPassword, onInputChange} = useForm(loginForUser);
+  const { startLogin, errorMessage } = useAuthStore();
+
+  const { loginUsername, loginPassword, onInputChange } = useForm(loginForUser);
+
+  useEffect(() => {
+    if (errorMessage != undefined) {
+      Swal.fire("Error al intentar logearse", errorMessage, "error");
+    }
+  }, [errorMessage]);
 
   const onLoginSubmit = (e) => {
     e.preventDefault();
-    startLogin({username: loginUsername, password: loginPassword})
+    if (loginUsername.trim() == "" || loginPassword.trim() == "") return;
+    startLogin({ username: loginUsername, password: loginPassword });
   };
-
 
   return (
     <div className="contenedor">
@@ -55,6 +63,7 @@ const {loginUsername, loginPassword, onInputChange} = useForm(loginForUser);
             />
           </div>
           <p>Olvidaste tu contraseña?</p>
+          <p onClick={register}>Registrarse</p>
           <div>
             <Button title={"Iniciar Sesion"} />
           </div>

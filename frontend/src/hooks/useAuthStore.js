@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-//import { onChecking, onLogin, onLogout } from '../store';
+import { clearErrorMessage, onChecking, onLogin, onLogout } from '../store/auth';
 
 
 export const useAuthStore = () => {
@@ -9,14 +9,21 @@ export const useAuthStore = () => {
     const dispatch = useDispatch();
 
     const startLogin = async({ username, password }) => {
-        //dispatch( onChecking() );
+        dispatch( onChecking() );
         console.log({username, password})
         try {
-            const resp = await axios.post('http://localhost:8080/api/auth/authenticate',{ username, password });
-            //dispatch( onLogin({ name: data.name, uid: data.uid }) );
-            console.log({resp})
+            const {data} = await axios.post('http://localhost:8080/api/auth/authenticate',{ username, password });
+            dispatch( onLogin({ name: data.name, uid: data.uid }) );
+            localStorage.setItem("token", data.token); //envio el token al localStorage
+            localStorage.setItem("token-init", new Date().getTime()); //envio otro token de referencia, si no sirve lo borramos mas adelante
+            dispatch(onLogin({username: data.username, password: data.password} ))
+
+
         } catch (error) {
-            console.log(error)
+            dispatch(onLogout("usuario o contraseña no validas"));
+            setTimeout(() => {
+                dispatch(clearErrorMessage());
+            }, 1000);
         }
     }
 
