@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public enum Role {
     ADMIN("Admin"),
-    PROFESSIONAL("Professional");
+    USER("User");
 
 
     @Column(name = "role")

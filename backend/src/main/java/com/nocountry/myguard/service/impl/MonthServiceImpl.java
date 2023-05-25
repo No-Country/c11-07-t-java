@@ -1,7 +1,6 @@
 package com.nocountry.myguard.service.impl;
 
 import com.nocountry.myguard.model.Month;
-import com.nocountry.myguard.model.Professional;
 import com.nocountry.myguard.repository.MonthRepository;
 import com.nocountry.myguard.service.MonthService;
 import org.springframework.beans.factory.annotation.Autowired;

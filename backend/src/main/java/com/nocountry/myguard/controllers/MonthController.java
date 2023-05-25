@@ -1,7 +1,6 @@
 package com.nocountry.myguard.controllers;
 
 import com.nocountry.myguard.model.Month;
-import com.nocountry.myguard.model.Professional;
 import com.nocountry.myguard.service.impl.MonthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,7 @@ import javax.management.ServiceNotFoundException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/months/")
+@RequestMapping("/api/months/")
 public class MonthController {
 
     @Autowired

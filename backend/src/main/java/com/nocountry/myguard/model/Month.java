@@ -17,15 +17,15 @@ import java.util.List;
 public class Month {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
 
-    String name;
+    private String name;
 
-    int year;
+    private int year;
 
-    String type; //Week, Weekend/Holiday // feriado no le demos bola todavia
+    private String type; //Week, Weekend/Holiday // feriado no le demos bola todavia
 
-    @ManyToMany(mappedBy = "months") private List<Professional> professionals;
+    @ManyToMany(mappedBy = "months") private List<User> users;
 
     @OneToOne(cascade = CascadeType.ALL) private Counter counter;
 

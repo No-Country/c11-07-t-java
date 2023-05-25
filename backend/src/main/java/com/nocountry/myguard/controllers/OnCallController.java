@@ -61,4 +61,12 @@ public class OnCallController {
         return ResponseEntity.noContent().build();
 
     }
+
+    @GetMapping("/getAllByDay/{day}")
+    public ResponseEntity<List<OnCall>> findAllOnCallByDay(@PathVariable int day){
+
+        if (day == 0)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(onCallService.findAllOnCallByDay(day));
+    }
 }

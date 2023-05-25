@@ -17,9 +17,9 @@ import lombok.Setter;
 public class Counter {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
-    Integer countHsWeekend;
-    Integer count24Weekend;
-    Integer countHsWeek;
-    Integer count24Week;
+    private Long id;
+    private Integer countHsWeekend;
+    private Integer count24Weekend;
+    private Integer countHsWeek;
+    private Integer count24Week;
 }

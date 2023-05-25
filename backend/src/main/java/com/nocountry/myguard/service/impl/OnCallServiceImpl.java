@@ -6,10 +6,8 @@ import com.nocountry.myguard.service.OnCallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.time.Duration;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OnCallServiceImpl implements OnCallService {
@@ -20,13 +18,20 @@ public class OnCallServiceImpl implements OnCallService {
     @Override
     public OnCall save(OnCall onCall) {
 
-        if (onCall.getStartDate() != null || onCall.getEndDate() != null) {
+        if (onCall.getEndDate() == null && onCall.getStartDate() != null && onCall.getDuration() != 0) {
+            onCall.calculateEndDate(onCall.getStartDate(),onCall.getDuration());
+        }
 
-            Duration duration = Duration.between(onCall.getStartDate(), onCall.getEndDate());
-            long hours = duration.toHours();
-            onCall.setDuration((int) hours);
+
+        if (onCall.getStartDate() != null || onCall.getEndDate() != null || onCall.getDuration() == 0) {
+
+            onCall.calculateDuration(onCall.getStartDate(), onCall.getEndDate());
 
         }
+
+        onCall.calculateShift(onCall.getStartDate());
+
+
         return onCallRepository.save(onCall);
     }
 
@@ -70,4 +75,11 @@ public class OnCallServiceImpl implements OnCallService {
         onCallRepository.delete(findById(id));
 
     }
+
+    @Override
+    public List<OnCall> findAllOnCallByDay(int day) {
+        return onCallRepository.findAllByDay(day);
+    }
+
+
 }

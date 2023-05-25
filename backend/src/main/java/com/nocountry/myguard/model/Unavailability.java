@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,18 +18,24 @@ import java.time.LocalDateTime;
 public class Unavailability {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
 
-    LocalDateTime startDate;
+    private LocalDateTime startDate;
 
-    LocalDateTime endDate;
+    private LocalDateTime endDate;
 
-    int duration;
-
-    String shift;
+    private int duration;
 
     @ManyToOne
-    Month month;
+    private Month month;
+
+    public void calculateEndDate(LocalDateTime startDate, int duration) {
+        this.endDate = startDate.plusHours(duration);
+    }
+
+    public void calculateDuration(LocalDateTime startDate, LocalDateTime endDate) {
+        this.duration = (int) Duration.between(startDate, endDate).toHours();
+    }
 
 
 }

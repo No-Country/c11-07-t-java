@@ -1,8 +1,6 @@
 package com.nocountry.myguard.service;
 
 import com.nocountry.myguard.model.Month;
-import com.nocountry.myguard.model.Professional;
-
 import javax.management.ServiceNotFoundException;
 import java.util.List;
 import java.util.Optional;
