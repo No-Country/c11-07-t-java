@@ -25,7 +25,7 @@ public class Month {
 
     private String type; //Week, Weekend/Holiday // feriado no le demos bola todavia
 
-    @ManyToMany(mappedBy = "months") private List<Professional> professionals;
+    @ManyToMany(mappedBy = "months") private List<User> users;
 
     @OneToOne(cascade = CascadeType.ALL) private Counter counter;
 
