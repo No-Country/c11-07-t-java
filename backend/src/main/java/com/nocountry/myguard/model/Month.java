@@ -54,4 +54,63 @@ public class Month {
 
         return false;
     }
+
+    public boolean isCorrectMonthByOnCallStartDate(LocalDateTime onCallStartDate){
+        java.time.Month actualMonth = onCallStartDate.getMonth();
+
+        switch (actualMonth){
+            case JANUARY -> {
+                return this.name.equals("January");
+            }
+            case FEBRUARY -> {
+                return this.name.equals("February");
+            }
+            case MARCH -> {
+                return this.name.equals("March");
+            }
+            case APRIL -> {
+                return this.name.equals("April");
+            }
+            case MAY -> {
+                return this.name.equals("May");
+            }
+            case JUNE -> {
+                return this.name.equals("June");
+            }
+            case JULY -> {
+                return this.name.equals("July");
+            }
+            case AUGUST -> {
+                return this.name.equals("August");
+            }
+            case SEPTEMBER -> {
+                return this.name.equals("September");
+            }
+            case OCTOBER -> {
+                return this.name.equals("October");
+            }
+            case NOVEMBER -> {
+                return this.name.equals("November");
+            }
+            case DECEMBER -> {
+                return this.name.equals("December");
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isCorrectOnCallShiftByMonthType(OnCall onCall){ //TODO Select if the parameter will be an OnCall or a String shift. It depends how is goint to be implemented this method in the class that creates the onCall.
+        DayOfWeek day = onCall.getStartDate().getDayOfWeek();
+
+        if (this.getType().equals(Type.WEEKEND)){
+            return false;
+        } else if (this.getType().equals(Type.WEEK)){
+            return true;
+        }
+        return false;
+    }
+
+
 }

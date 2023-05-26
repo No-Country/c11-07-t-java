@@ -33,6 +33,21 @@ public class OnCall {
     @ManyToOne
     private Month month;
 
+    public OnCall(LocalDateTime startDate, LocalDateTime endDate, Month month) throws Exception{
+
+        if (month.isCorrectMonthByOnCallStartDate(startDate)){
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.month = month;
+            calculateDuration(startDate,endDate);
+            calculateShift(startDate);
+        } else {
+            throw new Exception("Incorrect month assigned by start date");
+        }
+
+
+    }
+
     public void calculateEndDate(LocalDateTime startDate, int duration) {
         this.endDate = startDate.plusHours(duration);
     }
