@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public enum Type {
     WEEK("Week"),
-    WEEKEND("Weekwnd");
+    WEEKEND("Weekend");
 
     @Column(name = "type")
     private final String type;

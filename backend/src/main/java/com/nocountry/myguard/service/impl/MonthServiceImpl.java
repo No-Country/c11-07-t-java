@@ -4,6 +4,8 @@ import com.nocountry.myguard.model.Month;
 import com.nocountry.myguard.repository.MonthRepository;
 import com.nocountry.myguard.service.MonthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.management.ServiceNotFoundException;
@@ -58,6 +60,10 @@ public class MonthServiceImpl implements MonthService {
 
     @Override
     public Month create(Month month) throws Exception {
+
+        if (month.getName() == null || month.getYear() == 0 || month.getType() == null){
+            throw new Exception("Month must have name, year and type");
+        }
 
         return monthRepository.save(month);
 
