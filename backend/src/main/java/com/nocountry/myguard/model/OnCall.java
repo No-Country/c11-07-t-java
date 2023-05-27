@@ -1,6 +1,7 @@
 package com.nocountry.myguard.model;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,6 +34,7 @@ public class OnCall {
     @ManyToOne
     private Month month;
 
+    @JsonCreator
     public OnCall(LocalDateTime startDate, LocalDateTime endDate, Month month) throws Exception{
         calculateShift(startDate);
 

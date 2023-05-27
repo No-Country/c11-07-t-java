@@ -1,5 +1,6 @@
 package com.nocountry.myguard.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.nocountry.myguard.enums.Specialization;
 import com.nocountry.myguard.enums.Type;
 import jakarta.persistence.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Month {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,6 +39,7 @@ public class Month {
 
     @OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<Unavailability> unavailabilities;
 
+    @JsonCreator
     public Month(String name, int year, Type type) {
         this.name = name;
         this.year = year;

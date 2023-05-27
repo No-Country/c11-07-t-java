@@ -21,7 +21,7 @@ public class MonthServiceImpl implements MonthService {
 
     @Override
     public List<Month> getAll() {
-        return null;
+        return monthRepository.findAll();
     }
 
     @Override
