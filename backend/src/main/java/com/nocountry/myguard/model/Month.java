@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.Year;
 import java.util.List;
 
 @Entity
@@ -43,11 +44,10 @@ public class Month {
         this.counter = new Counter();
     }
 
-    public boolean isCorrectDateByMonthType(LocalDateTime dateTime){
-        DayOfWeek day = dateTime.getDayOfWeek();
+    public boolean isCorrectDayByMonthType(LocalDateTime dateTime){
 
         if (this.getType().equals(Type.WEEKEND)){
-            return day.equals(DayOfWeek.SATURDAY) || day.equals(DayOfWeek.SUNDAY);
+            return this.isWeekend(dateTime);
         } else if (this.getType().equals(Type.WEEK)){
             return true;
         }
@@ -56,61 +56,74 @@ public class Month {
     }
 
     public boolean isCorrectMonthByOnCallStartDate(LocalDateTime onCallStartDate){
+        int actualYear = onCallStartDate.getYear();
         java.time.Month actualMonth = onCallStartDate.getMonth();
 
-        switch (actualMonth){
-            case JANUARY -> {
-                return this.name.equals("January");
+        if (this.year == actualYear){
+            switch (actualMonth){
+                case JANUARY -> {
+                    return this.name.equals("January");
+                }
+                case FEBRUARY -> {
+                    return this.name.equals("February");
+                }
+                case MARCH -> {
+                    return this.name.equals("March");
+                }
+                case APRIL -> {
+                    return this.name.equals("April");
+                }
+                case MAY -> {
+                    return this.name.equals("May");
+                }
+                case JUNE -> {
+                    return this.name.equals("June");
+                }
+                case JULY -> {
+                    return this.name.equals("July");
+                }
+                case AUGUST -> {
+                    return this.name.equals("August");
+                }
+                case SEPTEMBER -> {
+                    return this.name.equals("September");
+                }
+                case OCTOBER -> {
+                    return this.name.equals("October");
+                }
+                case NOVEMBER -> {
+                    return this.name.equals("November");
+                }
+                case DECEMBER -> {
+                    return this.name.equals("December");
+                }
+                default -> {
+                    return false;
+                }
             }
-            case FEBRUARY -> {
-                return this.name.equals("February");
-            }
-            case MARCH -> {
-                return this.name.equals("March");
-            }
-            case APRIL -> {
-                return this.name.equals("April");
-            }
-            case MAY -> {
-                return this.name.equals("May");
-            }
-            case JUNE -> {
-                return this.name.equals("June");
-            }
-            case JULY -> {
-                return this.name.equals("July");
-            }
-            case AUGUST -> {
-                return this.name.equals("August");
-            }
-            case SEPTEMBER -> {
-                return this.name.equals("September");
-            }
-            case OCTOBER -> {
-                return this.name.equals("October");
-            }
-            case NOVEMBER -> {
-                return this.name.equals("November");
-            }
-            case DECEMBER -> {
-                return this.name.equals("December");
-            }
-            default -> {
-                return false;
-            }
+        } else {
+            return false;
         }
+
     }
 
-    public boolean isCorrectOnCallShiftByMonthType(OnCall onCall){ //TODO Select if the parameter will be an OnCall or a String shift. It depends how is goint to be implemented this method in the class that creates the onCall.
-        DayOfWeek day = onCall.getStartDate().getDayOfWeek();
+    public boolean isCorrectOnCallShiftByMonthType(String onCallShift, LocalDateTime onCallStartDate){
 
-        if (this.getType().equals(Type.WEEKEND)){
-            return false;
-        } else if (this.getType().equals(Type.WEEK)){
+        if (this.getType().equals(Type.WEEK)){
+            if (this.isWeekend(onCallStartDate)){
+                return true;
+            } else {
+                return onCallShift.equals("night")? true : false;
+            }
+        } else if (this.getType().equals(Type.WEEKEND)){
             return true;
         }
+
         return false;
     }
 
-
+    private boolean isWeekend(LocalDateTime dateTime){
+        DayOfWeek dayOfWeek = dateTime.getDayOfWeek();
+        return dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY);
+    }
 }

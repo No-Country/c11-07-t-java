@@ -34,17 +34,18 @@ public class OnCall {
     private Month month;
 
     public OnCall(LocalDateTime startDate, LocalDateTime endDate, Month month) throws Exception{
+        calculateShift(startDate);
 
-        if (month.isCorrectMonthByOnCallStartDate(startDate)){
+        if (month.isCorrectMonthByOnCallStartDate(startDate) &&
+                month.isCorrectOnCallShiftByMonthType(this.getShift(),startDate)){
             this.startDate = startDate;
             this.endDate = endDate;
             this.month = month;
             calculateDuration(startDate,endDate);
-            calculateShift(startDate);
+
         } else {
             throw new Exception("Incorrect month assigned by start date");
         }
-
 
     }
 
@@ -65,7 +66,6 @@ public class OnCall {
 
         if (startTime.isAfter(nightShiftStart) || startTime.isBefore(dayShiftEnd)) {
             this.shift = "night";
-
         } else {
             this.shift = "day";
         }

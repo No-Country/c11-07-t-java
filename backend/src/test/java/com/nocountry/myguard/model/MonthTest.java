@@ -19,22 +19,34 @@ class MonthTest {
 
     private LocalDateTime dayMay;
     private LocalDateTime dayJune;
+    private LocalDateTime day2024;
 
 
-    private OnCall onCall;
+    private OnCall onCallMay;
+    private OnCall onCallJune;
+    private OnCall onCallWrong;
 
     @BeforeAll
     void beforeAll() {
         this.monthWeekend = new Month("May",2023, Type.WEEKEND);
         this.monthWeek = new Month("June",2023, Type.WEEK);
         this.dayMay = LocalDateTime.of(2023,5,20,8,0); //SATURDAY
-        this. dayJune = LocalDateTime.of(2023,6,14,8,0); //WEDNESDAY
+        this.dayJune = LocalDateTime.of(2023,6,14,20,0); //WEDNESDAY
+        this.day2024 = LocalDateTime.of(2024,6,14,20,0); //WEDNESDAY
 
         try {
-            this.onCall = new OnCall(
+            this.onCallMay = new OnCall(
                     dayMay,
                     LocalDateTime.of(2023,5,20,20,0),
                     monthWeekend);
+            this.onCallJune = new OnCall(
+                    dayJune,
+                    LocalDateTime.of(2023,6,15,8,0),
+                    monthWeek);
+            this.onCallWrong = new OnCall(
+                    day2024,
+                    LocalDateTime.of(2024,6,15,8,0),
+                    monthWeek);
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -46,18 +58,25 @@ class MonthTest {
 
         assertEquals(DayOfWeek.SATURDAY, dayMay.getDayOfWeek());
         assertEquals(DayOfWeek.WEDNESDAY, dayJune.getDayOfWeek());
-        assertEquals(true, monthWeekend.isCorrectDateByMonthType(dayMay));
-        assertEquals(true, monthWeek.isCorrectDateByMonthType(dayMay));
-        assertEquals(false, monthWeekend.isCorrectDateByMonthType(dayJune));
-        assertEquals(true, monthWeek.isCorrectDateByMonthType(dayJune));
+        assertEquals(true, monthWeekend.isCorrectDayByMonthType(dayMay));
+        assertEquals(true, monthWeek.isCorrectDayByMonthType(dayMay));
+        assertEquals(false, monthWeekend.isCorrectDayByMonthType(dayJune));
+        assertEquals(true, monthWeek.isCorrectDayByMonthType(dayJune));
+
+        assertNull(onCallWrong);
     }
 
     @Test
-    void isCorrectOnCallShiftByMonthType() {
-        boolean correctShift = onCall.getMonth().isCorrectOnCallShiftByMonthType(onCall);
+    void isCorrectOnCallShiftByMonthTypeTest() {
+        boolean correctShiftMay = onCallMay.getMonth().isCorrectOnCallShiftByMonthType(onCallMay.getShift(), onCallMay.getStartDate());
+        boolean correctShiftJune = onCallJune.getMonth().isCorrectOnCallShiftByMonthType(onCallJune.getShift(), onCallJune.getStartDate());
 
-        assertEquals(true,correctShift);
-        assertEquals("day",onCall.getShift());
+        assertEquals("day", onCallMay.getShift());
+        assertEquals(true, correctShiftMay);
+
+        assertEquals("night", onCallJune.getShift());
+        assertEquals(true, correctShiftJune);
+
 
     }
 }
