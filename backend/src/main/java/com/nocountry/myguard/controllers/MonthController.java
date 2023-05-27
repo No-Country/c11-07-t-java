@@ -36,6 +36,16 @@ public class MonthController {
         return ResponseEntity.ok(monthService.getAll());
     }
 
+    @GetMapping("specificMonth")
+    public ResponseEntity<Month> getMonthByNameAndYear(@RequestParam String name, @RequestParam int year){
+
+        try {
+            return ResponseEntity.ok(monthService.findByNameAndYear(name, year));
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("")
     public ResponseEntity<Month> create(@RequestBody Month month){
 
