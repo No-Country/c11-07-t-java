@@ -36,9 +36,9 @@ public interface UserService {
 
       void delete(Long id) throws Exception;
 
-    public User addMonth2User(Long idProfessional, Long idMonth) throws Exception;
+    public User addCounter2User(Long idProfessional, Long idCounter) throws Exception;
 
-    public User removeMonth2User(Long idProfessional, Long idMonth) throws Exception;
+    public User removeCounter2User(Long idProfessional, Long idCounter) throws Exception;
 
 
     OnCall createOnCall(Long idProfessional, Long idMonth, LocalDateTime startDate, int duration, LocalDateTime endDate) throws Exception;

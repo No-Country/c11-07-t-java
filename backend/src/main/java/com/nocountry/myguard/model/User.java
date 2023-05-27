@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @Builder
 @Entity
- @AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
 
@@ -41,7 +41,9 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING) private Specialization specialization;
 
-    @ManyToMany private List<Month> months;
+    //@ManyToMany private List<Month> months;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Counter> counters;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -53,6 +55,7 @@ public class User implements UserDetails {
     public void addSpecialization(Specialization specialization) {
         this.specialization = specialization;
     }
+
 
     public void addMonth(Month month) {
         // Add a month to the Professional List

@@ -1,9 +1,6 @@
 package com.nocountry.myguard.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,4 +19,14 @@ public class Counter {
     private Integer count24Weekend;
     private Integer countHsWeek;
     private Integer count24Week;
+    //private Integer monthId;
+    //private Integer userId;
+
+    @ManyToOne
+    //@JoinColumn(name = "monthId", insertable = false, updatable = false)
+    private Month month;
+
+    @ManyToOne
+    //@JoinColumn(name = "userId", insertable = false, updatable = false)
+    private User user;
 }

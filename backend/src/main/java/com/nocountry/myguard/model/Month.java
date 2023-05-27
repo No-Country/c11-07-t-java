@@ -31,9 +31,9 @@ public class Month {
     @Enumerated(EnumType.STRING)
     private Type type; //Week, Weekend/Holiday // feriado no le demos bola todavia
 
-    @ManyToMany(mappedBy = "months") private List<User> users;
+    //@ManyToMany(mappedBy = "months") private List<User> users;
 
-    @OneToOne(cascade = CascadeType.ALL) private Counter counter;
+    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<Counter> counters;
 
     @OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<OnCall> onCalls;
 
@@ -44,7 +44,6 @@ public class Month {
         this.name = name;
         this.year = year;
         this.type = type;
-        this.counter = new Counter();
     }
 
     public boolean isCorrectDayByMonthType(LocalDateTime dateTime){
