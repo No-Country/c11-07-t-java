@@ -17,17 +17,21 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
     private UnavailabilityRepository unavailabilityRepository;
 
     @Override
-    public Unavailability save(Unavailability unavailability) {
+    public Unavailability save(Unavailability unavailability) throws Exception {
+
+        if (unavailability.getStartDate() == null) throw new Exception("Start date can't be null");
+        if (unavailability.getMonth() == null) throw new Exception("Month must be assigned to unavailability");
+        if (unavailability.getEndDate() == null && unavailability.getDuration() == 0) throw new Exception("You must assign an end date or a duration to an unavailability");
+        if (!unavailability.getMonth().isCorrectMonthByOnCallStartDate(unavailability.getStartDate())) throw new Exception("Incorrect month assigned by start date");
+        if (unavailability.getUser() == null) throw new Exception("User must be assigned to unavailability");
+
 
         if (unavailability.getEndDate() == null && unavailability.getStartDate() != null && unavailability.getDuration() != 0) {
             unavailability.calculateEndDate(unavailability.getStartDate(),unavailability.getDuration());
         }
 
-
         if (unavailability.getStartDate() != null || unavailability.getEndDate() != null || unavailability.getDuration() == 0) {
-
             unavailability.calculateDuration(unavailability.getStartDate(), unavailability.getEndDate());
-
         }
 
         return unavailabilityRepository.save(unavailability);

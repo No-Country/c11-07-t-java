@@ -40,6 +40,5 @@ public class Unavailability {
         this.duration = (int) Duration.between(startDate, endDate).toHours();
     }
 
-
 }
 

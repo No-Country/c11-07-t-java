@@ -5,6 +5,7 @@ import java.util.List;
 import com.nocountry.myguard.model.Unavailability;
 import com.nocountry.myguard.service.impl.UnavailabilityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,11 @@ public class UnavailabilityController {
         if (unavailability == null)
             return ResponseEntity.badRequest().build();
 
-        return ResponseEntity.ok(unavailabilityService.save(unavailability));
+        try {
+            return ResponseEntity.ok(unavailabilityService.save(unavailability));
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
 
     }
 

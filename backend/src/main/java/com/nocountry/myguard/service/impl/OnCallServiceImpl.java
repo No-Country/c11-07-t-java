@@ -27,7 +27,7 @@ public class OnCallServiceImpl implements OnCallService {
         if (onCall.getMonth() == null) throw new Exception("Month must be assigned to on call");
         if (onCall.getEndDate() == null && onCall.getDuration() == 0) throw new Exception("You must assign an end date or a duration to an on call");
         if (!onCall.getMonth().isCorrectMonthByOnCallStartDate(onCall.getStartDate())) throw new Exception("Incorrect month assigned by start date");
-        if (onCall.getUser() == null) throw new Exception("User must be asigned to on call");
+        if (onCall.getUser() == null) throw new Exception("User must be assigned to on call");
 
         onCall.calculateShift(onCall.getStartDate());
         if (!onCall.getMonth().isCorrectOnCallShiftByMonthType(onCall.getShift(),onCall.getStartDate())) {
@@ -57,7 +57,6 @@ public class OnCallServiceImpl implements OnCallService {
     @Override
     public OnCall update(Long id, OnCall onCallUpdated) throws Exception {
 
-
         OnCall onCall = findById(id);
 
         onCall.setStartDate(onCallUpdated.getStartDate());
@@ -68,7 +67,6 @@ public class OnCallServiceImpl implements OnCallService {
         onCall.setShift(onCallUpdated.getShift());
 
         return onCallRepository.save(onCall);
-
 
     }
 

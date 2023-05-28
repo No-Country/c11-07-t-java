@@ -5,7 +5,7 @@ import com.nocountry.myguard.model.Unavailability;
 import java.util.List;
 
 public interface UnavailabilityService {
-    Unavailability save(Unavailability unavailability);
+    Unavailability save(Unavailability unavailability) throws Exception;
     Unavailability update(Long id, Unavailability unavailability) throws Exception;
 
     Unavailability findById(Long id) throws Exception;

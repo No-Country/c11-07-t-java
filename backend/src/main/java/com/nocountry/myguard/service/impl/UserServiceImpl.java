@@ -177,7 +177,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public OnCall createOnCall(Long idUser, Long idMonth, LocalDateTime startDate, int duration, LocalDateTime endDate) throws Exception {
 
-
         User professional = findById(idUser);
         Month month = monthService.findById(idMonth);
 
