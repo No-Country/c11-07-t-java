@@ -34,9 +34,9 @@ public class Counter {
     private User user;
 
     @JsonCreator
-    public Counter(Month month, User user) {
-        this.month = month;
+    public Counter(User user, Month month) {
         this.user = user;
+        this.month = month;
     }
 
 

@@ -1,6 +1,8 @@
 package com.nocountry.myguard.service.impl;
 
+import com.nocountry.myguard.model.Counter;
 import com.nocountry.myguard.model.OnCall;
+import com.nocountry.myguard.repository.CounterRepository;
 import com.nocountry.myguard.repository.OnCallRepository;
 import com.nocountry.myguard.service.OnCallService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +10,15 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OnCallServiceImpl implements OnCallService {
 
     @Autowired
     private OnCallRepository onCallRepository;
+    @Autowired
+    private CounterRepository counterRepository;
 
     @Override
     public OnCall save(OnCall onCall) throws Exception {
@@ -22,12 +27,12 @@ public class OnCallServiceImpl implements OnCallService {
         if (onCall.getMonth() == null) throw new Exception("Month must be assigned to on call");
         if (onCall.getEndDate() == null && onCall.getDuration() == 0) throw new Exception("You must assign an end date or a duration to an on call");
         if (!onCall.getMonth().isCorrectMonthByOnCallStartDate(onCall.getStartDate())) throw new Exception("Incorrect month assigned by start date");
+        if (onCall.getUser() == null) throw new Exception("User must be asigned to on call");
 
         onCall.calculateShift(onCall.getStartDate());
         if (!onCall.getMonth().isCorrectOnCallShiftByMonthType(onCall.getShift(),onCall.getStartDate())) {
             throw new Exception("Incorrect shift by month type, select another date time (recommended) or change month type");
         }
-
 
         if (onCall.getEndDate() == null && onCall.getDuration() != 0) {
             onCall.calculateEndDate(onCall.getStartDate(),onCall.getDuration());
@@ -35,6 +40,15 @@ public class OnCallServiceImpl implements OnCallService {
 
         if (onCall.getEndDate() != null || onCall.getDuration() == 0) {
             onCall.calculateDuration(onCall.getStartDate(), onCall.getEndDate());
+        }
+
+        Optional<Counter> existingCounter = counterRepository.findByUserAndMonth(onCall.getUser(), onCall.getMonth());
+
+        if (existingCounter.isEmpty()){
+            Counter counter = counterRepository.save(new Counter(onCall.getUser(), onCall.getMonth()));
+            //TODO Here put the Counter method to add countHs to the new created counter
+        } else {
+            //TODO Here put the Counter method to add countHs to existing counter
         }
 
         return onCallRepository.save(onCall);
