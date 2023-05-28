@@ -62,20 +62,6 @@ public class User implements UserDetails {
         this.specialization = specialization;
     }
 
-
-    public void addMonth(Month month) {
-        // Add a month to the Professional List
-        this.months.add(month);
-        month.getUsers().add(this);
-    }
-
-    public void removeMonth(Month month) {
-        // Remove a month to the Professional List
-        this.months.remove(month);
-        month.getUsers().remove(this);
-    }
-
-
     //UserDetails methods
 
 
