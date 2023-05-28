@@ -127,7 +127,7 @@ public class Month {
         return false;
     }
 
-    private boolean isWeekend(LocalDateTime dateTime){
+    public boolean isWeekend(LocalDateTime dateTime){
         DayOfWeek dayOfWeek = dateTime.getDayOfWeek();
         return dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY);
     }

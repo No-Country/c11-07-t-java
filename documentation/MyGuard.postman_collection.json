@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "69a08cfd-3d20-4818-8266-ca69fe6ae22d",
+		"name": "MyGuard",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22531188",
+		"_collection_link": "https://orange-sunset-314031.postman.co/workspace/NoCountry~f3c7bf6e-5baf-4c4a-828e-0144d58a73ab/collection/22531188-69a08cfd-3d20-4818-8266-ca69fe6ae22d?action=share&creator=22531188&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "update user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"gabi1234\",\r\n  \"password\": \"gabi23434\",\r\n  \"email\": \"gonzaa@example.com\",\r\n\"name\": \"Gonzalo\",\r\n  \"lastName\": \"Co\",\r\n  \"enrolment\": \"234234234\",\r\n  \"personalID\": \"344342484\",\r\n  \"role\":\"Professional\",\r\n  \"specialization\":\"Social Work\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBaseUrl}}/api/users/52?id=52",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"52"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "52"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsers",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBaseUrl}}/api/users",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add OnCall 2 User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{localBaseUrl}}/api/users/305/onCalls?idMonth=1&startDate=2023-07-26T20:00:00&duration=12&endDate=2023-07-27T08:00:00",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"305",
+								"onCalls"
+							],
+							"query": [
+								{
+									"key": "idMonth",
+									"value": "1"
+								},
+								{
+									"key": "startDate",
+									"value": "2023-07-26T20:00:00"
+								},
+								{
+									"key": "duration",
+									"value": "12"
+								},
+								{
+									"key": "endDate",
+									"value": "2023-07-27T08:00:00"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Month",
+			"item": []
+		},
+		{
+			"name": "Unavailability",
+			"item": []
+		},
+		{
+			"name": "OnCall",
+			"item": []
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"gabi1234\",\r\n  \"password\": \"gabi23434\",\r\n  \"email\": \"gonzaa@example.com\",\r\n\"name\": \"Gonzalo\",\r\n  \"lastName\": \"Co\",\r\n  \"enrolment\": \"234234234\",\r\n  \"personalID\": \"344342484\",\r\n  \"role\":\"Professional\",\r\n  \"specialization\":\"Social Work\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBaseUrl}}/api/auth/register",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"gabi1234\",\r\n  \"password\": \"gabi23434\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('token', pm.environment.get('token'));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var headerValue = pm.response.headers.get('Token');\r",
+									"pm.environment.set('authToken',headerValue);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnYWJpMTIzNCIsImlhdCI6MTY4NTAyODc1MywiZXhwIjoxNjg1MTE1MTUzfQ.V0oEiNsCbXQ6dL5al5J6uC1oKJvmOZ-OWeRN5LhPns8"
+		},
+		{
+			"key": "localBaseUrl",
+			"value": "localhost:8080"
+		}
+	]
+}
