@@ -29,6 +29,9 @@ public class Unavailability {
     @ManyToOne
     private Month month;
 
+    @ManyToOne
+    private User user;
+
     public void calculateEndDate(LocalDateTime startDate, int duration) {
         this.endDate = startDate.plusHours(duration);
     }

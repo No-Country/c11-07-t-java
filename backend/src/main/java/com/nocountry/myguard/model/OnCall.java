@@ -11,6 +11,7 @@ import lombok.Setter;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,22 +35,9 @@ public class OnCall {
     @ManyToOne
     private Month month;
 
-    @JsonCreator
-    public OnCall(LocalDateTime startDate, LocalDateTime endDate, Month month) throws Exception{
-        calculateShift(startDate);
+    @ManyToOne
+    private User user;
 
-        if (month.isCorrectMonthByOnCallStartDate(startDate) &&
-                month.isCorrectOnCallShiftByMonthType(this.getShift(),startDate)){
-            this.startDate = startDate;
-            this.endDate = endDate;
-            this.month = month;
-            calculateDuration(startDate,endDate);
-
-        } else {
-            throw new Exception("Incorrect month assigned by start date");
-        }
-
-    }
 
     public void calculateEndDate(LocalDateTime startDate, int duration) {
         this.endDate = startDate.plusHours(duration);

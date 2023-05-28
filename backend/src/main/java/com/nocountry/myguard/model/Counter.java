@@ -1,10 +1,13 @@
 package com.nocountry.myguard.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -29,4 +32,12 @@ public class Counter {
     @ManyToOne
     //@JoinColumn(name = "userId", insertable = false, updatable = false)
     private User user;
+
+    @JsonCreator
+    public Counter(Month month, User user) {
+        this.month = month;
+        this.user = user;
+    }
+
+
 }

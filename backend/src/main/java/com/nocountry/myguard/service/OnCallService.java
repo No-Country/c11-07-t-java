@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OnCallService {
 
-    OnCall save(OnCall onCall);
+    OnCall save(OnCall onCall) throws Exception;
     OnCall update(Long id, OnCall onCall) throws Exception;
 
     OnCall findById(Long id) throws Exception;

@@ -45,6 +45,12 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Counter> counters;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<OnCall> onCalls;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Unavailability> unavailabilities;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

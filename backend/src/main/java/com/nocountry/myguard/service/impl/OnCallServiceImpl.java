@@ -16,21 +16,26 @@ public class OnCallServiceImpl implements OnCallService {
     private OnCallRepository onCallRepository;
 
     @Override
-    public OnCall save(OnCall onCall) {
+    public OnCall save(OnCall onCall) throws Exception {
 
-        if (onCall.getEndDate() == null && onCall.getStartDate() != null && onCall.getDuration() != 0) {
+        if (onCall.getStartDate() == null) throw new Exception("Start date can't be null");
+        if (onCall.getMonth() == null) throw new Exception("Month must be assigned to on call");
+        if (onCall.getEndDate() == null && onCall.getDuration() == 0) throw new Exception("You must assign an end date or a duration to an on call");
+        if (!onCall.getMonth().isCorrectMonthByOnCallStartDate(onCall.getStartDate())) throw new Exception("Incorrect month assigned by start date");
+
+        onCall.calculateShift(onCall.getStartDate());
+        if (!onCall.getMonth().isCorrectOnCallShiftByMonthType(onCall.getShift(),onCall.getStartDate())) {
+            throw new Exception("Incorrect shift by month type, select another date time (recommended) or change month type");
+        }
+
+
+        if (onCall.getEndDate() == null && onCall.getDuration() != 0) {
             onCall.calculateEndDate(onCall.getStartDate(),onCall.getDuration());
         }
 
-
-        if (onCall.getStartDate() != null || onCall.getEndDate() != null || onCall.getDuration() == 0) {
-
+        if (onCall.getEndDate() != null || onCall.getDuration() == 0) {
             onCall.calculateDuration(onCall.getStartDate(), onCall.getEndDate());
-
         }
-
-        onCall.calculateShift(onCall.getStartDate());
-
 
         return onCallRepository.save(onCall);
     }

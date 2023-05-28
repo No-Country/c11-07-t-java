@@ -33,11 +33,14 @@ public class Month {
 
     //@ManyToMany(mappedBy = "months") private List<User> users;
 
-    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<Counter> counters;
+    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL)
+    private List<Counter> counters;
 
-    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<OnCall> onCalls;
+    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL)
+    private List<OnCall> onCalls;
 
-    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<Unavailability> unavailabilities;
+    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL)
+    private List<Unavailability> unavailabilities;
 
     @JsonCreator
     public Month(String name, int year, Type type) {
