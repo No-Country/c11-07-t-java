@@ -130,31 +130,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addMonth2User(Long idProfessional, Long idMonth) throws Exception {
-
-
-        User professional = findById(idProfessional);
-
-        professional.addMonth(monthService.findById(idMonth));
-
-        return userRepository.save(professional);
-
-
+    public User addCounter2User(Long idProfessional, Long idCounter) throws Exception {
+        return null;
     }
 
     @Override
-    public User removeMonth2User(Long idProfessional, Long idMonth) throws Exception {
-
-
-        User professional = findById(idProfessional);
-
-        professional.removeMonth(monthService.findById(idMonth));
-
-        return userRepository.save(professional);
-
-
+    public User removeCounter2User(Long idProfessional, Long idCounter) throws Exception {
+        return null;
     }
-
 
     public User addSpecialization2Professional(Long professionalId, Specialization specialization) {
         // Retrieve the Professional entity from the repository
@@ -174,44 +157,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public OnCall createOnCall(Long idUser, Long idMonth, LocalDateTime startDate, int duration, LocalDateTime endDate) throws Exception {
 
-
-        User professional = findById(idUser);
-        Month month = monthService.findById(idMonth);
-
-        OnCall newOnCall = new OnCall();
-
-        newOnCall.setStartDate(startDate);
-
-        newOnCall.setDuration(duration);
-
-        if (newOnCall.getEndDate() == null && newOnCall.getStartDate() != null && newOnCall.getDuration() != 0) {
-            newOnCall.calculateEndDate(newOnCall.getStartDate(), newOnCall.getDuration());
-        }
-
-
-        if (newOnCall.getStartDate() != null || newOnCall.getEndDate() != null || newOnCall.getDuration() == 0) {
-
-            newOnCall.calculateDuration(newOnCall.getStartDate(), newOnCall.getEndDate());
-
-        }
-
-        newOnCall.setEndDate(endDate);
-
-        newOnCall.calculateShift(newOnCall.getStartDate());
-
-        month.getUsers().add(professional);
-        month.getOnCalls().add(newOnCall);
-        professional.getMonths().add(month);
-
-
-        monthRepository.save(month); // actualiza mes //TODO o crea uno nuevo
-        return onCallRepository.save(newOnCall); // persiste nueva guardia
-
-
-    }
 
 
 }
