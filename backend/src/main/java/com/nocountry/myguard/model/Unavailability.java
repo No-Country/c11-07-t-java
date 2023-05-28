@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,10 +26,16 @@ public class Unavailability {
 
     private int duration;
 
-    private String shift;
-
     @ManyToOne
     private Month month;
+
+    public void calculateEndDate(LocalDateTime startDate, int duration) {
+        this.endDate = startDate.plusHours(duration);
+    }
+
+    public void calculateDuration(LocalDateTime startDate, LocalDateTime endDate) {
+        this.duration = (int) Duration.between(startDate, endDate).toHours();
+    }
 
 
 }

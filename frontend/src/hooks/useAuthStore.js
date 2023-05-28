@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import  {calendarApi}  from '../api';
+import axios from 'axios';
 //import { onChecking, onLogin, onLogout } from '../store';
 
 
@@ -12,7 +12,7 @@ export const useAuthStore = () => {
         //dispatch( onChecking() );
         console.log({username, password})
         try {
-            const resp = await calendarApi.post('/auth',{ username, password });
+            const resp = await axios.post('http://localhost:8080/api/auth/authenticate',{ username, password });
             //dispatch( onLogin({ name: data.name, uid: data.uid }) );
             console.log({resp})
         } catch (error) {

@@ -1,21 +1,43 @@
 package com.nocountry.myguard.service;
 
 
-import com.nocountry.myguard.auth.model.User;
+import com.nocountry.myguard.auth.model.authentication.AuthenticationRequest;
+import com.nocountry.myguard.auth.model.authentication.AuthenticationResponse;
+import com.nocountry.myguard.auth.model.authentication.RegisterRequest;
+import com.nocountry.myguard.model.OnCall;
+import com.nocountry.myguard.model.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
 
-    User save(User user) throws Exception;
+
     User update(Long id, User user) throws Exception;
+
+    AuthenticationResponse register(RegisterRequest request);
+
+    AuthenticationResponse authenticate(AuthenticationRequest request);
 
     User findById(Long id) throws Exception;
 
-    List<User> findAll();
+    Optional<User> findByUsername(String username);
 
-    void Delete(Long id) throws Exception;
+    List<User> getAll();
 
-    Optional <User> findByUsername(String username);
+    Optional<User> findByName(String name);
+
+    Optional<User> findByEnrolment(String enrolment);
+
+    Optional<User> findByEmail(String email);
+
+    Optional<User> findByDni(String dni);
+
+      void delete(Long id) throws Exception;
+
+
+    User addCounter2User(Long idProfessional, Long idCounter) throws Exception;
+
+    User removeCounter2User(Long idProfessional, Long idCounter) throws Exception;
 }

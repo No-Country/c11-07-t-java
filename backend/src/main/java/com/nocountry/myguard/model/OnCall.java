@@ -1,6 +1,7 @@
 package com.nocountry.myguard.model;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,6 +34,23 @@ public class OnCall {
     @ManyToOne
     private Month month;
 
+    @JsonCreator
+    public OnCall(LocalDateTime startDate, LocalDateTime endDate, Month month) throws Exception{
+        calculateShift(startDate);
+
+        if (month.isCorrectMonthByOnCallStartDate(startDate) &&
+                month.isCorrectOnCallShiftByMonthType(this.getShift(),startDate)){
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.month = month;
+            calculateDuration(startDate,endDate);
+
+        } else {
+            throw new Exception("Incorrect month assigned by start date");
+        }
+
+    }
+
     public void calculateEndDate(LocalDateTime startDate, int duration) {
         this.endDate = startDate.plusHours(duration);
     }
@@ -50,7 +68,6 @@ public class OnCall {
 
         if (startTime.isAfter(nightShiftStart) || startTime.isBefore(dayShiftEnd)) {
             this.shift = "night";
-
         } else {
             this.shift = "day";
         }

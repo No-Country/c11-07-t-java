@@ -1,6 +1,7 @@
-package com.nocountry.myguard.auth.model;
+package com.nocountry.myguard.model;
 
 import com.nocountry.myguard.enums.Role;
+import com.nocountry.myguard.enums.Specialization;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,7 +14,7 @@ import java.util.List;
 @Data
 @Builder
 @Entity
- @AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
 
@@ -30,10 +31,31 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private String name;
+
+    private String lastName;
+
+    private String enrolment;
+
+    private String personalID;
+
+    @Enumerated(EnumType.STRING) private Specialization specialization;
+
+    //@ManyToMany private List<Month> months;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Counter> counters;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
+
+
+    //Professional methods
+    public void addSpecialization(Specialization specialization) {
+        this.specialization = specialization;
+    }
+
 
     @Override
     public String getPassword() {

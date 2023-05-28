@@ -19,9 +19,16 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
     @Override
     public Unavailability save(Unavailability unavailability) {
 
-        Duration duration = Duration.between(unavailability.getStartDate(), unavailability.getEndDate());
-        long hours = duration.toHours();
-        unavailability.setDuration((int) hours);
+        if (unavailability.getEndDate() == null && unavailability.getStartDate() != null && unavailability.getDuration() != 0) {
+            unavailability.calculateEndDate(unavailability.getStartDate(),unavailability.getDuration());
+        }
+
+
+        if (unavailability.getStartDate() != null || unavailability.getEndDate() != null || unavailability.getDuration() == 0) {
+
+            unavailability.calculateDuration(unavailability.getStartDate(), unavailability.getEndDate());
+
+        }
 
         return unavailabilityRepository.save(unavailability);
     }
@@ -35,7 +42,6 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
         unavailability.setStartDate(unavailabilityUpdated.getStartDate());
         unavailability.setEndDate(unavailabilityUpdated.getEndDate());
         unavailability.setDuration(unavailabilityUpdated.getDuration());
-        unavailability.setShift(unavailabilityUpdated.getShift());
 
         return unavailabilityRepository.save(unavailability);
     }

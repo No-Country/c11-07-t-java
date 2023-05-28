@@ -4,7 +4,7 @@ import com.nocountry.myguard.auth.model.authentication.AuthenticationRequest;
 import com.nocountry.myguard.auth.model.authentication.AuthenticationResponse;
 import com.nocountry.myguard.auth.model.authentication.RegisterRequest;
 import com.nocountry.myguard.enums.Role;
-import com.nocountry.myguard.auth.model.User;
+import com.nocountry.myguard.model.User;
 import com.nocountry.myguard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,7 +35,7 @@ public class AuthenticationService {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.PROFESSIONAL)
+                .role(Role.USER)
                 .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
