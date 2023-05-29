@@ -1,102 +1,83 @@
-import React, { useState } from "react";
 import { SideNabvar, Header } from "../ui";
 import { Button } from "../util";
-import './loginForm.css'
+import "./loginForm.css";
+import { useAuthStore, useForm } from "../../hooks";
+
+const registerForUser = {
+  registerUsername: "",
+  registerEmail: "",
+  registerPassword: "",
+};
 
 export const SignUpForm = () => {
+  const { startRegister, startLogin, status } = useAuthStore();
 
-    const [email, setEmail] = useState('');
-    const [isValid, setIsValid] = useState(false);
-    
-    const handleEmailChange = (event) => {
-        const inputEmail = event.target.value;
-        setEmail(inputEmail);
-        validateEmail(inputEmail);
-    };
-    
-    const validateEmail = (email) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        setIsValid(emailRegex.test(email));
+  const { registerUsername, registerEmail, registerPassword, onInputChange } =
+    useForm(registerForUser);
+
+  const onRegisterSubmit = (e) => {
+    e.preventDefault();
+    if (
+      registerUsername.trim() == "" ||
+      registerEmail.trim() == "" ||
+      registerPassword.trim() == ""
+    ) {
+      alert("Los datos subministrados no son validos");
     }
-    
+    startRegister({
+      username: registerUsername,
+      email: registerEmail,
+      password: registerPassword,
+    });
+  };
 
   return (
-    <div>
-      <Header />
-      <SideNabvar />
-      <div className="container">
-        <h1>Nuevo Perfil</h1>
-        <br />
+    <>
+      <div>
+        <Header />
+        <SideNabvar />
+        <div className="contenedor contenedor-register">
+          <h1>Nuevo Perfil</h1>
 
-        <div>
-          <input
-            placeholder="especialidad"
-            type="text"
-            id="especialidad"
-            value={""}
-            onChange={""}
-            name="especialidad"
-          />
+          <form onSubmit={onRegisterSubmit}>
+            <div>
+              <input
+                placeholder="usuario. ej: aRamirez"
+                type="text"
+                id="nombre"
+                value={registerUsername}
+                onChange={onInputChange}
+                name="registerUsername"
+              />
+            </div>
+            <div>
+              <input
+                placeholder="correo electrónico"
+                type="email"
+                id="email"
+                value={registerEmail}
+                onChange={onInputChange}
+                name="registerEmail"
+              />
+            </div>
+
+            <div>
+              <input
+                placeholder="contraseña"
+                type="text"
+                id="password"
+                value={registerPassword}
+                onChange={onInputChange}
+                name="registerPassword"
+              />
+            </div>
+
+            <div>
+              <Button title={"Crear Perfil"} />
+            </div>
+          </form>
         </div>
-
-        <br />
-
-        <div>
-          <input
-            placeholder="nombre completo"
-            type="text"
-            id="nombre"
-            value={""}
-            onChange={""}
-            name="nombre"
-          />
-        </div>
-
-        <br />
-
-        <div>
-          <input
-            placeholder="DNI"
-            type="text"
-            id="dni"
-            value={""}
-            onChange={""}
-            name="dni"
-          />
-        </div>
-
-        <br />
-
-        <div>
-          <input
-            placeholder="correo electrónico"
-            type="email"
-            id="email"
-            value={email}
-            onChange={handleEmailChange}
-            name="email"
-          />
-          { isValid ? <p>el email es válido</p> : <p>el email no es válido</p> }
-        </div>
-
-        <div>
-          <input
-            placeholder="contraseña"
-            type="text"
-            id="password"
-            value={""}
-            onChange={""}
-            name="password"
-          />
-        </div>
-
-        <br />
-
-        <div className="contenedor">
-            <Button title={"Crear Perfil"}/>
-        </div>
-
       </div>
-    </div>
+    </>
   );
 };

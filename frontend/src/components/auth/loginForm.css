@@ -20,7 +20,9 @@ form{
     align-items: center;
 
 }
-
+.contenedor-register{
+  margin-top: 2rem;
+}
 .welcome{
   width: 80%;
   text-align: center;

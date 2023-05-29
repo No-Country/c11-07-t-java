@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-//import { onChecking, onLogin, onLogout } from '../store';
+import { clearErrorMessage, onChecking, onLogin, onLogout } from '../store/auth';
 
 
 export const useAuthStore = () => {
@@ -9,17 +9,36 @@ export const useAuthStore = () => {
     const dispatch = useDispatch();
 
     const startLogin = async({ username, password }) => {
-        //dispatch( onChecking() );
+        dispatch( onChecking() );
         console.log({username, password})
         try {
-            const resp = await axios.post('http://localhost:8080/api/auth/authenticate',{ username, password });
-            //dispatch( onLogin({ name: data.name, uid: data.uid }) );
-            console.log({resp})
+            const {data} = await axios.post('http://localhost:8080/api/auth/authenticate',{ username, password });
+            dispatch( onLogin({ name: data.name, uid: data.uid }) );
+            localStorage.setItem("token", data.token); //envio el token al localStorage
+            localStorage.setItem("token-init", new Date().getTime()); //envio otro token de referencia, si no sirve lo borramos mas adelante
+            dispatch(onLogin({username: data.username, password: data.password} ))
+
+
         } catch (error) {
-            console.log(error)
+           console.log(error)
         }
     }
 
+    const startRegister = async({ username, email, password }) => {
+        dispatch( onChecking() );
+        console.log({username, email, password})
+        try {
+            const {data} = await axios.post('http://localhost:8080/api/auth/register',{ username, email, password });
+            dispatch( onLogin({ name: data.name, uid: data.uid }) );
+            localStorage.setItem("token", data.token); //envio el token al localStorage
+            localStorage.setItem("token-init", new Date().getTime()); //envio otro token de referencia, si no sirve lo borramos mas adelante
+            dispatch(onLogin({username: data.username, password: data.password} ))
+
+
+        } catch (error) {
+           console.log(error)
+        }
+    }
 
     /*const checkAuthToken = async() => {
         const token = localStorage.getItem('token');
@@ -34,12 +53,12 @@ export const useAuthStore = () => {
             localStorage.clear();
             dispatch( onLogout() );
         }
-    }
+    }*/
 
     const startLogout = () => {
         localStorage.clear();
         dispatch(onLogout());
-    }*/
+    }
 
 
 
@@ -52,8 +71,8 @@ export const useAuthStore = () => {
         //* Métodos
        
         startLogin,
-        //startLogout,
-       // startRegister,
+        startLogout,
+       startRegister,
     }
 
 }
