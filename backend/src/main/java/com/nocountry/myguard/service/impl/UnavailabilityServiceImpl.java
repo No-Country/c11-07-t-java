@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,6 +71,17 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
     public void Delete(Long id) throws Exception {
 
         unavailabilityRepository.delete(findById(id));
+
+    }
+
+    @Override
+    public List<Unavailability> findByDateTimeRange(LocalDateTime start, LocalDateTime end) throws Exception {
+
+        if (start == null) throw new Exception("Start date can't be null");
+        if (end == null) throw new Exception("End date can't be null");
+        if (start.isAfter(end)) throw new Exception("Start date can't be after end date");
+
+        return unavailabilityRepository.findByDateTimeRange(start, end);
 
     }
 }

@@ -2,6 +2,7 @@ package com.nocountry.myguard.service;
 
 import com.nocountry.myguard.model.OnCall;
 
+
 import java.util.List;
 
 public interface OnCallService {
@@ -18,6 +19,10 @@ public interface OnCallService {
     List<OnCall> findAllOnCallByDay(int day);
 
 
+    List<OnCall> findAllByMonth(int month);
 
+    int getNumberOfOnCallByMonth(Long monthId, Long UserId) throws Exception;
+
+    List<OnCall> findAllByMonthAndUser(Long monthId, Long userId) throws Exception;
 
 }
