@@ -1,26 +1,34 @@
 import { SideNabvar, Header } from "../ui";
 import { Button } from "../util";
 import "./loginForm.css";
-import { useForm } from "../../hooks";
-
-
+import { useAuthStore, useForm } from "../../hooks";
 
 const registerForUser = {
-    registerUsername : "",
-    registerEmail: "",
-    registerPassword: ""
-}
-
+  registerUsername: "",
+  registerEmail: "",
+  registerPassword: "",
+};
 
 export const SignUpForm = () => {
+  const { startRegister, startLogin, status } = useAuthStore();
+
   const { registerUsername, registerEmail, registerPassword, onInputChange } =
     useForm(registerForUser);
 
-
-    const onRegisterSubmit = (e) => {
+  const onRegisterSubmit = (e) => {
     e.preventDefault();
-    if(registerUsername.trim() == "" || registerEmail.trim() == "" || registerPassword.trim() == ""  ) return
-    startLogin({username: loginUsername, password: loginPassword})
+    if (
+      registerUsername.trim() == "" ||
+      registerEmail.trim() == "" ||
+      registerPassword.trim() == ""
+    ) {
+      alert("Los datos subministrados no son validos");
+    }
+    startRegister({
+      username: registerUsername,
+      email: registerEmail,
+      password: registerPassword,
+    });
   };
 
   return (

@@ -11,12 +11,10 @@ export const authSlice = createSlice({
         onLogin: (state, { payload }) => {
             state.status = 'authenticated';
             state.user = payload;
-            errorMessage = undefined;
         },
-        onLogout: (state, { payload }) => {
+        onLogout: (state) => {
             state.status = 'not--authenticated';
             state.user = null;
-            errorMessage = payload;
         },
         onChecking: (state) => {
             state.status = 'checking';

@@ -3,8 +3,6 @@ import "./loginForm.css";
 import { Button } from "../util";
 import { useAuthStore, useForm } from "../../hooks";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import Swal from "sweetalert2";
 
 const loginForUser = {
   loginUsername: "",
@@ -17,19 +15,15 @@ export const LoginForm = () => {
     navigate("/register");
   };
 
-  const { startLogin, errorMessage } = useAuthStore();
+  const { startLogin } = useAuthStore();
 
   const { loginUsername, loginPassword, onInputChange } = useForm(loginForUser);
 
-  useEffect(() => {
-    if (errorMessage != undefined) {
-      Swal.fire("Error al intentar logearse", errorMessage, "error");
-    }
-  }, [errorMessage]);
-
   const onLoginSubmit = (e) => {
     e.preventDefault();
-    if (loginUsername.trim() == "" || loginPassword.trim() == "") return;
+    if (loginUsername.trim() == "" || loginPassword.trim() == "") {
+      alert("Credenciales incorrectas");
+    }
     startLogin({ username: loginUsername, password: loginPassword });
   };
 
