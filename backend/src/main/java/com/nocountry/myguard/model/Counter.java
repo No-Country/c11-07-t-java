@@ -19,9 +19,8 @@ public class Counter {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Integer countHsWeekend;
-    private Integer count24Weekend;
     private Integer countHsWeek;
-    private Integer count24Week;
+    private Integer countOnCall;
     //private Integer monthId;
     //private Integer userId;
 
@@ -38,6 +37,36 @@ public class Counter {
         this.user = user;
         this.month = month;
     }
+
+    public void addHsWeekend(int duration) {
+        if (duration > 0 && duration <= 24) {
+            this.countHsWeekend += duration;
+        }
+    }
+
+    public void addHsWeek(int duration) {
+        if (duration > 0 && duration <= 24) {
+            this.countHsWeek += duration;
+        }
+
+    }
+
+    public void reduceHsWeekend(int duration) {
+        if (duration > 0 && duration <= 24) {
+            this.countHsWeekend -= duration;
+        }
+    }
+    public void reduceHsWeek(int duration) {
+        if (duration > 0 && duration <= 24) {
+            this.countHsWeek -= duration;
+        }
+    }
+
+    public int calculateOnCalls() {
+        this.countOnCall = (countHsWeekend + countHsWeek) / 24;
+        return this.countOnCall;
+    }
+
 
 
 }

@@ -1,7 +1,9 @@
 package com.nocountry.myguard.service;
 
 import com.nocountry.myguard.model.Unavailability;
+import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface UnavailabilityService {
@@ -13,5 +15,7 @@ public interface UnavailabilityService {
     List<Unavailability> findAll();
 
     void Delete(Long id) throws Exception;
+
+    List<Unavailability> findByDateTimeRange(LocalDateTime start, LocalDateTime end) throws Exception;
 }
 

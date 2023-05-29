@@ -19,4 +19,5 @@ public interface MonthRepository extends JpaRepository<Month, Long> {
 
     Optional<Month> findByType(Type type);
 
+
 }
