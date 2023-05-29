@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -139,8 +140,10 @@ public class OnCallServiceImpl implements OnCallService {
                 .orElseThrow(() -> new Exception("No counter with that user and month"));
 
         // Calculate the number of on-calls
-        return counter.calculateOnCalls(counter.getCountHsWeek(), counter.getCountHsWeek());
+        //return counter.calculateOnCalls(counter.getCountHsWeek(), counter.getCountHsWeek());
         // TODO Change the name of the attribute to: return counter.getCountOnCall();
+
+        return counter.calculateOnCalls();
 
     }
 
@@ -160,6 +163,19 @@ public class OnCallServiceImpl implements OnCallService {
            throw new Exception("No onCall with that user and month");
         }
         return onCalls;
+    }
+
+    @Override
+    public List<OnCall> findByDateTimeRange(LocalDateTime start, LocalDateTime end) throws Exception {
+        if (start == null || end == null) {
+            throw new Exception("Start date and end date can't be null");
+        }
+
+        if (!unavailabilityService.findByDateTimeRange(start, end).isEmpty()) {
+            throw new Exception("Doesn't exist an unavailability at the selected time range");
+        }
+        return onCallRepository.findByDateTimeRange(start, end);
+
     }
 
 

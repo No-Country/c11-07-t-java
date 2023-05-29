@@ -1,8 +1,10 @@
 package com.nocountry.myguard.service;
 
 import com.nocountry.myguard.model.OnCall;
+import org.springframework.data.repository.query.Param;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OnCallService {
@@ -24,5 +26,7 @@ public interface OnCallService {
     int getNumberOfOnCallByMonth(Long monthId, Long UserId) throws Exception;
 
     List<OnCall> findAllByMonthAndUser(Long monthId, Long userId) throws Exception;
+
+    List<OnCall> findByDateTimeRange( LocalDateTime start, LocalDateTime end) throws Exception;
 
 }
