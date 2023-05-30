@@ -1,23 +1,28 @@
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { clearErrorMessage, onChecking, onLogin, onLogout } from '../store/auth';
+import {  onChecking, onLogin, onLogout } from '../store/auth';
+import { useNavigate } from 'react-router-dom';
 
 
 export const useAuthStore = () => {
+
+
+    const navigate = useNavigate();
+     
+  
 
     const { status, user, errorMessage } = useSelector( state => state.auth );
     const dispatch = useDispatch();
 
     const startLogin = async({ username, password }) => {
         dispatch( onChecking() );
-        console.log({username, password})
         try {
             const {data} = await axios.post('http://localhost:8080/api/auth/authenticate',{ username, password });
             dispatch( onLogin({ name: data.name, uid: data.uid }) );
             localStorage.setItem("token", data.token); //envio el token al localStorage
             localStorage.setItem("token-init", new Date().getTime()); //envio otro token de referencia, si no sirve lo borramos mas adelante
-            dispatch(onLogin({username: data.username, password: data.password} ))
-
+            dispatch(onLogin({username: data.username, password: data.password} ));
+            navigate("/calendar");
 
         } catch (error) {
            console.log(error)
@@ -26,13 +31,13 @@ export const useAuthStore = () => {
 
     const startRegister = async({ username, email, password }) => {
         dispatch( onChecking() );
-        console.log({username, email, password})
         try {
             const {data} = await axios.post('http://localhost:8080/api/auth/register',{ username, email, password });
             dispatch( onLogin({ name: data.name, uid: data.uid }) );
             localStorage.setItem("token", data.token); //envio el token al localStorage
             localStorage.setItem("token-init", new Date().getTime()); //envio otro token de referencia, si no sirve lo borramos mas adelante
-            dispatch(onLogin({username: data.username, password: data.password} ))
+            dispatch(onLogin({username: data.username, password: data.password} ));
+            navigate("/calendar");
 
 
         } catch (error) {
@@ -40,20 +45,21 @@ export const useAuthStore = () => {
         }
     }
 
-    /*const checkAuthToken = async() => {
+    const checkAuthToken = async() => {
         const token = localStorage.getItem('token');
         if ( !token ) return dispatch( onLogout() );
 
         try {
-            const { data } = await calendarApi.get('auth/renew');
+            const { data } = await axios.get('http://localhost:8080/api/auth/authenticate');
             localStorage.setItem('token', data.token );
             localStorage.setItem('token-init-date', new Date().getTime() );
-            dispatch( onLogin({ name: data.name, uid: data.uid }) );
+            dispatch(onLogin({username: data.username, password: data.password} ));
+
         } catch (error) {
             localStorage.clear();
             dispatch( onLogout() );
         }
-    }*/
+    }
 
     const startLogout = () => {
         localStorage.clear();
@@ -69,7 +75,7 @@ export const useAuthStore = () => {
         user, 
 
         //* Métodos
-       
+        checkAuthToken,
         startLogin,
         startLogout,
        startRegister,
