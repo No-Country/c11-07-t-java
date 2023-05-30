@@ -2,6 +2,7 @@ package com.nocountry.myguard.service.impl;
 
 import com.nocountry.myguard.model.Unavailability;
 import com.nocountry.myguard.repository.UnavailabilityRepository;
+import com.nocountry.myguard.service.OnCallService;
 import com.nocountry.myguard.service.UnavailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
 
     @Autowired
     private UnavailabilityRepository unavailabilityRepository;
+    @Autowired
+    private OnCallService onCallService;
 
     @Override
     public Unavailability save(Unavailability unavailability) throws Exception {
@@ -33,6 +36,10 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
 
         if (unavailability.getStartDate() != null || unavailability.getEndDate() != null || unavailability.getDuration() == 0) {
             unavailability.calculateDuration(unavailability.getStartDate(), unavailability.getEndDate());
+        }
+
+        if (!onCallService.findByDateTimeRange(unavailability.getStartDate(),unavailability.getEndDate()).isEmpty()){
+            throw new Exception("Can't create unavailability, there is an on call at the same time range");
         }
 
         return unavailabilityRepository.save(unavailability);
