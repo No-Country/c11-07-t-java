@@ -1,17 +1,17 @@
 package com.nocountry.myguard.model;
 
 
-import com.fasterxml.jackson.annotation.JsonCreator;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
+
 
 @Entity
 @Getter
@@ -32,12 +32,19 @@ public class OnCall {
 
     private String shift; //day - night
 
+    @JsonBackReference(value = "MonthOnCall")
     @ManyToOne
     private Month month;
 
+    @JsonBackReference(value = "UserOnCall")
     @ManyToOne
     private User user;
 
+    public OnCall(LocalDateTime startDate, LocalDateTime endDate, Month month) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.month = month;
+    }
 
     public void calculateEndDate(LocalDateTime startDate, int duration) {
         this.endDate = startDate.plusHours(duration);

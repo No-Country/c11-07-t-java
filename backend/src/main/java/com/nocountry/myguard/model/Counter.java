@@ -1,6 +1,8 @@
 package com.nocountry.myguard.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,10 +26,12 @@ public class Counter {
     //private Integer monthId;
     //private Integer userId;
 
+    @JsonBackReference(value = "MonthCounter")
     @ManyToOne
     //@JoinColumn(name = "monthId", insertable = false, updatable = false)
     private Month month;
 
+    @JsonBackReference(value = "CounterUser")
     @ManyToOne
     //@JoinColumn(name = "userId", insertable = false, updatable = false)
     private User user;
@@ -36,6 +40,9 @@ public class Counter {
     public Counter(User user, Month month) {
         this.user = user;
         this.month = month;
+        this.countHsWeekend = 0;
+        this.countHsWeek = 0;
+        this.countOnCall = 0;
     }
 
     public void addHsWeekend(int duration) {

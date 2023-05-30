@@ -11,7 +11,7 @@
 			"name": "User",
 			"item": [
 				{
-					"name": "update user",
+					"name": "Update User",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -38,7 +38,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token}}",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWNoYWVsLmJyb3duIiwiaWF0IjoxNjg1MzkzOTE4LCJleHAiOjE2ODU0ODAzMTh9.CkZXuXJHUU7ByYcvpVk9YvjwdfExP4iueuYnu7EQvIs",
 									"type": "string"
 								}
 							]
@@ -54,7 +54,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"username\": \"gabi1234\",\r\n  \"password\": \"gabi23434\",\r\n  \"email\": \"gonzaa@example.com\",\r\n\"name\": \"Gonzalo\",\r\n  \"lastName\": \"Co\",\r\n  \"enrolment\": \"234234234\",\r\n  \"personalID\": \"344342484\",\r\n  \"role\":\"Professional\",\r\n  \"specialization\":\"Social Work\"\r\n}",
+							"raw": "{\r\n  \"username\": \"john.doe\",\r\n  \"email\": \"john.doe@example.com\",\r\n  \"password\": \"password123\",\r\n  \"role\": \"USER\",\r\n  \"name\": \"John\",\r\n  \"lastName\": \"Doe\",\r\n  \"enrolment\": \"123456\",\r\n  \"personalID\": \"35512874\",\r\n  \"specialization\": \"Psychology\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -62,19 +62,19 @@
 							}
 						},
 						"url": {
-							"raw": "{{localBaseUrl}}/api/users/52?id=52",
+							"raw": "{{localBaseUrl}}/api/users/1?id=1",
 							"host": [
 								"{{localBaseUrl}}"
 							],
 							"path": [
 								"api",
 								"users",
-								"52"
+								"1"
 							],
 							"query": [
 								{
 									"key": "id",
-									"value": "52"
+									"value": "1"
 								}
 							]
 						}
@@ -82,7 +82,7 @@
 					"response": []
 				},
 				{
-					"name": "getUsers",
+					"name": "get Users",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -100,7 +100,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token}}",
+									"value": "{{authToken}}",
 									"type": "string"
 								}
 							]
@@ -119,81 +119,21 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "add OnCall 2 User",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{localBaseUrl}}/api/users/305/onCalls?idMonth=1&startDate=2023-07-26T20:00:00&duration=12&endDate=2023-07-27T08:00:00",
-							"host": [
-								"{{localBaseUrl}}"
-							],
-							"path": [
-								"api",
-								"users",
-								"305",
-								"onCalls"
-							],
-							"query": [
-								{
-									"key": "idMonth",
-									"value": "1"
-								},
-								{
-									"key": "startDate",
-									"value": "2023-07-26T20:00:00"
-								},
-								{
-									"key": "duration",
-									"value": "12"
-								},
-								{
-									"key": "endDate",
-									"value": "2023-07-27T08:00:00"
-								}
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
 		{
 			"name": "Month",
-			"item": []
-		},
-		{
-			"name": "Unavailability",
-			"item": []
-		},
-		{
-			"name": "OnCall",
-			"item": []
-		},
-		{
-			"name": "Auth",
 			"item": [
 				{
-					"name": "Register User",
+					"name": "create Month",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token}}",
+									"value": "{{authToken}}",
 									"type": "string"
 								}
 							]
@@ -202,7 +142,158 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"username\": \"gabi1234\",\r\n  \"password\": \"gabi23434\",\r\n  \"email\": \"gonzaa@example.com\",\r\n\"name\": \"Gonzalo\",\r\n  \"lastName\": \"Co\",\r\n  \"enrolment\": \"234234234\",\r\n  \"personalID\": \"344342484\",\r\n  \"role\":\"Professional\",\r\n  \"specialization\":\"Social Work\"\r\n}",
+							"raw": "{\r\n\r\n\"name\":\"June\",\r\n\"year\": 2023,\r\n\"type\":\"Week\"\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBaseUrl}}/api/months/",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"api",
+								"months",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All Month",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBaseUrl}}/api/months/",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"api",
+								"months",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Unavailability",
+			"item": []
+		},
+		{
+			"name": "OnCall",
+			"item": [
+				{
+					"name": "create OnCall",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\":\"2023-06-03T20:00:00\",\r\n    \"endDate\":\"2023-06-04T08:00:00\",\r\n    \"month\":{\r\n        \"name\": \"June\",\r\n        \"year\": 2023,\r\n        \"type\": \"Week\",\r\n        \"id\": 1\r\n            },\r\n    \"user\":{\r\n        \"id\": 6,\r\n        \"username\": \"michael.brown\",\r\n        \"email\": \"michael.brown@example.com\",\r\n        \"password\": \"$2a$10$4sLEhoDMRhkikVfVzVnNHejyYvK5NHf74ziLd48WBjlKplgnSBYiG\",\r\n        \"role\": \"User\",\r\n        \"name\": \"Michael\",\r\n        \"lastName\": \"Brown\",\r\n        \"enrolment\": \"345678\",\r\n        \"personalID\": \"56789012\",\r\n        \"specialization\": \"Psychiatry\"\r\n        \r\n    }\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBaseUrl}}/oncalls/",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"oncalls",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All On Call",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\":\"2023-06-01T20:00:00\",\r\n    \"endDate\":\"2023-06-02T08:00:00\",\r\n    \"month\":{\r\n        \"name\": \"June\",\r\n        \"year\": 2023,\r\n        \"type\": \"Week\",\r\n        \"id\": 1\r\n            },\r\n    \"user\":{\r\n        \"id\": 1,\r\n        \"username\": \"john.doe\",\r\n        \"email\": \"john.doe@example.com\",\r\n        \"password\": \"$2a$10$aPIt9vbkOTE3lXwt31Gx5uCjxTV/y05j22GT7dlokthm4z0ZqDepm\",\r\n        \"role\": \"User\",\r\n        \"name\": \"John\",\r\n        \"lastName\": \"Doe\",\r\n        \"enrolment\": \"123456\",\r\n        \"personalID\": \"35512874\",\r\n        \"specialization\": \"Psychology\"\r\n        \r\n    }\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBaseUrl}}/oncalls/getAll",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"oncalls",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"michael.brown\",\r\n  \"email\": \"michael.brown@example.com\",\r\n  \"password\": \"pass1234\",\r\n  \"role\": \"USER\",\r\n  \"name\": \"Michael\",\r\n  \"lastName\": \"Brown\",\r\n  \"enrolment\": \"345678\",\r\n  \"personalID\": \"56789012\",\r\n  \"specialization\": \"Psychiatry\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -231,7 +322,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{token}}",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZSIsImlhdCI6MTY4NTM5MjI4OSwiZXhwIjoxNjg1NDc4Njg5fQ.8P6ZTzkFchvSFhrkqMXtkELrCpR7Jg_K4b8V4yZFCms",
 									"type": "string"
 								}
 							]
@@ -240,7 +331,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"username\": \"gabi1234\",\r\n  \"password\": \"gabi23434\"\r\n}",
+							"raw": "{\r\n    \"username\": \"michael.brown\",\r\n \r\n  \"password\": \"pass1234\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

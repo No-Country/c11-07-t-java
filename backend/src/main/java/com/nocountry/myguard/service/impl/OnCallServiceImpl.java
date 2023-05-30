@@ -65,6 +65,7 @@ public class OnCallServiceImpl implements OnCallService {
         }
 
         Optional<Counter> existingCounter = counterRepository.findByUserAndMonth(onCall.getUser(), onCall.getMonth());
+        Month month = onCall.getMonth();
 
         if (existingCounter.isEmpty()){
             Counter counter = new Counter(onCall.getUser(), onCall.getMonth());
@@ -73,8 +74,11 @@ public class OnCallServiceImpl implements OnCallService {
             }else {
                 counter.addHsWeek(onCall.getDuration());
             }
+            counter.calculateOnCalls();
             counterRepository.save(counter);
-            //TODO Here put the Counter method to add countHs to the new created counter
+            month.getCounters().add(counter);
+
+
         } else {
             Counter counter = existingCounter.get();
             if(onCall.getMonth().isWeekend(onCall.getStartDate())){
@@ -82,9 +86,13 @@ public class OnCallServiceImpl implements OnCallService {
             }else {
                 counter.addHsWeek(onCall.getDuration());
             }
+            counter.calculateOnCalls();
             counterRepository.save(counter);
-            //TODO Here put the Counter method to add countHs to existing counter
+            month.getCounters().add(counter);
+
         }
+
+        monthRepository.save(month);
 
         return onCallRepository.save(onCall);
     }

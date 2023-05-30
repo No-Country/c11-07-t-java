@@ -111,12 +111,29 @@ public class UserServiceImpl implements UserService {
 
         User professional = findById(id);
 
-        professional.setName(professionalUpdate.getName());
-        professional.setLastName(professionalUpdate.getLastName());
-        professional.setPersonalID(professionalUpdate.getPersonalID());
-        professional.setEmail(professionalUpdate.getEmail());
-        professional.setEnrolment(professionalUpdate.getEnrolment());
-        professional.setPassword(passwordEncoder.encode(professionalUpdate.getPassword()));
+        if (professionalUpdate.getName() != null) {
+            professional.setName(professionalUpdate.getName());
+        }
+        if (professionalUpdate.getLastName() != null) {
+            professional.setLastName(professionalUpdate.getLastName());
+        }
+        if (professionalUpdate.getPersonalID() != null) {
+            professional.setPersonalID(professionalUpdate.getPersonalID());
+        }
+        if (professionalUpdate.getEmail() != null) {
+            professional.setEmail(professionalUpdate.getEmail());
+        }
+        if (professionalUpdate.getEnrolment() != null) {
+            professional.setEnrolment(professionalUpdate.getEnrolment());
+        }
+        if (professionalUpdate.getPassword() != null) {
+            professional.setPassword(passwordEncoder.encode(professionalUpdate.getPassword()));
+        }
+
+        if (professionalUpdate.getSpecialization() != null) {
+            professional.setSpecialization(professionalUpdate.getSpecialization());
+        }
+
 
         return userRepository.save(professional);
     }

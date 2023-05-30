@@ -28,26 +28,26 @@ class MonthTest {
 
     @BeforeAll
     void beforeAll() {
-        this.monthWeekend = new Month("May",2023, Type.WEEKEND);
-        this.monthWeek = new Month("June",2023, Type.WEEK);
-        this.dayMay = LocalDateTime.of(2023,5,20,8,0); //SATURDAY
-        this.dayJune = LocalDateTime.of(2023,6,14,20,0); //WEDNESDAY
-        this.day2024 = LocalDateTime.of(2024,6,14,20,0); //WEDNESDAY
+        this.monthWeekend = new Month("May", 2023, Type.WEEKEND);
+        this.monthWeek = new Month("June", 2023, Type.WEEK);
+        this.dayMay = LocalDateTime.of(2023, 5, 20, 8, 0); //SATURDAY
+        this.dayJune = LocalDateTime.of(2023, 6, 14, 20, 0); //WEDNESDAY
+        this.day2024 = LocalDateTime.of(2024, 6, 14, 20, 0); //WEDNESDAY
 
         try {
             this.onCallMay = new OnCall(
                     dayMay,
-                    LocalDateTime.of(2023,5,20,20,0),
+                    LocalDateTime.of(2023, 5, 20, 20, 0),
                     monthWeekend);
             this.onCallJune = new OnCall(
                     dayJune,
-                    LocalDateTime.of(2023,6,15,8,0),
+                    LocalDateTime.of(2023, 6, 15, 8, 0),
                     monthWeek);
             this.onCallWrong = new OnCall(
                     day2024,
-                    LocalDateTime.of(2024,6,15,8,0),
+                    LocalDateTime.of(2024, 6, 15, 8, 0),
                     monthWeek);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 

@@ -1,5 +1,6 @@
 package com.nocountry.myguard.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nocountry.myguard.enums.Role;
 import com.nocountry.myguard.enums.Specialization;
 import jakarta.persistence.*;
@@ -42,12 +43,15 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING) private Specialization specialization;
 
     //@ManyToMany private List<Month> months;
+    @JsonManagedReference(value = "CounterUser")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Counter> counters;
 
+    @JsonManagedReference(value = "UserOnCall")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<OnCall> onCalls;
 
+    @JsonManagedReference(value = "UserUnavailability")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Unavailability> unavailabilities;
 
