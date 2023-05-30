@@ -95,27 +95,16 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
 
         User user = unavailability.getUser();
         Month month = unavailability.getMonth();
-        Counter counter = counterRepository.findByUserAndMonth(user, month).get();
 
-        //Remove on call from User and Month
+        //Remove unavailability from User and Month
         user.getUnavailabilities().remove(unavailability);
         month.getUnavailabilities().remove(unavailability);
-
-        //Update respective counter
-        if(month.isWeekend(unavailability.getStartDate())){
-            counter.reduceHsWeekend(unavailability.getDuration());
-        }else {
-            counter.reduceHsWeek(unavailability.getDuration());
-        }
-        counter.calculateOnCalls();
 
         //Save changes
         userRepository.save(user);
         monthRepository.save(month);
-        counterRepository.save(counter);
 
         unavailabilityRepository.delete(unavailability);
-
     }
 
     @Override
