@@ -29,8 +29,5 @@ public enum Specialization {
                 .filter(targetEnum -> targetEnum.name.equals(name))
                 .findFirst()
                 .orElse(null);
-
-
-
     }
 }

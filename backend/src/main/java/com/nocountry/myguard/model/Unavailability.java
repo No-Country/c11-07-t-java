@@ -1,5 +1,6 @@
 package com.nocountry.myguard.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,8 +27,13 @@ public class Unavailability {
 
     private int duration;
 
+    @JsonBackReference(value = "MonthUnavailability")
     @ManyToOne
     private Month month;
+
+    @JsonBackReference(value = "UserUnavailability")
+    @ManyToOne
+    private User user;
 
     public void calculateEndDate(LocalDateTime startDate, int duration) {
         this.endDate = startDate.plusHours(duration);
@@ -36,7 +42,6 @@ public class Unavailability {
     public void calculateDuration(LocalDateTime startDate, LocalDateTime endDate) {
         this.duration = (int) Duration.between(startDate, endDate).toHours();
     }
-
 
 }
 

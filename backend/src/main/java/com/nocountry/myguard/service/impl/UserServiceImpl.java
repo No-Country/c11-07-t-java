@@ -111,12 +111,29 @@ public class UserServiceImpl implements UserService {
 
         User professional = findById(id);
 
-        professional.setName(professionalUpdate.getName());
-        professional.setLastName(professionalUpdate.getLastName());
-        professional.setPersonalID(professionalUpdate.getPersonalID());
-        professional.setEmail(professionalUpdate.getEmail());
-        professional.setEnrolment(professionalUpdate.getEnrolment());
-        professional.setPassword(passwordEncoder.encode(professionalUpdate.getPassword()));
+        if (professionalUpdate.getName() != null) {
+            professional.setName(professionalUpdate.getName());
+        }
+        if (professionalUpdate.getLastName() != null) {
+            professional.setLastName(professionalUpdate.getLastName());
+        }
+        if (professionalUpdate.getPersonalID() != null) {
+            professional.setPersonalID(professionalUpdate.getPersonalID());
+        }
+        if (professionalUpdate.getEmail() != null) {
+            professional.setEmail(professionalUpdate.getEmail());
+        }
+        if (professionalUpdate.getEnrolment() != null) {
+            professional.setEnrolment(professionalUpdate.getEnrolment());
+        }
+        if (professionalUpdate.getPassword() != null) {
+            professional.setPassword(passwordEncoder.encode(professionalUpdate.getPassword()));
+        }
+
+        if (professionalUpdate.getSpecialization() != null) {
+            professional.setSpecialization(professionalUpdate.getSpecialization());
+        }
+
 
         return userRepository.save(professional);
     }
@@ -129,31 +146,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public User addMonth2User(Long idProfessional, Long idMonth) throws Exception {
-
-
-        User professional = findById(idProfessional);
-
-        professional.addMonth(monthService.findById(idMonth));
-
-        return userRepository.save(professional);
-
-
-    }
-
-    @Override
-    public User removeMonth2User(Long idProfessional, Long idMonth) throws Exception {
-
-
-        User professional = findById(idProfessional);
-
-        professional.removeMonth(monthService.findById(idMonth));
-
-        return userRepository.save(professional);
-
-
-    }
 
 
     public User addSpecialization2Professional(Long professionalId, Specialization specialization) {
@@ -173,46 +165,6 @@ public class UserServiceImpl implements UserService {
         }
 
     }
-
-    @Override
-    public OnCall createOnCall(Long idUser, Long idMonth, LocalDateTime startDate, int duration, LocalDateTime endDate) throws Exception {
-
-
-        User professional = findById(idUser);
-        Month month = monthService.findById(idMonth);
-
-        OnCall newOnCall = new OnCall();
-
-        newOnCall.setStartDate(startDate);
-
-        newOnCall.setDuration(duration);
-
-        if (newOnCall.getEndDate() == null && newOnCall.getStartDate() != null && newOnCall.getDuration() != 0) {
-            newOnCall.calculateEndDate(newOnCall.getStartDate(), newOnCall.getDuration());
-        }
-
-
-        if (newOnCall.getStartDate() != null || newOnCall.getEndDate() != null || newOnCall.getDuration() == 0) {
-
-            newOnCall.calculateDuration(newOnCall.getStartDate(), newOnCall.getEndDate());
-
-        }
-
-        newOnCall.setEndDate(endDate);
-
-        newOnCall.calculateShift(newOnCall.getStartDate());
-
-        month.getUsers().add(professional);
-        month.getOnCalls().add(newOnCall);
-        professional.getMonths().add(month);
-
-
-        monthRepository.save(month); // actualiza mes //TODO o crea uno nuevo
-        return onCallRepository.save(newOnCall); // persiste nueva guardia
-
-
-    }
-
 
 }
 

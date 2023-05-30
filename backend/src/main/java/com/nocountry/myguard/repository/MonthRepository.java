@@ -1,5 +1,6 @@
 package com.nocountry.myguard.repository;
 
+import com.nocountry.myguard.enums.Type;
 import com.nocountry.myguard.model.Month;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,9 +17,7 @@ public interface MonthRepository extends JpaRepository<Month, Long> {
 
     List<Month> findAllByYear(int year);
 
-    Optional<Month> findByType(String type);
-
-
+    Optional<Month> findByType(Type type);
 
 
 }

@@ -94,26 +94,6 @@ public class UserController {
         }
     }
 
-
-    private ResponseEntity<User> addMonth2Professional(Long idProfessional, Long idMonth) throws Exception {
-
-        if (idMonth == 0 || idProfessional == 0)
-            return ResponseEntity.badRequest().build();
-
-        return ResponseEntity.ok(userService.addMonth2User(idProfessional, idMonth));
-
-    }
-
-
-    private ResponseEntity<User> removeMonth2Professional(Long idProfessional, Long idMonth) throws Exception {
-
-        if (idMonth == 0 || idProfessional == 0)
-            return ResponseEntity.badRequest().build();
-
-        return ResponseEntity.ok(userService.removeMonth2User(idProfessional, idMonth));
-
-    }
-
     @PostMapping("/{professionalId}/specializations")
     public ResponseEntity<User> addSpecialization2Professional(@PathVariable Long professionalId,
                                                                @RequestBody Specialization specialization) {
@@ -130,18 +110,7 @@ public class UserController {
 
     }
 
-    @PostMapping("/{professionalId}/onCalls")
-    public ResponseEntity<OnCall> addOnCall2User(@PathVariable Long professionalId, @RequestParam Long idMonth , @RequestParam LocalDateTime startDate, @RequestParam int duration, @RequestParam(required = false) LocalDateTime endDate) {
 
-
-        if (professionalId == null || idMonth == null || startDate == null || duration == 0) return ResponseEntity.badRequest().build();
-
-        try {
-            return ResponseEntity.ok(userService.createOnCall(professionalId, idMonth, startDate, duration, endDate));
-        } catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
 
 
 }

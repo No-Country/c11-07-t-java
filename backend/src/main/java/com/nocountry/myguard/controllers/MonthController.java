@@ -1,6 +1,7 @@
 package com.nocountry.myguard.controllers;
 
 import com.nocountry.myguard.model.Month;
+import com.nocountry.myguard.service.MonthService;
 import com.nocountry.myguard.service.impl.MonthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ import java.util.List;
 public class MonthController {
 
     @Autowired
-    private MonthServiceImpl monthService;
+    private MonthService monthService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Month> findById(@PathVariable Long id){
@@ -33,6 +34,16 @@ public class MonthController {
     @GetMapping("")
     public ResponseEntity<List<Month>> getMonths(){
         return ResponseEntity.ok(monthService.getAll());
+    }
+
+    @GetMapping("specificMonth")
+    public ResponseEntity<Month> getMonthByNameAndYear(@RequestParam String name, @RequestParam int year){
+
+        try {
+            return ResponseEntity.ok(monthService.findByNameAndYear(name, year));
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("")
