@@ -10,6 +10,7 @@ import com.nocountry.myguard.repository.OnCallRepository;
 import com.nocountry.myguard.repository.UserRepository;
 import com.nocountry.myguard.service.OnCallService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -28,7 +29,7 @@ public class OnCallServiceImpl implements OnCallService {
     private final UnavailabilityServiceImpl unavailabilityService;
 
     @Autowired
-    public OnCallServiceImpl(OnCallRepository onCallRepository, CounterRepository counterRepository, MonthRepository monthRepository, UserRepository userRepository, UnavailabilityServiceImpl unavailabilityService) {
+    public OnCallServiceImpl(OnCallRepository onCallRepository, CounterRepository counterRepository, MonthRepository monthRepository, UserRepository userRepository, @Lazy UnavailabilityServiceImpl unavailabilityService) {
         this.onCallRepository = onCallRepository;
         this.counterRepository = counterRepository;
         this.monthRepository = monthRepository;
@@ -61,8 +62,11 @@ public class OnCallServiceImpl implements OnCallService {
         }
 
         if (!unavailabilityService.findByDateTimeRange(onCall.getStartDate(), onCall.getEndDate()).isEmpty()) {
-            throw new Exception("Can't create on call, there is an unavailability at the same time range");
+            throw new Exception("Can't create on call, there is already an unavailability created at the same time range");
         }
+
+        if(!findByDateTimeRange(onCall.getStartDate(), onCall.getEndDate()).isEmpty())
+            throw new Exception("Can't create on call, there is already an on call created at the same time range");
 
         Optional<Counter> existingCounter = counterRepository.findByUserAndMonth(onCall.getUser(), onCall.getMonth());
         Month month = onCall.getMonth();

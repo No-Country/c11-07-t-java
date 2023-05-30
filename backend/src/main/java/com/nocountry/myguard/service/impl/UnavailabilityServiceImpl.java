@@ -11,6 +11,7 @@ import com.nocountry.myguard.repository.UserRepository;
 import com.nocountry.myguard.service.OnCallService;
 import com.nocountry.myguard.service.UnavailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -21,16 +22,25 @@ import java.util.Optional;
 @Service
 public class UnavailabilityServiceImpl implements UnavailabilityService {
 
+
+    private final UnavailabilityRepository unavailabilityRepository;
+
+    private final OnCallServiceImpl onCallService;
+
+    private final CounterRepository counterRepository;
+
+    private final UserRepository userRepository;
+
+    private final MonthRepository monthRepository;
+
     @Autowired
-    private UnavailabilityRepository unavailabilityRepository;
-    @Autowired
-    private OnCallService onCallService;
-    @Autowired
-    private CounterRepository counterRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private MonthRepository monthRepository;
+    public UnavailabilityServiceImpl(UnavailabilityRepository unavailabilityRepository, @Lazy OnCallServiceImpl onCallService, CounterRepository counterRepository, UserRepository userRepository, MonthRepository monthRepository) {
+        this.unavailabilityRepository = unavailabilityRepository;
+        this.onCallService = onCallService;
+        this.counterRepository = counterRepository;
+        this.userRepository = userRepository;
+        this.monthRepository = monthRepository;
+    }
 
     @Override
     public Unavailability save(Unavailability unavailability) throws Exception {
@@ -50,9 +60,13 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
             unavailability.calculateDuration(unavailability.getStartDate(), unavailability.getEndDate());
         }
 
-        if (!onCallService.findByDateTimeRange(unavailability.getStartDate(),unavailability.getEndDate()).isEmpty()){
-            throw new Exception("Can't create unavailability, there is an on call at the same time range");
+        if (!findByDateTimeRange(unavailability.getStartDate(), unavailability.getEndDate()).isEmpty()) {
+            throw new Exception("Can't create unavailability, there is already an unavailability created at the same time range");
         }
+
+        if(!onCallService.findByDateTimeRange(unavailability.getStartDate(), unavailability.getEndDate()).isEmpty())
+            throw new Exception("Can't create unavailability, there is already an on call created at the same time range");
+
 
         return unavailabilityRepository.save(unavailability);
     }
