@@ -1,15 +1,12 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { Calendario } from "./components/pages";
-import { Home, Loading } from "./components/ui";
-import { SelectedGuard } from "./components/pages/";
-import { SignUpForm } from "./components/auth/SignUpForm";
+import { Calendario, SelectedGuard } from "./components/pages";
+import {  Loading } from "./components/ui";
 import { useAuthStore } from "./hooks";
 import { useEffect } from "react";
-import { LoginForm } from "./components/auth";
+import { LoginForm, SignUpForm } from "./components/auth";
 
 export const AppRoutes = () => {
   const { status, checkAuthToken } = useAuthStore();
-
 
   const navigate = useNavigate();
 
@@ -17,24 +14,22 @@ export const AppRoutes = () => {
     checkAuthToken();
   }, []);
 
-
   if (status == "checking") {
     return <Loading />;
   }
   return (
     <Routes>
-      {status === "not-authenticated" ? (
+      {status === "not--authenticated" ? (
         <>
-          <Route path="/auth/*" element={<LoginPage />} />
-          <Route path="/*" element={<Navigate to="/auth/login" />} />
+          <Route path="/auth/*" element={<LoginForm />} />
+          <Route path="/register" element={<SignUpForm />} />
+          <Route path="/*" element={<LoginForm/>} />
         </>
       ) : (
         <>
-          <Route path="/" element={<Home />} />
           <Route path="/calendar" element={<Calendario />} />
           <Route path="/selec" element={<SelectedGuard />} />
-          <Route path="/*" element={<Home />} />
-          <Route path="/register" element={<SignUpForm />} />
+          <Route path="/*" element={<Calendario />} />
         </>
       )}
     </Routes>
