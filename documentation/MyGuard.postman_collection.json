@@ -1,0 +1,399 @@
+{
+	"info": {
+		"_postman_id": "69a08cfd-3d20-4818-8266-ca69fe6ae22d",
+		"name": "MyGuard",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22531188",
+		"_collection_link": "https://orange-sunset-314031.postman.co/workspace/NoCountry~f3c7bf6e-5baf-4c4a-828e-0144d58a73ab/collection/22531188-69a08cfd-3d20-4818-8266-ca69fe6ae22d?action=share&creator=22531188&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Update User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWNoYWVsLmJyb3duIiwiaWF0IjoxNjg1MzkzOTE4LCJleHAiOjE2ODU0ODAzMTh9.CkZXuXJHUU7ByYcvpVk9YvjwdfExP4iueuYnu7EQvIs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"john.doe\",\r\n  \"email\": \"john.doe@example.com\",\r\n  \"password\": \"password123\",\r\n  \"role\": \"USER\",\r\n  \"name\": \"John\",\r\n  \"lastName\": \"Doe\",\r\n  \"enrolment\": \"123456\",\r\n  \"personalID\": \"35512874\",\r\n  \"specialization\": \"Psychology\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBaseUrl}}/api/users/1?id=1",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Users",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBaseUrl}}/api/users",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Month",
+			"item": [
+				{
+					"name": "create Month",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n\"name\":\"June\",\r\n\"year\": 2023,\r\n\"type\":\"Week\"\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBaseUrl}}/api/months/",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"api",
+								"months",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All Month",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBaseUrl}}/api/months/",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"api",
+								"months",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Unavailability",
+			"item": []
+		},
+		{
+			"name": "OnCall",
+			"item": [
+				{
+					"name": "create OnCall",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\":\"2023-06-03T20:00:00\",\r\n    \"endDate\":\"2023-06-04T08:00:00\",\r\n    \"month\":{\r\n        \"name\": \"June\",\r\n        \"year\": 2023,\r\n        \"type\": \"Week\",\r\n        \"id\": 1\r\n            },\r\n    \"user\":{\r\n        \"id\": 6,\r\n        \"username\": \"michael.brown\",\r\n        \"email\": \"michael.brown@example.com\",\r\n        \"password\": \"$2a$10$4sLEhoDMRhkikVfVzVnNHejyYvK5NHf74ziLd48WBjlKplgnSBYiG\",\r\n        \"role\": \"User\",\r\n        \"name\": \"Michael\",\r\n        \"lastName\": \"Brown\",\r\n        \"enrolment\": \"345678\",\r\n        \"personalID\": \"56789012\",\r\n        \"specialization\": \"Psychiatry\"\r\n        \r\n    }\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBaseUrl}}/oncalls/",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"oncalls",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All On Call",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\":\"2023-06-01T20:00:00\",\r\n    \"endDate\":\"2023-06-02T08:00:00\",\r\n    \"month\":{\r\n        \"name\": \"June\",\r\n        \"year\": 2023,\r\n        \"type\": \"Week\",\r\n        \"id\": 1\r\n            },\r\n    \"user\":{\r\n        \"id\": 1,\r\n        \"username\": \"john.doe\",\r\n        \"email\": \"john.doe@example.com\",\r\n        \"password\": \"$2a$10$aPIt9vbkOTE3lXwt31Gx5uCjxTV/y05j22GT7dlokthm4z0ZqDepm\",\r\n        \"role\": \"User\",\r\n        \"name\": \"John\",\r\n        \"lastName\": \"Doe\",\r\n        \"enrolment\": \"123456\",\r\n        \"personalID\": \"35512874\",\r\n        \"specialization\": \"Psychology\"\r\n        \r\n    }\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBaseUrl}}/oncalls/getAll",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"oncalls",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"michael.brown\",\r\n  \"email\": \"michael.brown@example.com\",\r\n  \"password\": \"pass1234\",\r\n  \"role\": \"USER\",\r\n  \"name\": \"Michael\",\r\n  \"lastName\": \"Brown\",\r\n  \"enrolment\": \"345678\",\r\n  \"personalID\": \"56789012\",\r\n  \"specialization\": \"Psychiatry\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBaseUrl}}/api/auth/register",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZSIsImlhdCI6MTY4NTM5MjI4OSwiZXhwIjoxNjg1NDc4Njg5fQ.8P6ZTzkFchvSFhrkqMXtkELrCpR7Jg_K4b8V4yZFCms",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"michael.brown\",\r\n \r\n  \"password\": \"pass1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set('token', pm.environment.get('token'));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var headerValue = pm.response.headers.get('Token');\r",
+									"pm.environment.set('authToken',headerValue);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnYWJpMTIzNCIsImlhdCI6MTY4NTAyODc1MywiZXhwIjoxNjg1MTE1MTUzfQ.V0oEiNsCbXQ6dL5al5J6uC1oKJvmOZ-OWeRN5LhPns8"
+		},
+		{
+			"key": "localBaseUrl",
+			"value": "localhost:8080"
+		}
+	]
+}

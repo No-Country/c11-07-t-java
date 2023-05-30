@@ -1,5 +1,6 @@
 package com.nocountry.myguard.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nocountry.myguard.enums.Role;
 import com.nocountry.myguard.enums.Specialization;
 import jakarta.persistence.*;
@@ -14,7 +15,7 @@ import java.util.List;
 @Data
 @Builder
 @Entity
- @AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
 
@@ -41,7 +42,18 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING) private Specialization specialization;
 
-    @ManyToMany private List<Month> months;
+    //@ManyToMany private List<Month> months;
+    @JsonManagedReference(value = "CounterUser")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Counter> counters;
+
+    @JsonManagedReference(value = "UserOnCall")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<OnCall> onCalls;
+
+    @JsonManagedReference(value = "UserUnavailability")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Unavailability> unavailabilities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -53,19 +65,6 @@ public class User implements UserDetails {
     public void addSpecialization(Specialization specialization) {
         this.specialization = specialization;
     }
-
-    public void addMonth(Month month) {
-        // Add a month to the Professional List
-        this.months.add(month);
-        month.getUsers().add(this);
-    }
-
-    public void removeMonth(Month month) {
-        // Remove a month to the Professional List
-        this.months.remove(month);
-        month.getUsers().remove(this);
-    }
-
 
     //UserDetails methods
 

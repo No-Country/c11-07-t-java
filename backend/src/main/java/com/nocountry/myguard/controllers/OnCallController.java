@@ -4,6 +4,7 @@ package com.nocountry.myguard.controllers;
 import com.nocountry.myguard.model.OnCall;
 import com.nocountry.myguard.service.impl.OnCallServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,11 @@ public class OnCallController {
         if (onCall == null)
             return ResponseEntity.badRequest().build();
 
-        return ResponseEntity.ok(onCallService.save(onCall));
+        try {
+            return ResponseEntity.ok(onCallService.save(onCall));
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
 
     }
 
