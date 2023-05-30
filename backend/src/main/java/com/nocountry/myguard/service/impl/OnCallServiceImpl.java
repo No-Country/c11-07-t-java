@@ -118,9 +118,33 @@ public class OnCallServiceImpl implements OnCallService {
 
     @Override
     public void Delete(Long id) throws Exception {
+        OnCall onCall = findById(id);
+        /*if (onCall.getStartDate().isBefore(LocalDateTime.now())){
+            throw new Exception("The on call already started, you can't modify it."); //TODO Define this condition with business rules
+        }*/
 
-        onCallRepository.delete(findById(id));
+        User user = onCall.getUser();
+        Month month = onCall.getMonth();
+        Counter counter = counterRepository.findByUserAndMonth(user, month).get();
 
+        //Remove on call from User and Month
+        user.getOnCalls().remove(onCall);
+        month.getOnCalls().remove(onCall);
+
+        //Update respective counter
+        if(month.isWeekend(onCall.getStartDate())){
+            counter.reduceHsWeekend(onCall.getDuration());
+        }else {
+            counter.reduceHsWeek(onCall.getDuration());
+        }
+        counter.calculateOnCalls();
+
+        //Save changes
+        userRepository.save(user);
+        monthRepository.save(month);
+        counterRepository.save(counter);
+
+        onCallRepository.delete(onCall);
     }
 
     @Override
