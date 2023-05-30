@@ -118,7 +118,7 @@ public class OnCallServiceImpl implements OnCallService {
 
     @Override
     public void Delete(Long id) throws Exception {
-        OnCall onCall = findById(id);
+        OnCall onCall = this.findById(id);
         /*if (onCall.getStartDate().isBefore(LocalDateTime.now())){
             throw new Exception("The on call already started, you can't modify it."); //TODO Define this condition with business rules
         }*/

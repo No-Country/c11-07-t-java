@@ -1,7 +1,13 @@
 package com.nocountry.myguard.service.impl;
 
+import com.nocountry.myguard.model.Counter;
+import com.nocountry.myguard.model.Month;
 import com.nocountry.myguard.model.Unavailability;
+import com.nocountry.myguard.model.User;
+import com.nocountry.myguard.repository.CounterRepository;
+import com.nocountry.myguard.repository.MonthRepository;
 import com.nocountry.myguard.repository.UnavailabilityRepository;
+import com.nocountry.myguard.repository.UserRepository;
 import com.nocountry.myguard.service.OnCallService;
 import com.nocountry.myguard.service.UnavailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +25,12 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
     private UnavailabilityRepository unavailabilityRepository;
     @Autowired
     private OnCallService onCallService;
+    @Autowired
+    private CounterRepository counterRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private MonthRepository monthRepository;
 
     @Override
     public Unavailability save(Unavailability unavailability) throws Exception {
@@ -76,8 +88,33 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
 
     @Override
     public void Delete(Long id) throws Exception {
+        Unavailability unavailability = this.findById(id);
+        /*if (unavailability.getStartDate().isBefore(LocalDateTime.now())){
+            throw new Exception("The unavailability is in the past, you can't modify it."); //TODO Define this condition with business rules
+        }*/
 
-        unavailabilityRepository.delete(findById(id));
+        User user = unavailability.getUser();
+        Month month = unavailability.getMonth();
+        Counter counter = counterRepository.findByUserAndMonth(user, month).get();
+
+        //Remove on call from User and Month
+        user.getUnavailabilities().remove(unavailability);
+        month.getUnavailabilities().remove(unavailability);
+
+        //Update respective counter
+        if(month.isWeekend(unavailability.getStartDate())){
+            counter.reduceHsWeekend(unavailability.getDuration());
+        }else {
+            counter.reduceHsWeek(unavailability.getDuration());
+        }
+        counter.calculateOnCalls();
+
+        //Save changes
+        userRepository.save(user);
+        monthRepository.save(month);
+        counterRepository.save(counter);
+
+        unavailabilityRepository.delete(unavailability);
 
     }
 
