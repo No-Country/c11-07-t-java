@@ -3,6 +3,10 @@ package com.nocountry.myguard.controllers;
 import com.nocountry.myguard.model.Month;
 import com.nocountry.myguard.service.MonthService;
 import com.nocountry.myguard.service.impl.MonthServiceImpl;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +17,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/months/")
+@Tag(name = "Month" , description = "Month Controller")
+@OpenAPIDefinition(info = @io.swagger.v3.oas.annotations.info.Info(title = "MyGuard API", version = "1.0", description = "Api of hospital on call management"))
 public class MonthController {
 
     @Autowired
     private MonthService monthService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Month> findById(@PathVariable Long id){
+    @Operation(summary = "Get month by id")
+    public ResponseEntity<Month> findById(
+            @Parameter(name = "id", description = "Id of the month", required = true)
+            @PathVariable Long id){
 
         if (id == 0 || id == null) return ResponseEntity.badRequest().build();
 
@@ -32,6 +41,7 @@ public class MonthController {
     }
 
     @GetMapping("")
+    @Operation(summary = "Get the list of months")
     public ResponseEntity<List<Month>> getMonths(){
         return ResponseEntity.ok(monthService.getAll());
     }
@@ -47,7 +57,10 @@ public class MonthController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Month> create(@RequestBody Month month){
+    @Operation(summary = "create a new month")
+    public ResponseEntity<Month> create(
+            @Parameter(name = "Month", description = "Body of the month with name, year and type", required = true)
+            @RequestBody Month month){
 
         if (month == null ) return ResponseEntity.badRequest().build();
 
@@ -61,7 +74,12 @@ public class MonthController {
     }
 
     @PutMapping
-    public ResponseEntity<Month> update(@RequestParam Long id , @RequestBody Month month){
+    @Operation(summary = "update a month")
+    public ResponseEntity<Month> update(
+            @Parameter(name = "id", description = "Id of the month", required = true)
+            @RequestParam Long id ,
+            @Parameter(name = "Month", description = "Body of the month with name, year and type", required = true)
+            @RequestBody Month month){
 
         if (id == null || id == 0 || month == null) return ResponseEntity.badRequest().build();
 
@@ -75,7 +93,10 @@ public class MonthController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Month> Delete(Long id) {
+    @Operation(summary = "delete a month" , hidden = true)
+    public ResponseEntity<Month> Delete(
+            @Parameter(name = "id", description = "Id of the month", required = true)
+            @RequestParam Long id) {
 
         if (id < 1) return ResponseEntity.badRequest().build();
 

@@ -66,6 +66,7 @@ public class User implements UserDetails {
         this.specialization = specialization;
     }
 
+
     //UserDetails methods
 
 

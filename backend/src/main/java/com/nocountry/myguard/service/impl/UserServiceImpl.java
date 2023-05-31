@@ -4,10 +4,7 @@ import com.nocountry.myguard.auth.model.authentication.AuthenticationRequest;
 import com.nocountry.myguard.auth.model.authentication.AuthenticationResponse;
 import com.nocountry.myguard.auth.model.authentication.RegisterRequest;
 import com.nocountry.myguard.auth.service.AuthenticationService;
-import com.nocountry.myguard.enums.Role;
 import com.nocountry.myguard.enums.Specialization;
-import com.nocountry.myguard.model.Month;
-import com.nocountry.myguard.model.OnCall;
 import com.nocountry.myguard.model.User;
 import com.nocountry.myguard.repository.MonthRepository;
 import com.nocountry.myguard.repository.OnCallRepository;
@@ -17,7 +14,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -145,7 +141,6 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(findById(id));
 
     }
-
 
 
     public User addSpecialization2Professional(Long professionalId, Specialization specialization) {
