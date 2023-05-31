@@ -65,6 +65,12 @@ public class MonthServiceImpl implements MonthService {
             throw new Exception("Month must have name, year and type");
         }
 
+        Optional<Month> optMonth = monthRepository.findByNameAndYear(month.getName(), month.getYear());
+
+        if(optMonth.isPresent()){
+            throw new Exception("Month already exists");
+        }
+
         return monthRepository.save(month);
 
     }

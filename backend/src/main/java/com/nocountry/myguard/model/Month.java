@@ -1,6 +1,9 @@
 package com.nocountry.myguard.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nocountry.myguard.enums.Specialization;
 import com.nocountry.myguard.enums.Type;
 import jakarta.persistence.*;
@@ -12,6 +15,7 @@ import lombok.Setter;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,17 +37,24 @@ public class Month {
 
     //@ManyToMany(mappedBy = "months") private List<User> users;
 
-    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<Counter> counters;
+    @JsonManagedReference(value = "MonthCounter")
+    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL)
+    private List<Counter> counters;
 
-    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<OnCall> onCalls;
+    @JsonManagedReference(value = "MonthOnCall")
+    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL)
+    private List<OnCall> onCalls;
 
-    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL) private List<Unavailability> unavailabilities;
+    @JsonManagedReference(value = "MonthUnavailability")
+    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL)
+    private List<Unavailability> unavailabilities;
 
     @JsonCreator
     public Month(String name, int year, Type type) {
         this.name = name;
         this.year = year;
         this.type = type;
+        this.counters = new ArrayList<>();
     }
 
     public boolean isCorrectDayByMonthType(LocalDateTime dateTime){
@@ -124,7 +135,7 @@ public class Month {
         return false;
     }
 
-    private boolean isWeekend(LocalDateTime dateTime){
+    public boolean isWeekend(LocalDateTime dateTime){
         DayOfWeek dayOfWeek = dateTime.getDayOfWeek();
         return dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY);
     }

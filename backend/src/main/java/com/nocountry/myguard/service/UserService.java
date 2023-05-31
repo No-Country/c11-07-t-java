@@ -37,7 +37,4 @@ public interface UserService {
       void delete(Long id) throws Exception;
 
 
-    User addCounter2User(Long idProfessional, Long idCounter) throws Exception;
-
-    User removeCounter2User(Long idProfessional, Long idCounter) throws Exception;
 }
