@@ -15,11 +15,16 @@ import java.util.List;
 @RequestMapping("/oncalls/")
 public class OnCallController {
 
+    private final OnCallServiceImpl onCallService;
+
     @Autowired
-    private OnCallServiceImpl onCallService;
+    public OnCallController(OnCallServiceImpl onCallService) {
+        this.onCallService = onCallService;
+    }
+
 
     @PostMapping
-    public ResponseEntity<OnCall> create(@RequestBody OnCall onCall){
+    public ResponseEntity<OnCall> create(@RequestBody OnCall onCall) {
 
         if (onCall == null)
             return ResponseEntity.badRequest().build();
@@ -33,7 +38,7 @@ public class OnCallController {
     }
 
     @PutMapping
-    public ResponseEntity<OnCall> update(@RequestParam Long id , @RequestBody OnCall onCallUpdate) throws Exception{
+    public ResponseEntity<OnCall> update(@RequestParam Long id, @RequestBody OnCall onCallUpdate) throws Exception {
 
         if (id == 0 || onCallUpdate == null)
             return ResponseEntity.badRequest().build();
@@ -51,14 +56,14 @@ public class OnCallController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<OnCall>> findAll(){
+    public ResponseEntity<List<OnCall>> findAll() {
 
         return ResponseEntity.ok(onCallService.findAll());
 
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<OnCall> Delete(Long id){
+    ResponseEntity<OnCall> Delete(Long id) {
 
         if (id == 0)
             return ResponseEntity.badRequest().build();
@@ -68,7 +73,7 @@ public class OnCallController {
     }
 
     @GetMapping("/getAllByDay/{day}")
-    public ResponseEntity<List<OnCall>> findAllOnCallByDay(@PathVariable int day){
+    public ResponseEntity<List<OnCall>> findAllOnCallByDay(@PathVariable int day) {
 
         if (day == 0)
             return ResponseEntity.badRequest().build();

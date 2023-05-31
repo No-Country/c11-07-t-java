@@ -10,6 +10,7 @@ import com.nocountry.myguard.repository.OnCallRepository;
 import com.nocountry.myguard.repository.UserRepository;
 import com.nocountry.myguard.service.OnCallService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -28,7 +29,7 @@ public class OnCallServiceImpl implements OnCallService {
     private final UnavailabilityServiceImpl unavailabilityService;
 
     @Autowired
-    public OnCallServiceImpl(OnCallRepository onCallRepository, CounterRepository counterRepository, MonthRepository monthRepository, UserRepository userRepository, UnavailabilityServiceImpl unavailabilityService) {
+    public OnCallServiceImpl(OnCallRepository onCallRepository, CounterRepository counterRepository, MonthRepository monthRepository, UserRepository userRepository, @Lazy UnavailabilityServiceImpl unavailabilityService) {
         this.onCallRepository = onCallRepository;
         this.counterRepository = counterRepository;
         this.monthRepository = monthRepository;
@@ -61,36 +62,26 @@ public class OnCallServiceImpl implements OnCallService {
         }
 
         if (!unavailabilityService.findByDateTimeRange(onCall.getStartDate(), onCall.getEndDate()).isEmpty()) {
-            throw new Exception("Can't create on call, there is an unavailability at the same time range");
+            throw new Exception("Can't create on call, there is already an unavailability created at the same time range");
         }
+
+        if(!findByDateTimeRange(onCall.getStartDate(), onCall.getEndDate()).isEmpty())
+            throw new Exception("Can't create on call, there is already an on call created at the same time range");
 
         Optional<Counter> existingCounter = counterRepository.findByUserAndMonth(onCall.getUser(), onCall.getMonth());
         Month month = onCall.getMonth();
 
-        if (existingCounter.isEmpty()){
-            Counter counter = new Counter(onCall.getUser(), onCall.getMonth());
-            if(onCall.getMonth().isWeekend(onCall.getStartDate())){
-                counter.addHsWeekend(onCall.getDuration());
-            }else {
-                counter.addHsWeek(onCall.getDuration());
-            }
-            counter.calculateOnCalls();
-            counterRepository.save(counter);
-            month.getCounters().add(counter);
+        Counter counter = existingCounter.isEmpty()? new Counter(onCall.getUser(), onCall.getMonth()) : existingCounter.get();
 
-
-        } else {
-            Counter counter = existingCounter.get();
-            if(onCall.getMonth().isWeekend(onCall.getStartDate())){
-                counter.addHsWeekend(onCall.getDuration());
-            }else {
-                counter.addHsWeek(onCall.getDuration());
-            }
-            counter.calculateOnCalls();
-            counterRepository.save(counter);
-            month.getCounters().add(counter);
-
+        if(onCall.getMonth().isWeekend(onCall.getStartDate())){
+            counter.addHsWeekend(onCall.getDuration());
+        }else {
+            counter.addHsWeek(onCall.getDuration());
         }
+
+        counter.calculateOnCalls();
+        counterRepository.save(counter);
+        month.getCounters().add(counter);
 
         monthRepository.save(month);
 
@@ -131,9 +122,33 @@ public class OnCallServiceImpl implements OnCallService {
 
     @Override
     public void Delete(Long id) throws Exception {
+        OnCall onCall = this.findById(id);
+        /*if (onCall.getStartDate().isBefore(LocalDateTime.now())){
+            throw new Exception("The on call already started, you can't modify it."); //TODO Define this condition with business rules
+        }*/
 
-        onCallRepository.delete(findById(id));
+        User user = onCall.getUser();
+        Month month = onCall.getMonth();
+        Counter counter = counterRepository.findByUserAndMonth(user, month).get();
 
+        //Remove on call from User and Month
+        user.getOnCalls().remove(onCall);
+        month.getOnCalls().remove(onCall);
+
+        //Update respective counter
+        if(month.isWeekend(onCall.getStartDate())){
+            counter.reduceHsWeekend(onCall.getDuration());
+        }else {
+            counter.reduceHsWeek(onCall.getDuration());
+        }
+        counter.calculateOnCalls();
+
+        //Save changes
+        userRepository.save(user);
+        monthRepository.save(month);
+        counterRepository.save(counter);
+
+        onCallRepository.delete(onCall);
     }
 
     @Override

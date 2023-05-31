@@ -1,9 +1,17 @@
 package com.nocountry.myguard.service.impl;
 
+import com.nocountry.myguard.model.Counter;
+import com.nocountry.myguard.model.Month;
 import com.nocountry.myguard.model.Unavailability;
+import com.nocountry.myguard.model.User;
+import com.nocountry.myguard.repository.CounterRepository;
+import com.nocountry.myguard.repository.MonthRepository;
 import com.nocountry.myguard.repository.UnavailabilityRepository;
+import com.nocountry.myguard.repository.UserRepository;
+import com.nocountry.myguard.service.OnCallService;
 import com.nocountry.myguard.service.UnavailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -14,8 +22,25 @@ import java.util.Optional;
 @Service
 public class UnavailabilityServiceImpl implements UnavailabilityService {
 
+
+    private final UnavailabilityRepository unavailabilityRepository;
+
+    private final OnCallServiceImpl onCallService;
+
+    private final CounterRepository counterRepository;
+
+    private final UserRepository userRepository;
+
+    private final MonthRepository monthRepository;
+
     @Autowired
-    private UnavailabilityRepository unavailabilityRepository;
+    public UnavailabilityServiceImpl(UnavailabilityRepository unavailabilityRepository, @Lazy OnCallServiceImpl onCallService, CounterRepository counterRepository, UserRepository userRepository, MonthRepository monthRepository) {
+        this.unavailabilityRepository = unavailabilityRepository;
+        this.onCallService = onCallService;
+        this.counterRepository = counterRepository;
+        this.userRepository = userRepository;
+        this.monthRepository = monthRepository;
+    }
 
     @Override
     public Unavailability save(Unavailability unavailability) throws Exception {
@@ -34,6 +59,14 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
         if (unavailability.getStartDate() != null || unavailability.getEndDate() != null || unavailability.getDuration() == 0) {
             unavailability.calculateDuration(unavailability.getStartDate(), unavailability.getEndDate());
         }
+
+        if (!findByDateTimeRange(unavailability.getStartDate(), unavailability.getEndDate()).isEmpty()) {
+            throw new Exception("Can't create unavailability, there is already an unavailability created at the same time range");
+        }
+
+        if(!onCallService.findByDateTimeRange(unavailability.getStartDate(), unavailability.getEndDate()).isEmpty())
+            throw new Exception("Can't create unavailability, there is already an on call created at the same time range");
+
 
         return unavailabilityRepository.save(unavailability);
     }
@@ -69,9 +102,23 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
 
     @Override
     public void Delete(Long id) throws Exception {
+        Unavailability unavailability = this.findById(id);
+        /*if (unavailability.getStartDate().isBefore(LocalDateTime.now())){
+            throw new Exception("The unavailability is in the past, you can't modify it."); //TODO Define this condition with business rules
+        }*/
 
-        unavailabilityRepository.delete(findById(id));
+        User user = unavailability.getUser();
+        Month month = unavailability.getMonth();
 
+        //Remove unavailability from User and Month
+        user.getUnavailabilities().remove(unavailability);
+        month.getUnavailabilities().remove(unavailability);
+
+        //Save changes
+        userRepository.save(user);
+        monthRepository.save(month);
+
+        unavailabilityRepository.delete(unavailability);
     }
 
     @Override
