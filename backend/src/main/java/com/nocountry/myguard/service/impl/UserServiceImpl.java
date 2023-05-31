@@ -143,8 +143,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-
     public User addSpecialization2Professional(Long professionalId, Specialization specialization) {
         // Retrieve the Professional entity from the repository
         Optional<User> optionalProfessional = userRepository.findById(professionalId);
@@ -162,7 +160,6 @@ public class UserServiceImpl implements UserService {
         }
 
     }
-
 
 }
 

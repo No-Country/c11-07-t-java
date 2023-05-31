@@ -28,6 +28,7 @@ public class OnCallController {
 
 
     @PostMapping
+
     @Operation(summary = "create a new OnCall")
     public ResponseEntity<OnCall> create(
             @Parameter(name = "onCall", description = "new OnCall Body to create", required = true)
@@ -45,12 +46,14 @@ public class OnCallController {
     }
 
     @PutMapping
+
     @Operation(summary = "update an OnCall")
     public ResponseEntity<OnCall> update(
             @Parameter(name = "onCall id", description = "OnCall id to update", required = true)
             @RequestParam Long id,
             @Parameter(name = "onCall", description = "OnCall Body", required = true)
             @RequestBody OnCall onCallUpdate) throws Exception {
+
 
         if (id == 0 || onCallUpdate == null)
             return ResponseEntity.badRequest().build();
@@ -79,6 +82,7 @@ public class OnCallController {
     }
 
     @DeleteMapping("/{id}")
+
     @Operation(summary = "delete an OnCall")
     ResponseEntity<OnCall> Delete(
             @Parameter(name = "onCall id", description = "OnCall id to delete", required = true)
