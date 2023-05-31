@@ -18,7 +18,7 @@ public interface OnCallRepository extends JpaRepository<OnCall,Long> {
     List<OnCall> findAllByDay(@Param("day") int day);
 
     @Query("SELECT o FROM OnCall o WHERE MONTH(o.startDate) = :month")
-    List<OnCall> findAllByMonth(@Param("month") int month);
+    List<OnCall> findAllByMonth(@Param("month") Long month);
 
     List<OnCall> findAllByMonthAndUser(Month month, User user);
 

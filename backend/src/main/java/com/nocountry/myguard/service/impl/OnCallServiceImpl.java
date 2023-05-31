@@ -65,17 +65,17 @@ public class OnCallServiceImpl implements OnCallService {
             throw new Exception("Can't create on call, there is already an unavailability created at the same time range");
         }
 
-        if(!findByDateTimeRange(onCall.getStartDate(), onCall.getEndDate()).isEmpty())
+        if (!findByDateTimeRange(onCall.getStartDate(), onCall.getEndDate()).isEmpty())
             throw new Exception("Can't create on call, there is already an on call created at the same time range");
 
         Optional<Counter> existingCounter = counterRepository.findByUserAndMonth(onCall.getUser(), onCall.getMonth());
         Month month = onCall.getMonth();
 
-        Counter counter = existingCounter.isEmpty()? new Counter(onCall.getUser(), onCall.getMonth()) : existingCounter.get();
+        Counter counter = existingCounter.isEmpty() ? new Counter(onCall.getUser(), onCall.getMonth()) : existingCounter.get();
 
-        if(onCall.getMonth().isWeekend(onCall.getStartDate())){
+        if (onCall.getMonth().isWeekend(onCall.getStartDate())) {
             counter.addHsWeekend(onCall.getDuration());
-        }else {
+        } else {
             counter.addHsWeek(onCall.getDuration());
         }
 
@@ -136,9 +136,9 @@ public class OnCallServiceImpl implements OnCallService {
         month.getOnCalls().remove(onCall);
 
         //Update respective counter
-        if(month.isWeekend(onCall.getStartDate())){
+        if (month.isWeekend(onCall.getStartDate())) {
             counter.reduceHsWeekend(onCall.getDuration());
-        }else {
+        } else {
             counter.reduceHsWeek(onCall.getDuration());
         }
         counter.calculateOnCalls();
@@ -157,8 +157,18 @@ public class OnCallServiceImpl implements OnCallService {
     }
 
     @Override
-    public List<OnCall> findAllByMonth(int month) {
-        return onCallRepository.findAllByMonth(month);
+    public List<OnCall> findAllByMonth(Long monthId) throws Exception {
+
+        // Bring user and month from database
+        Month month = monthRepository.findById(monthId)
+                .orElseThrow(() -> new Exception("No month with that id"));
+
+        List<OnCall> onCalls = onCallRepository.findAllByMonth(monthId);
+
+        if (onCalls.isEmpty()) {
+            throw new Exception("No onCall with that user and month");
+        }
+        return onCalls;
     }
 
     @Override
@@ -196,7 +206,7 @@ public class OnCallServiceImpl implements OnCallService {
         List<OnCall> onCalls = onCallRepository.findAllByMonthAndUser(month, user);
 
         if (onCalls.isEmpty()) {
-           throw new Exception("No onCall with that user and month");
+            throw new Exception("No onCall with that user and month");
         }
         return onCalls;
     }
