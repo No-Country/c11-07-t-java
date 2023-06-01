@@ -1,5 +1,5 @@
 import { Logo } from "../util";
-import "./loginForm.css";
+import "./auth.css";
 import { Button } from "../util";
 import { useAuthStore, useForm } from "../../hooks";
 import { useNavigate } from "react-router-dom";
