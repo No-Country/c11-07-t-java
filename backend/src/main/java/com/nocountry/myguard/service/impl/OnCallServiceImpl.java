@@ -159,14 +159,17 @@ public class OnCallServiceImpl implements OnCallService {
     @Override
     public List<OnCall> findAllByMonth(Long monthId) throws Exception {
 
+        System.out.println(monthId);
+
         // Bring user and month from database
         Month month = monthRepository.findById(monthId)
                 .orElseThrow(() -> new Exception("No month with that id"));
 
-        List<OnCall> onCalls = onCallRepository.findAllByMonth(monthId);
+        List<OnCall> onCalls = onCallRepository.findAllByMonth(month);
+        System.out.println(onCallRepository.findAllByMonth(month));
 
         if (onCalls.isEmpty()) {
-            throw new Exception("No onCall with that user and month");
+            throw new Exception("No onCall with that month");
         }
         return onCalls;
     }
