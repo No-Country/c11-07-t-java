@@ -18,6 +18,7 @@ export const useAuthStore = () => {
         dispatch( onChecking() );
         try {
             const {data} = await axios.post('http://localhost:8080/api/auth/authenticate',{ username, password });
+            console.log(data)
             dispatch( onLogin({ name: data.name, uid: data.uid }) );
             localStorage.setItem("token", data.token); //envio el token al localStorage
             localStorage.setItem("token-init", new Date().getTime()); //envio otro token de referencia, si no sirve lo borramos mas adelante
