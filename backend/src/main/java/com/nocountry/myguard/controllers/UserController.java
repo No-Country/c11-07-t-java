@@ -4,6 +4,9 @@ import com.nocountry.myguard.enums.Specialization;
 import com.nocountry.myguard.model.OnCall;
 import com.nocountry.myguard.model.User;
 import com.nocountry.myguard.service.impl.UserServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,7 @@ import java.util.Optional;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/users")
+@Tag(name = "User" , description = "User Controller")
 public class UserController {
     @Autowired
     private UserServiceImpl userService;
@@ -26,7 +30,10 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
+    @Operation(summary = "Get user by id")
+    public ResponseEntity<User> findById(
+            @Parameter(name = "id", description = "User id to get", required = true)
+            @PathVariable Long id) {
         if (id < 1) return ResponseEntity.badRequest().build();
 
         try {
@@ -38,11 +45,17 @@ public class UserController {
     }
 
     @GetMapping("getByParam")
-    public ResponseEntity<User> findByParam(@RequestParam(required = false) String name,
-                                                    @RequestParam(required = false) String enrolment,
-                                                    @RequestParam(required = false) String email,
-                                                    @RequestParam(required = false) String dni
-                                                    //,@RequestParam(required = false) Long onCalls
+    @Operation(summary = "Get user by param")
+    public ResponseEntity<User> findByParam(
+            @Parameter(name = "name", description = "User name to get", required = true)
+            @RequestParam(required = false) String name,
+            @Parameter(name = "enrolment", description = "User enrolment to get", required = true)
+            @RequestParam(required = false) String enrolment,
+            @Parameter(name = "email", description = "User email to get", required = true)
+            @RequestParam(required = false) String email,
+            @Parameter(name = "dni", description = "User dni to get", required = true)
+            @RequestParam(required = false) String dni
+
     ) {
 
         if (name != null) {
@@ -59,7 +72,12 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@RequestParam Long id, @RequestBody User professional) throws Exception {
+    @Operation(summary = "Update user by id")
+    public ResponseEntity<User> update(
+            @Parameter(name = "id", description = "User id to update", required = true)
+            @RequestParam Long id,
+            @Parameter(name = "professional", description = "User professional to update", required = true)
+            @RequestBody User professional) throws Exception {
 
 
         if (id < 1 || professional == null ) return ResponseEntity.badRequest().build();
@@ -72,7 +90,10 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> Delete(Long id) {
+    @Operation(summary = "Delete user by id")
+    public ResponseEntity<User> Delete(
+            @Parameter(name = "id", description = "User id to delete", required = true)
+            @RequestParam Long id) {
 
         if (id < 1) return ResponseEntity.badRequest().build();
 
@@ -95,8 +116,12 @@ public class UserController {
     }
 
     @PostMapping("/{professionalId}/specializations")
-    public ResponseEntity<User> addSpecialization2Professional(@PathVariable Long professionalId,
-                                                               @RequestBody Specialization specialization) {
+    @Operation(summary = "Add specialization to professional")
+    public ResponseEntity<User> addSpecialization2Professional(
+            @Parameter(name = "professionalId", description = "Professional id to add specialization to", required = true)
+            @PathVariable Long professionalId,
+            @Parameter(name = "specialization", description = "Specialization to add", required = true)
+            @RequestBody Specialization specialization) {
 
 
         if (professionalId == null || specialization == null) return ResponseEntity.badRequest().build();
@@ -109,8 +134,5 @@ public class UserController {
 
 
     }
-
-
-
 
 }
