@@ -1,5 +1,5 @@
 import logo from '../../assets/img/Group_1.png';
-import './logo.css';
+import './util.css';
 
 export const Logo = () => {
   return (
