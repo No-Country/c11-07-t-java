@@ -1,7 +1,10 @@
+.container-logo{
+    margin: auto;
+}
 .logo{
     width: 60%;
     height: auto;
-    margin-bottom: 1rem;
+    
 }
 @media (min-width: 769px) and (max-width: 1024px) {
     .logo{
@@ -12,7 +15,5 @@
     .logo{
         width: 95%;
     }
-    .container-logo{
-        margin-left: 135px;
-    }
+   
 }

@@ -44,6 +44,7 @@ export const Calendario = () => {
     <div className="calendario">
     <Header/>
     <SideNabvar/>
+    <h2 className='titulo'>Mis Guardias</h2>
      <div className="container">
       <Calendar
         value={selectedDate}
