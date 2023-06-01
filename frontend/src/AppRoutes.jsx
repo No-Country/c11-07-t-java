@@ -13,14 +13,14 @@ export const AppRoutes = () => {
     checkAuthToken();
   }, []);
 
-const estado = 'authenticated'; //ESTA VARIABLE HAY QUE BORRARLA CUANDO SE TERMINA DE USAR Y REEMPLAZAR TODO POR STATUS
+//const estado = 'authenticated'; //ESTA VARIABLE HAY QUE BORRARLA CUANDO SE TERMINA DE USAR Y REEMPLAZAR TODO POR STATUS
 
-  if (estado == "checking") {
+  if (status == "checking") {
     return <Loading />;
   }
   return (
     <Routes>
-      {estado === "not--authenticated" ? (
+      {status === "not--authenticated" ? (
         <>
           <Route path="/auth/*" element={<LoginForm />} />
           <Route path="/register" element={<SignUpForm />} />
