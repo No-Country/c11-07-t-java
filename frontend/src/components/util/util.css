@@ -14,7 +14,13 @@
   }
   
   .button-green:active {
-    background-color: var(--verdeOliva)
+    background-color: var(--verdeOliva);
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    box-shadow: 0px 0px 10px 5px darkolivegreen;
   }
 
   .logo{
@@ -23,17 +29,18 @@
     margin-bottom: 1rem;
 }
 @media (min-width: 769px) and (max-width: 1024px) {
-    .logo{
-        width: 65%;
-    }
+  .logo{
+      width: 65%;
   }
+}
 @media (min-width: 577px) and (max-width: 768px) {
-    .logo{
-        width: 95%;
-    }
-    .container-logo{
-        margin-left: 135px;
-    }
+  .logo{
+      width: 95%;
+  }
+  .container-logo{
+      margin-left: 135px;
+  }
+
 }
 
 .logout-button {
