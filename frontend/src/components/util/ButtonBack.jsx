@@ -5,7 +5,7 @@ export const ButtonBack = () => {
   const { startLogout } = useAuthStore();
 
   return (
-    <button className="logout-button" onClick={startLogout()}>
+    <button className="logout-button" onClick={startLogout}>
       salir
     </button>
   );
