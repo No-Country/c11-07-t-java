@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "69a08cfd-3d20-4818-8266-ca69fe6ae22d",
+		"_postman_id": "c1d903a6-36f4-43fc-8962-cf44d9c09bee",
 		"name": "MyGuard",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "22531188",
-		"_collection_link": "https://orange-sunset-314031.postman.co/workspace/NoCountry~f3c7bf6e-5baf-4c4a-828e-0144d58a73ab/collection/22531188-69a08cfd-3d20-4818-8266-ca69fe6ae22d?action=share&creator=22531188&source=collection_link"
+		"_collection_link": "https://orange-sunset-314031.postman.co/workspace/NoCountry~f3c7bf6e-5baf-4c4a-828e-0144d58a73ab/collection/22531188-c1d903a6-36f4-43fc-8962-cf44d9c09bee?action=share&creator=22531188&source=collection_link"
 	},
 	"item": [
 		{
@@ -142,7 +142,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\r\n\"name\":\"June\",\r\n\"year\": 2023,\r\n\"type\":\"Week\"\r\n\r\n\r\n}",
+							"raw": "{\r\n\r\n\"name\":\"July\",\r\n\"year\": 2023,\r\n\"type\":\"Week\"\r\n\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -196,7 +196,85 @@
 		},
 		{
 			"name": "Unavailability",
-			"item": []
+			"item": [
+				{
+					"name": "create Unavailability",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\": \"2023-06-01T08:00:00\",\r\n                \"endDate\": \"2023-06-01T20:00:00\",\r\n    \"month\":{\r\n        \"name\": \"June\",\r\n        \"year\": 2023,\r\n        \"type\": \"Week\",\r\n        \"id\": 1\r\n            },\r\n    \"user\":{\r\n       \r\n      \"id\": 52,\r\n        \r\n        \"specialization\": \"Social Work\"\r\n    }\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBaseUrl}}/unavailability/",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"unavailability",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All Unavailability",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\":\"2023-06-01T20:00:00\",\r\n    \"endDate\":\"2023-06-02T08:00:00\",\r\n    \"month\":{\r\n        \"name\": \"June\",\r\n        \"year\": 2023,\r\n        \"type\": \"Week\",\r\n        \"id\": 1\r\n            },\r\n    \"user\":{\r\n        \"id\": 1,\r\n        \"username\": \"john.doe\",\r\n        \"email\": \"john.doe@example.com\",\r\n        \"password\": \"$2a$10$aPIt9vbkOTE3lXwt31Gx5uCjxTV/y05j22GT7dlokthm4z0ZqDepm\",\r\n        \"role\": \"User\",\r\n        \"name\": \"John\",\r\n        \"lastName\": \"Doe\",\r\n        \"enrolment\": \"123456\",\r\n        \"personalID\": \"35512874\",\r\n        \"specialization\": \"Psychology\"\r\n        \r\n    }\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBaseUrl}}/unavailability/getAll",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"unavailability",
+								"getAll"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "OnCall",
@@ -218,7 +296,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"startDate\":\"2023-06-03T20:00:00\",\r\n    \"endDate\":\"2023-06-04T08:00:00\",\r\n    \"month\":{\r\n        \"name\": \"June\",\r\n        \"year\": 2023,\r\n        \"type\": \"Week\",\r\n        \"id\": 1\r\n            },\r\n    \"user\":{\r\n        \"id\": 6,\r\n        \"username\": \"michael.brown\",\r\n        \"email\": \"michael.brown@example.com\",\r\n        \"password\": \"$2a$10$4sLEhoDMRhkikVfVzVnNHejyYvK5NHf74ziLd48WBjlKplgnSBYiG\",\r\n        \"role\": \"User\",\r\n        \"name\": \"Michael\",\r\n        \"lastName\": \"Brown\",\r\n        \"enrolment\": \"345678\",\r\n        \"personalID\": \"56789012\",\r\n        \"specialization\": \"Psychiatry\"\r\n        \r\n    }\r\n    \r\n}",
+							"raw": "{\r\n\"startDate\":\"2023-06-10T08:00:00\",\r\n    \"endDate\":\"2023-06-11T20:00:00\",\r\n    \"month\":{\r\n        \"name\": \"June\",\r\n        \"year\": 2023,\r\n        \"type\": \"Week\",\r\n        \"id\": 1\r\n            },\r\n    \"user\":{\r\n       \"id\": 6,\r\n        \"username\": \"michael.brown\",\r\n        \"email\": \"michael.brown@example.com\",\r\n        \"password\": \"$2a$10$4sLEhoDMRhkikVfVzVnNHejyYvK5NHf74ziLd48WBjlKplgnSBYiG\",\r\n        \"role\": \"User\",\r\n        \"name\": \"Michael\",\r\n        \"lastName\": \"Brown\",\r\n        \"enrolment\": \"345678\",\r\n        \"personalID\": \"56789012\",\r\n        \"specialization\": \"Psychiatry\"\r\n        \r\n    }\r\n    \r\n}\r\n\r\n\r\n\r\n               \r\n                ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -277,6 +355,132 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get All by Month by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBaseUrl}}/oncalls/getAllByMonth/2?monthId=2",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"oncalls",
+								"getAllByMonth",
+								"2"
+							],
+							"query": [
+								{
+									"key": "monthId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All Month by Id and User by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localBaseUrl}}/oncalls/getAllByMonthAndUser/1?monthId=1&userId=6",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"oncalls",
+								"getAllByMonthAndUser",
+								"1"
+							],
+							"query": [
+								{
+									"key": "monthId",
+									"value": "1"
+								},
+								{
+									"key": "userId",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All Numbers On Call by month",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localBaseUrl}}/oncalls/countByMonth/1?userId=6",
+							"host": [
+								"{{localBaseUrl}}"
+							],
+							"path": [
+								"oncalls",
+								"countByMonth",
+								"1"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "6"
+								},
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -318,14 +522,7 @@
 					"name": "Login User",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZSIsImlhdCI6MTY4NTM5MjI4OSwiZXhwIjoxNjg1NDc4Njg5fQ.8P6ZTzkFchvSFhrkqMXtkELrCpR7Jg_K4b8V4yZFCms",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "POST",
 						"header": [],
@@ -351,35 +548,6 @@
 								"authenticate"
 							]
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "token",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									"pm.variables.set('token', pm.environment.get('token'));"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var headerValue = pm.response.headers.get('Token');\r",
-									"pm.environment.set('authToken',headerValue);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": []
 					},
 					"response": []
 				}
