@@ -28,13 +28,16 @@ public class OnCallServiceImpl implements OnCallService {
     private final UserRepository userRepository;
     private final UnavailabilityServiceImpl unavailabilityService;
 
+    private final UserServiceImpl userService;
+
     @Autowired
-    public OnCallServiceImpl(OnCallRepository onCallRepository, CounterRepository counterRepository, MonthRepository monthRepository, UserRepository userRepository, @Lazy UnavailabilityServiceImpl unavailabilityService) {
+    public OnCallServiceImpl(@Lazy UserServiceImpl userService,OnCallRepository onCallRepository, CounterRepository counterRepository, MonthRepository monthRepository, UserRepository userRepository, @Lazy UnavailabilityServiceImpl unavailabilityService) {
         this.onCallRepository = onCallRepository;
         this.counterRepository = counterRepository;
         this.monthRepository = monthRepository;
         this.userRepository = userRepository;
         this.unavailabilityService = unavailabilityService;
+        this.userService = userService;
     }
 
     @Override
@@ -61,12 +64,13 @@ public class OnCallServiceImpl implements OnCallService {
             onCall.calculateDuration(onCall.getStartDate(), onCall.getEndDate());
         }
 
-        if (!unavailabilityService.findByDateTimeRange(onCall.getStartDate(), onCall.getEndDate()).isEmpty()) {
-            throw new Exception("Can't create on call, there is already an unavailability created at the same time range");
+        if (userService.isEmptyUnavailabilitiesByUserIdAndRangeTime(onCall.getUser().getId(), onCall.getStartDate(), onCall.getEndDate())) {
+
+            throw new Exception("Can't create on call, this user has already an unavailability created at the same time range");
         }
 
-        if(!findByDateTimeRange(onCall.getStartDate(), onCall.getEndDate()).isEmpty())
-            throw new Exception("Can't create on call, there is already an on call created at the same time range");
+        if (userService.validateQuantityOnCallsBySpecialization(onCall.getUser().getSpecialization(), onCall.getStartDate(), onCall.getEndDate()))
+            throw new Exception("There's already an on Call on that range with that specialization");
 
         Optional<Counter> existingCounter = counterRepository.findByUserAndMonth(onCall.getUser(), onCall.getMonth());
         Month month = onCall.getMonth();

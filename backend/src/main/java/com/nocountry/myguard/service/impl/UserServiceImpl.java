@@ -14,6 +14,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -160,6 +162,48 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
+
+    //This method is used to validate the quantity of calls by specialization: just only one on call per specialization
+    public Boolean validateQuantityOnCallsBySpecialization(Specialization specialization, LocalDateTime startDate, LocalDateTime endDate) {
+
+        return !userRepository.findAllBySpecializationAndOnCallsRangeTime(specialization, startDate, endDate).isEmpty();
+    }
+
+
+    //This method is used to validate the quantity of unavailabilities by specialization: if all the users are unavailable, then the last one cant be unavailable
+    public Boolean validateQuantityUnavailabilityBySpecialization(Specialization specialization, LocalDateTime startDate, LocalDateTime endDate) {
+
+        List<User> usersWithSpecialization = userRepository.findAllBySpecialization(specialization);
+        System.out.println(userRepository.findAllBySpecialization(specialization).size());
+        List<User> usersWithUnavailability = userRepository.findAllBySpecializationAndUnavailabilityRangeTime(specialization, startDate, endDate);
+        System.out.println(userRepository.findAllBySpecializationAndUnavailabilityRangeTime(specialization, startDate, endDate).size());
+
+        List<User> availableUsers = new ArrayList<>();
+
+        for (User user : usersWithSpecialization) {
+            if (!usersWithUnavailability.contains(user)) {
+                availableUsers.add(user);
+            }
+        }
+
+        System.out.println(availableUsers.size());
+        return availableUsers.size() == 1;
+    }
+
+    public Boolean isEmptyUnavailabilitiesByUserIdAndRangeTime(Long idUser, LocalDateTime startDate, LocalDateTime endDate) {
+
+        return !userRepository.getUserByIdAndUnavailabilityRangeTime(idUser, startDate, endDate).isEmpty();
+
+
+    }
+
+    public Boolean isEmptyOnCallsByUserIdAndRangeTime(Long idUser, LocalDateTime startDate, LocalDateTime endDate) {
+
+        return !userRepository.getUserByIdAndOnCallRangeTime(idUser, startDate, endDate).isEmpty();
+
+    }
+
 
 }
 

@@ -1,6 +1,5 @@
 package com.nocountry.myguard.service.impl;
 
-import com.nocountry.myguard.model.Counter;
 import com.nocountry.myguard.model.Month;
 import com.nocountry.myguard.model.Unavailability;
 import com.nocountry.myguard.model.User;
@@ -8,16 +7,13 @@ import com.nocountry.myguard.repository.CounterRepository;
 import com.nocountry.myguard.repository.MonthRepository;
 import com.nocountry.myguard.repository.UnavailabilityRepository;
 import com.nocountry.myguard.repository.UserRepository;
-import com.nocountry.myguard.service.OnCallService;
 import com.nocountry.myguard.service.UnavailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UnavailabilityServiceImpl implements UnavailabilityService {
@@ -29,17 +25,20 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
 
     private final CounterRepository counterRepository;
 
-    private final UserRepository userRepository;
+    private final UserServiceImpl userService;
 
     private final MonthRepository monthRepository;
 
+    private final UserRepository userRepository;
+
     @Autowired
-    public UnavailabilityServiceImpl(UnavailabilityRepository unavailabilityRepository, @Lazy OnCallServiceImpl onCallService, CounterRepository counterRepository, UserRepository userRepository, MonthRepository monthRepository) {
+    public UnavailabilityServiceImpl(UserRepository userRepository, UnavailabilityRepository unavailabilityRepository, @Lazy OnCallServiceImpl onCallService, CounterRepository counterRepository, UserServiceImpl userService, MonthRepository monthRepository) {
         this.unavailabilityRepository = unavailabilityRepository;
         this.onCallService = onCallService;
         this.counterRepository = counterRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.monthRepository = monthRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -47,26 +46,34 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
 
         if (unavailability.getStartDate() == null) throw new Exception("Start date can't be null");
         if (unavailability.getMonth() == null) throw new Exception("Month must be assigned to unavailability");
-        if (unavailability.getEndDate() == null && unavailability.getDuration() == 0) throw new Exception("You must assign an end date or a duration to an unavailability");
-        if (!unavailability.getMonth().isCorrectMonthByOnCallStartDate(unavailability.getStartDate())) throw new Exception("Incorrect month assigned by start date");
+        if (unavailability.getEndDate() == null && unavailability.getDuration() == 0)
+            throw new Exception("You must assign an end date or a duration to an unavailability");
+        if (!unavailability.getMonth().isCorrectMonthByOnCallStartDate(unavailability.getStartDate()))
+            throw new Exception("Incorrect month assigned by start date");
         if (unavailability.getUser() == null) throw new Exception("User must be assigned to unavailability");
 
 
         if (unavailability.getEndDate() == null && unavailability.getStartDate() != null && unavailability.getDuration() != 0) {
-            unavailability.calculateEndDate(unavailability.getStartDate(),unavailability.getDuration());
+            unavailability.calculateEndDate(unavailability.getStartDate(), unavailability.getDuration());
         }
 
         if (unavailability.getStartDate() != null || unavailability.getEndDate() != null || unavailability.getDuration() == 0) {
             unavailability.calculateDuration(unavailability.getStartDate(), unavailability.getEndDate());
         }
 
-        if (!findByDateTimeRange(unavailability.getStartDate(), unavailability.getEndDate()).isEmpty()) {
-            throw new Exception("Can't create unavailability, there is already an unavailability created at the same time range");
+        if (userService.isEmptyUnavailabilitiesByUserIdAndRangeTime(unavailability.getUser().getId(), unavailability.getStartDate(), unavailability.getEndDate())) {
+
+            throw new Exception("Can't create unavailability, this user has already an unavailability created at the same time range");
         }
 
-        if(!onCallService.findByDateTimeRange(unavailability.getStartDate(), unavailability.getEndDate()).isEmpty())
-            throw new Exception("Can't create unavailability, there is already an on call created at the same time range");
+        if (userService.isEmptyOnCallsByUserIdAndRangeTime(unavailability.getUser().getId(), unavailability.getStartDate(), unavailability.getEndDate()))
+            //if(!onCallService.findByDateTimeRange(unavailability.getStartDate(), unavailability.getEndDate()).isEmpty())
+            throw new Exception("Can't create unavailability, this user has already an onCall created at the same time range");
 
+        if (userService.validateQuantityUnavailabilityBySpecialization(unavailability.getUser().getSpecialization(), unavailability.getStartDate(), unavailability.getEndDate())) {
+
+            throw new Exception("Can't create unavailability, this user is the last one available at his specialization for this range time");
+        }
 
         return unavailabilityRepository.save(unavailability);
     }
