@@ -1,6 +1,6 @@
 import { Header } from '../ui';
 import { Button } from '../util';
-import './selectedGuard.css';
+import './pages.css';
 
 
 export const SelectedGuard = () => {

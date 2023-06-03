@@ -23,7 +23,7 @@ export const SideNabvar = ({ isOpen }) => {
             <i className="fa fa-fw fa-user"></i>
           </NavIcon>
           <NavText>
-            <Link to="/home" className="texto-negro">
+            <Link to="/profile" className="texto-negro">
                   Perfil
             </Link>
           </NavText>
