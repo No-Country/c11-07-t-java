@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import {  onChecking, onLogin, onLogout } from '../store/auth';
+import {  onChecking, onLogin, onLogout } from '../store';
 import { useNavigate } from 'react-router-dom';
 
 
