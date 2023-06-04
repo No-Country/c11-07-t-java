@@ -69,6 +69,9 @@ public class OnCallServiceImpl implements OnCallService {
             onCall.calculateDuration(onCall.getStartDate(), onCall.getEndDate());
         }
 
+        if (userService.isEmptyOnCallsByUserIdAndRangeTime(onCall.getUserId(), onCall.getStartDate(), onCall.getEndDate()))
+            //if(!onCallService.findByDateTimeRange(unavailability.getStartDate(), unavailability.getEndDate()).isEmpty())
+            throw new Exception("Can't create on call, this user has already an onCall created at the same time range");
 
         if (userService.isEmptyUnavailabilitiesByUserIdAndRangeTime(onCall.getUserId(), onCall.getStartDate(), onCall.getEndDate())) {
             throw new Exception("Can't create on call, this user has already an unavailability created at the same time range");
