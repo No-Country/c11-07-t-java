@@ -3,6 +3,7 @@ package com.nocountry.myguard.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,12 +47,13 @@ public class OnCall {
     @JoinColumn(name = "userId", insertable = false, updatable = false)
     private User user;
 
+    /*@JsonCreator
     public OnCall(LocalDateTime startDate, LocalDateTime endDate, Month month) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.month = month;
-    }
-
+    }*/
+    @JsonCreator
     public OnCall(LocalDateTime startDate, LocalDateTime endDate, Long monthId) {
         this.startDate = startDate;
         this.endDate = endDate;

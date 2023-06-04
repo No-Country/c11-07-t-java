@@ -37,15 +37,6 @@ public class Counter {
     private User user;
 
     @JsonCreator
-    public Counter(User user, Month month) {
-        this.user = user;
-        this.month = month;
-        this.countHsWeekend = 0;
-        this.countHsWeek = 0;
-        this.countOnCall = 0;
-    }
-
-    @JsonCreator
     public Counter(Long userId, Long monthId) {
         this.userId = userId;
         this.monthId = monthId;

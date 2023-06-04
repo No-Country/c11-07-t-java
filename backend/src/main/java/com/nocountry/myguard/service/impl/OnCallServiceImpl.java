@@ -44,15 +44,20 @@ public class OnCallServiceImpl implements OnCallService {
     public OnCall save(OnCall onCall) throws Exception {
 
         if (onCall.getStartDate() == null) throw new Exception("Start date can't be null");
-        if (onCall.getMonth() == null) throw new Exception("Month must be assigned to on call");
+        if (onCall.getMonthId() == null) throw new Exception("Month must be assigned to on call");
         if (onCall.getEndDate() == null && onCall.getDuration() == 0)
             throw new Exception("You must assign an end date or a duration to an on call");
-        if (!onCall.getMonth().isCorrectMonthByOnCallStartDate(onCall.getStartDate()))
+        if (onCall.getUserId() == null) throw new Exception("User must be assigned to on call");
+
+        Month month = monthRepository.findById(onCall.getMonthId()).orElseThrow(()-> new Exception("No Month found for the assigned month id"));
+        if (!month.isCorrectMonthByOnCallStartDate(onCall.getStartDate()))
             throw new Exception("Incorrect month assigned by start date");
-        if (onCall.getUser() == null) throw new Exception("User must be assigned to on call");
+
+        User user = userRepository.findById(onCall.getUserId()).orElseThrow(()-> new Exception("No User found for the assigned user id"));
+
 
         onCall.calculateShift(onCall.getStartDate());
-        if (!onCall.getMonth().isCorrectOnCallShiftByMonthType(onCall.getShift(), onCall.getStartDate())) {
+        if (!month.isCorrectOnCallShiftByMonthType(onCall.getShift(), onCall.getStartDate())) {
             throw new Exception("Incorrect shift by month type, select another date time (recommended) or change month type");
         }
 
@@ -64,20 +69,19 @@ public class OnCallServiceImpl implements OnCallService {
             onCall.calculateDuration(onCall.getStartDate(), onCall.getEndDate());
         }
 
-        if (userService.isEmptyUnavailabilitiesByUserIdAndRangeTime(onCall.getUser().getId(), onCall.getStartDate(), onCall.getEndDate())) {
 
+        if (userService.isEmptyUnavailabilitiesByUserIdAndRangeTime(onCall.getUserId(), onCall.getStartDate(), onCall.getEndDate())) {
             throw new Exception("Can't create on call, this user has already an unavailability created at the same time range");
         }
 
-        if (userService.validateQuantityOnCallsBySpecialization(onCall.getUser().getSpecialization(), onCall.getStartDate(), onCall.getEndDate()))
+        if (userService.validateQuantityOnCallsBySpecialization(user.getSpecialization(), onCall.getStartDate(), onCall.getEndDate()))
             throw new Exception("There's already an on Call on that range with that specialization");
 
-        Optional<Counter> existingCounter = counterRepository.findByUserAndMonth(onCall.getUser(), onCall.getMonth());
-        Month month = onCall.getMonth();
+        Optional<Counter> existingCounter = counterRepository.findByUserAndMonth(user, month);
 
-        Counter counter = existingCounter.isEmpty()? new Counter(onCall.getUser(), onCall.getMonth()) : existingCounter.get();
+        Counter counter = existingCounter.isEmpty()? new Counter(onCall.getUserId(), onCall.getMonthId()) : existingCounter.get();
 
-        if(onCall.getMonth().isWeekend(onCall.getStartDate())){
+        if(month.isWeekend(onCall.getStartDate())){
             counter.addHsWeekend(onCall.getDuration());
         }else {
             counter.addHsWeek(onCall.getDuration());

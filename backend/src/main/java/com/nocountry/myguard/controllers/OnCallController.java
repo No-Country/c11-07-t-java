@@ -28,7 +28,6 @@ public class OnCallController {
 
 
     @PostMapping
-
     @Operation(summary = "create a new OnCall")
     public ResponseEntity<OnCall> create(
             @Parameter(name = "onCall", description = "new OnCall Body to create", required = true)
