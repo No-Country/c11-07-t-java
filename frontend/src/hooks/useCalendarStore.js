@@ -1,15 +1,10 @@
 
 import axios from 'axios';
-import {  onLogin, onLogout } from '../store/auth';
+import {  onLogin, onLogout } from '../store';
 
 
 
 export const useCalendarStore = () => {
-
-
-   
-     
- 
 
 
     const checkAuthToken = async() => {
@@ -27,9 +22,6 @@ export const useCalendarStore = () => {
             dispatch( onLogout() );
         }
     }
-
-   
-
 
 
     return {

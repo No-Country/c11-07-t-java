@@ -6,7 +6,6 @@ import "./header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useAuthStore } from "../../hooks";
-import { ButtonBack } from "../util";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +29,7 @@ export const Header = () => {
         <div className="container-logo">
           <img src={logo} alt="logo" className="logo-header" />
         </div>
-        {status === "authenticated" && <ButtonBack />}
+       
       </header>
       <SideNabvar isOpen={isOpen} />
     </div>
