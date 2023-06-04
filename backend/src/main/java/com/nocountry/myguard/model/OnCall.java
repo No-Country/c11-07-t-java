@@ -32,18 +32,30 @@ public class OnCall {
 
     private String shift; //day - night
 
+    private Long monthId;
+
+    private Long userId;
+
     @JsonBackReference(value = "MonthOnCall")
     @ManyToOne
+    @JoinColumn(name = "monthId", insertable = false, updatable = false)
     private Month month;
 
     @JsonBackReference(value = "UserOnCall")
     @ManyToOne
+    @JoinColumn(name = "userId", insertable = false, updatable = false)
     private User user;
 
     public OnCall(LocalDateTime startDate, LocalDateTime endDate, Month month) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.month = month;
+    }
+
+    public OnCall(LocalDateTime startDate, LocalDateTime endDate, Long monthId) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.monthId = monthId;
     }
 
     public void calculateEndDate(LocalDateTime startDate, int duration) {
