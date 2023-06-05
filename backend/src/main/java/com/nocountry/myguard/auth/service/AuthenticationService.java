@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     @Autowired
@@ -30,7 +30,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
 
-        Optional<User> optUser = repository.findByUsername(request.getUsername());
+        Optional<User> optUser = userRepository.findByUsername(request.getUsername());
 
         if (optUser.isPresent())
             throw new RuntimeException("This username has been already taken.");
@@ -41,7 +41,7 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
-        repository.save(user);
+        userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -56,7 +56,7 @@ public class AuthenticationService {
                 )
         );
         //It will continue to below lines only if authentication was successful
-        var user = repository.findByUsername(request.getUsername()).orElseThrow();
+        var user = userRepository.findByUsername(request.getUsername()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -64,11 +64,22 @@ public class AuthenticationService {
     }
 
     public String forgetPassword(String email) throws Exception {
-        User user = repository.findByEmail(email)
+
+
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(()-> new Exception("User not found with this email: " + email));
 
         emailUtil.sendSetPasswordEmail(email);
 
         return "Email send. Please check your email to set new password to your account.";
+    }
+
+    public String setPassword(String email, String newPassword) throws Exception {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(()-> new Exception("User not found with this email: " + email));
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        return "Password changed successfully.";
+
     }
 }

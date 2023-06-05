@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("http://localhost:5173/")
 public class AuthenticationController {
 
-    private final AuthenticationService service;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
 
         try {
-            return ResponseEntity.ok(service.register(request));
+            return ResponseEntity.ok(authenticationService.register(request));
         } catch (RuntimeException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -31,19 +31,25 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(service.authenticate(request));
+        return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestParam String email){
+
         try {
-            return new ResponseEntity<>(service.forgetPassword(email), HttpStatus.OK);
+            return new ResponseEntity<>(authenticationService.forgetPassword(email), HttpStatus.OK);
         } catch (MessagingException e){
             return new ResponseEntity("Unable to sent set password email. Please try again.", HttpStatus.BAD_REQUEST);
         }
         catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PutMapping("/set-password")
+    public ResponseEntity<String> setPassword(@RequestParam String email, @RequestHeader String newPassword) throws Exception {
+        return new ResponseEntity<>(authenticationService.setPassword(email, newPassword), HttpStatus.OK);
     }
 
 }
