@@ -7,7 +7,7 @@
 El Sistema de Administración de Guardias Hospitalarias es una solución tecnológica diseñada para optimizar y simplificar la asignación y gestión de guardias en un hospital. Este proyecto tiene como objetivo principal mejorar la eficiencia operativa del hospital al garantizar una cobertura adecuada del personal médico en diferentes turnos y áreas, al tiempo que se reducen las cargas administrativas asociadas. 
 
 ### Tecnologías 🚀:
-* FrontEnd: Javascript | Reac |
+* FrontEnd: Javascript | React |
 * BackEnd: Java | Spring Boot | MySQL |
 * Diseño UX: Figma.
 * Testing: Postman | google sheets
