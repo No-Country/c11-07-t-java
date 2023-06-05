@@ -1,7 +1,7 @@
 
 .container {
-    background-color: var(--blanco);
-    background-color: var(--blancoVerdoso);
+    /* background-color: var(--blanco);
+    background-color: var(--blancoVerdoso); */
     justify-content: center;
     display: flex;
     flex-direction: column;

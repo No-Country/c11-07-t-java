@@ -1,6 +1,5 @@
 
 .sidenav{
-    background-color: var(--blancoVerdoso);
     margin-top:92px;
     left: -58px;
 
@@ -14,5 +13,7 @@
   }
   .sidenav---sidenav---_2tBP{
     min-width: 0px;
+    background-color: whitesmoke;
     
   }
+

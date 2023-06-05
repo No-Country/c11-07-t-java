@@ -23,8 +23,10 @@ export const LoginForm = () => {
     e.preventDefault();
     if (loginUsername.trim() == "" || loginPassword.trim() == "") {
       alert("Credenciales incorrectas");
+    }else{
+      startLogin({ username: loginUsername, password: loginPassword });
     }
-    startLogin({ username: loginUsername, password: loginPassword });
+    
   };
 
   return (
