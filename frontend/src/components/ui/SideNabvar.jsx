@@ -37,21 +37,12 @@ const {startLogout} = useAuthStore();
             <i className="fa fa-fw fa-cog"></i>
           </NavIcon>
           <NavText>
-            <Link to="/home" className="texto-negro">
-                Configuracion
+            <Link to="/settings" className="texto-negro">
+                Configuración
             </Link>
           </NavText>
         </NavItem>
-        <NavItem eventKey="close">
-          <NavIcon>
-            <i className="fa fa-fw fa-cog"></i>
-          </NavIcon>
-          <NavText>
-            <Link to="/home" className="texto-negro" onClick={startLogout}>
-                Cerrar sesion
-            </Link>
-          </NavText>
-        </NavItem>
+        
       </SideNav.Nav>
     </SideNav>
   );

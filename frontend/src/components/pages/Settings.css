@@ -1,0 +1,36 @@
+.switch{
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 31px;
+    border: 2px solid gray;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.switch > * {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.switch_ball{
+    left: 1px;
+    z-index: 10;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-color: var(--verdeLimon);
+    border-radius: 50%;
+    transition: transform 0.5s cubic-bezier(0.52, -0.4, 0.27, 1.55);
+}
+
+#checkbox:checked + .switch_ball{
+    transform: translate(29px, -50%);
+}
+
+.boton{
+    border: none;
+    color: #242424;
+    background-color: var(--blancoVerdoso);
+}
