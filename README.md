@@ -14,7 +14,7 @@ El Sistema de Administración de Guardias Hospitalarias es una solución tecnol�
 
 ### Conoce nuestro proyecto: [Presentación y Mockups]()
 
-### URL del proyecto desplegado 🔗:  [Appetit]()
+### URL del proyecto desplegado 🔗:  [MyGuard]()
 
 ## Integrantes 👩🏻‍💻👨🏽‍💻
 ✔️ **QA Tester:** Sabrina Buschiazzo | [LinkedIn](https://www.linkedin.com/in/sabrina-buschiazzo/) | [GitHub](https://github.com/SabriVbus)
