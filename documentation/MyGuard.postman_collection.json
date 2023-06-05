@@ -497,7 +497,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"username\": \"michael.brown\",\r\n  \"email\": \"michael.brown@example.com\",\r\n  \"password\": \"pass1234\",\r\n  \"role\": \"USER\",\r\n  \"name\": \"Michael\",\r\n  \"lastName\": \"Brown\",\r\n  \"enrolment\": \"345678\",\r\n  \"personalID\": \"56789012\",\r\n  \"specialization\": \"Psychiatry\"\r\n}",
+							"raw": "{\r\n  \"username\": \"giezzi\",\r\n  \"email\": \"geiezzi90@gmail.com\",\r\n  \"password\": \"pass12345\",\r\n  \"role\": \"USER\",\r\n  \"name\": \"Gabi\",\r\n  \"lastName\": \"Iezzi\",\r\n  \"enrolment\": \"2430\",\r\n  \"personalID\": \"35512877\",\r\n  \"specialization\": \"Psychiatry\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -505,12 +505,11 @@
 							}
 						},
 						"url": {
-							"raw": "{{localBaseUrl}}/api/auth/register",
+							"raw": "{{localBaseUrl}}api/auth/register",
 							"host": [
-								"{{localBaseUrl}}"
+								"{{localBaseUrl}}api"
 							],
 							"path": [
-								"api",
 								"auth",
 								"register"
 							]
@@ -528,7 +527,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"michael.brown\",\r\n \r\n  \"password\": \"pass1234\"\r\n}",
+							"raw": "  {\r\n      \"username\": \"giezzi\",\r\n\r\n  \"password\": \"Contraseña12345\"\r\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -536,16 +535,87 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/auth/authenticate",
-							"protocol": "http",
+							"raw": "{{localBaseUrl}}api/auth/authenticate",
 							"host": [
-								"localhost"
+								"{{localBaseUrl}}api"
 							],
-							"port": "8080",
 							"path": [
-								"api",
 								"auth",
 								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{localBaseUrl}}api/auth/forgot-password?email=geiezzi90@gmail.com",
+							"host": [
+								"{{localBaseUrl}}api"
+							],
+							"path": [
+								"auth",
+								"forgot-password"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "geiezzi90@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "set Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "newPassword",
+								"value": "Contraseña12345",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localBaseUrl}}api/auth/set-password?email=geiezzi90@gmail.com",
+							"host": [
+								"{{localBaseUrl}}api"
+							],
+							"path": [
+								"auth",
+								"set-password"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "geiezzi90@gmail.com"
+								}
 							]
 						}
 					},
@@ -554,14 +624,41 @@
 			]
 		}
 	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
 	"variable": [
 		{
-			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnYWJpMTIzNCIsImlhdCI6MTY4NTAyODc1MywiZXhwIjoxNjg1MTE1MTUzfQ.V0oEiNsCbXQ6dL5al5J6uC1oKJvmOZ-OWeRN5LhPns8"
+			"key": "localBaseUrl",
+			"value": "localhost:8080",
+			"disabled": true
+		},
+		{
+			"key": "authToken",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYW5pZWwiLCJpYXQiOjE2ODU5NjY1NjAsImV4cCI6MTY4NjA1Mjk2MH0.Kir5-pVUlDiTJNys-Bm_CCQbuR6TPoUW7ecbYs-eEY4",
+			"type": "string"
 		},
 		{
 			"key": "localBaseUrl",
-			"value": "localhost:8080"
+			"value": "",
+			"type": "string"
 		}
 	]
 }
