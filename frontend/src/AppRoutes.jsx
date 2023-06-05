@@ -4,6 +4,7 @@ import {  Loading } from "./components/ui";
 import { useAuthStore } from "./hooks";
 import { useEffect } from "react";
 import { LoginForm, SignUpForm } from "./components/auth";
+import { Settings } from "./components/pages/Settings";
 
 export const AppRoutes = () => {
   const { status, checkAuthToken } = useAuthStore();
@@ -35,6 +36,7 @@ export const AppRoutes = () => {
           <Route path="/selec" element={<SelectedGuard />} />
           <Route path="/*" element={<Calendario />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/settings" element={<Settings/>} />
         </>
       )}
     </Routes>
