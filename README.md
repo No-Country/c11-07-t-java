@@ -31,7 +31,7 @@ El Sistema de Administración de Guardias Hospitalarias es una solución tecnol�
 
 ✔️ **Desarrollador back-end:** Antonella Lusardi | [LinkedIn](https://www.linkedin.com/in/antonella-lusardi-45622a20/) | [GitHub](https://github.com/AntoCLus)
 
-✔️ **Desarrollador back-end:** Gonzalo Cocchetto | [LinkedIn](www.linkedin.com/in/gonzalo-cocchetto) | [GitHub](https://github.com/gonzacocchetto)
+✔️ **Desarrollador back-end:** Gonzalo Cocchetto | [LinkedIn](https://www.linkedin.com/in/gonzalo-cocchetto/) | [GitHub](https://github.com/gonzacocchetto)
 
 ✔️ **Desarrollador back-end:** Daniel Matos | [LinkedIn](https://www.linkedin.com/in/daniel-matos-echevarria/) | [GitHub](https://github.com/Daniel-M12)
 
