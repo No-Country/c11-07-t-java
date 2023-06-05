@@ -40,7 +40,7 @@ export const LoginForm = () => {
          <form onSubmit={onLoginSubmit}>
           <div>
             <input
-              placeholder="usuario"
+              placeholder="Usuario"
               type="text"
               onChange={onInputChange}
               name="loginUsername"
@@ -56,7 +56,6 @@ export const LoginForm = () => {
               value={loginPassword}
             />
           </div>
-        
           <a href="#" className="link">Olvidaste tu contraseña?</a>
           <p className="link" onClick={register}>Registrarse</p>
           <div>

@@ -1,15 +1,15 @@
 
 .container {
-  background-color: var(--blanco);
-  padding: 20px;
-  background-color: var(--blancoVerdoso);
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  flex-wrap: wrap;
-  min-height: 70vh;
-}
+    background-color: var(--blanco);
+    background-color: var(--blancoVerdoso);
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+    min-height: 70vh;
+  }
+  
   .event {
     background-color: var(--blancoVerdoso);
     border-radius: 5px;
@@ -93,7 +93,6 @@
   background-color: transparent;
   border: none;
 }
-
 .titulo{
   text-align: center;
   font-weight: bold;
