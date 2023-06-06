@@ -10,10 +10,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("http://localhost:5173/")
 @RequestMapping("/unavailability/")
 @Tag(name = "Unavailability" , description = "Unavailability Controller")
 public class UnavailabilityController {
@@ -21,6 +22,7 @@ public class UnavailabilityController {
     private  UnavailabilityServiceImpl unavailabilityService;
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "create a new Unavailability")
     public ResponseEntity<Unavailability> create(
             @Parameter(name = "unavailability", description = "new Unavailability Body to create", required = true)
@@ -38,6 +40,7 @@ public class UnavailabilityController {
     }
 
     @PutMapping
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "update an Unavailability")
     public ResponseEntity<Unavailability> update(
             @Parameter(name = "unavailability id", description = "Unavailability id to update", required = true)
@@ -53,6 +56,7 @@ public class UnavailabilityController {
     }
 
     @GetMapping("/get/{id}")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "get an Unavailability by id")
     public ResponseEntity<Unavailability> findById(
             @Parameter(name = "id Unavailability", description = "get an Unavailability by id", required = true)
@@ -65,6 +69,7 @@ public class UnavailabilityController {
     }
 
     @GetMapping("/getAll")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "get all Unavailability")
     public ResponseEntity<List<Unavailability>> findAll(){
 
@@ -73,6 +78,7 @@ public class UnavailabilityController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "delete an Unavailability")
     ResponseEntity<Unavailability> Delete(
             @Parameter(name = "id Unavailability", description = "Unavailability id to delete", required = true)

@@ -9,12 +9,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("http://localhost:5173/")
 @RequestMapping("/oncalls/")
 @Tag(name = "OnCall" , description = "OnCall Controller")
 public class OnCallController {
@@ -28,6 +29,7 @@ public class OnCallController {
 
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "create a new OnCall")
     public ResponseEntity<OnCall> create(
             @Parameter(name = "onCall", description = "new OnCall Body to create", required = true)
@@ -45,7 +47,7 @@ public class OnCallController {
     }
 
     @PutMapping
-
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "update an OnCall")
     public ResponseEntity<OnCall> update(
             @Parameter(name = "onCall id", description = "OnCall id to update", required = true)
@@ -61,6 +63,7 @@ public class OnCallController {
     }
 
     @GetMapping("/get/{id}")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "get an OnCall by id")
     public ResponseEntity<OnCall> findById(
             @Parameter(name = "onCall id", description = "OnCall id to get", required = true)
@@ -73,6 +76,7 @@ public class OnCallController {
     }
 
     @GetMapping("/getAll")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "get all OnCalls")
     public ResponseEntity<List<OnCall>> findAll() {
 
@@ -81,7 +85,7 @@ public class OnCallController {
     }
 
     @DeleteMapping("/{id}")
-
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "delete an OnCall")
     ResponseEntity<OnCall> Delete(
             @Parameter(name = "onCall id", description = "OnCall id to delete", required = true)
@@ -95,6 +99,7 @@ public class OnCallController {
     }
 
     @GetMapping("/getAllByDay/{day}")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "get all OnCalls by day")
     public ResponseEntity<List<OnCall>> findAllOnCallByDay(
             @Parameter(name = "Day number", description = "Get all the OnCalls by day", required = true)

@@ -47,9 +47,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             @Param("start") LocalDateTime startDate,
             @Param("end") LocalDateTime endDate);
 
-
-
-
     @Query("SELECT DISTINCT u FROM User u " +
             "JOIN u.unavailabilities un " +
             "WHERE u.id = :id " +

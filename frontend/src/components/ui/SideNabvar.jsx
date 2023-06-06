@@ -2,9 +2,13 @@ import SideNav, {  NavItem, NavIcon, NavText } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import "./sideNabvar.css";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 // eslint-disable-next-line react/prop-types
 export const SideNabvar = ({ isOpen }) => {
+
+const {startLogout} = useAuthStore();
+
   return (
     <SideNav expanded={isOpen} className="sidenav">
       <SideNav.Nav defaultSelected="home" className="icons">
@@ -23,7 +27,7 @@ export const SideNabvar = ({ isOpen }) => {
             <i className="fa fa-fw fa-user"></i>
           </NavIcon>
           <NavText>
-            <Link to="/home" className="texto-negro">
+            <Link to="/profile" className="texto-negro">
                   Perfil
             </Link>
           </NavText>
@@ -33,11 +37,12 @@ export const SideNabvar = ({ isOpen }) => {
             <i className="fa fa-fw fa-cog"></i>
           </NavIcon>
           <NavText>
-            <Link to="/home" className="texto-negro">
-                Configuracion
+            <Link to="/settings" className="texto-negro">
+                Configuración
             </Link>
           </NavText>
         </NavItem>
+        
       </SideNav.Nav>
     </SideNav>
   );

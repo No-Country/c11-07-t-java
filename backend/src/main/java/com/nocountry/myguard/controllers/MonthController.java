@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.ServiceNotFoundException;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/months/")
+@CrossOrigin("http://localhost:5173/")
 @Tag(name = "Month" , description = "Month Controller")
 @OpenAPIDefinition(info = @io.swagger.v3.oas.annotations.info.Info(title = "MyGuard API", version = "1.0", description = "Api of hospital on call management"))
 public class MonthController {
@@ -25,6 +27,7 @@ public class MonthController {
     private MonthService monthService;
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Get month by id")
     public ResponseEntity<Month> findById(
             @Parameter(name = "id", description = "Id of the month", required = true)
@@ -41,11 +44,13 @@ public class MonthController {
     }
 
     @GetMapping("")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Get the list of months")
     public ResponseEntity<List<Month>> getMonths(){
         return ResponseEntity.ok(monthService.getAll());
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("specificMonth")
     public ResponseEntity<Month> getMonthByNameAndYear(@RequestParam String name, @RequestParam int year){
 
@@ -56,6 +61,7 @@ public class MonthController {
         }
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("")
     @Operation(summary = "create a new month")
     public ResponseEntity<Month> create(
@@ -73,7 +79,9 @@ public class MonthController {
 
     }
 
+
     @PutMapping
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "update a month")
     public ResponseEntity<Month> update(
             @Parameter(name = "id", description = "Id of the month", required = true)
@@ -92,7 +100,9 @@ public class MonthController {
 
 
 
+
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "delete a month" , hidden = true)
     public ResponseEntity<Month> Delete(
             @Parameter(name = "id", description = "Id of the month", required = true)

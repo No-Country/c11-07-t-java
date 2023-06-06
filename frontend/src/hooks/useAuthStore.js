@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import {  onChecking, onLogin, onLogout } from '../store/auth';
+import {  onChecking, onLogin, onLogout } from '../store';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -18,6 +18,7 @@ export const useAuthStore = () => {
         dispatch( onChecking() );
         try {
             const {data} = await axios.post('http://localhost:8080/api/auth/authenticate',{ username, password });
+            
             dispatch( onLogin({ name: data.name, uid: data.uid }) );
             localStorage.setItem("token", data.token); //envio el token al localStorage
             localStorage.setItem("token-init", new Date().getTime()); //envio otro token de referencia, si no sirve lo borramos mas adelante
@@ -30,6 +31,7 @@ export const useAuthStore = () => {
     }
 
     const startRegister = async({ username, email, password }) => {
+     
         dispatch( onChecking() );
         try {
             const {data} = await axios.post('http://localhost:8080/api/auth/register',{ username, email, password });
