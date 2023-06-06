@@ -12,7 +12,7 @@ El Sistema de Administración de Guardias Hospitalarias es una solución tecnol�
 * Diseño UX: Figma.
 * Testing: Postman | Google Sheets
 
-### Conoce nuestro proyecto: [Presentación y Mockups]()
+### Conoce nuestro proyecto: [Presentación y Mockups](https://youtu.be/yobLwrEohkk)
 
 ### URL del proyecto desplegado 🔗:  [MyGuard](https://c11-07-t-java.vercel.app/)
 
