@@ -45,12 +45,16 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
     public Unavailability save(Unavailability unavailability) throws Exception {
 
         if (unavailability.getStartDate() == null) throw new Exception("Start date can't be null");
-        if (unavailability.getMonth() == null) throw new Exception("Month must be assigned to unavailability");
+        if (unavailability.getMonthId() == null) throw new Exception("Month must be assigned to unavailability");
         if (unavailability.getEndDate() == null && unavailability.getDuration() == 0)
             throw new Exception("You must assign an end date or a duration to an unavailability");
-        if (!unavailability.getMonth().isCorrectMonthByOnCallStartDate(unavailability.getStartDate()))
+        if (unavailability.getUserId() == null) throw new Exception("User must be assigned to unavailability");
+
+        Month month = monthRepository.findById(unavailability.getMonthId()).orElseThrow(()-> new Exception("No Month found for the assigned month id"));
+        if (!month.isCorrectMonthByOnCallStartDate(unavailability.getStartDate()))
             throw new Exception("Incorrect month assigned by start date");
-        if (unavailability.getUser() == null) throw new Exception("User must be assigned to unavailability");
+
+        User user = userRepository.findById(unavailability.getUserId()).orElseThrow(()-> new Exception("No User found for the assigned user id"));
 
 
         if (unavailability.getEndDate() == null && unavailability.getStartDate() != null && unavailability.getDuration() != 0) {
@@ -61,17 +65,19 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
             unavailability.calculateDuration(unavailability.getStartDate(), unavailability.getEndDate());
         }
 
-        if (userService.isEmptyUnavailabilitiesByUserIdAndRangeTime(unavailability.getUser().getId(), unavailability.getStartDate(), unavailability.getEndDate())) {
+        if (unavailability.getDuration() <= 0 || unavailability.getDuration() > 24) {
+            throw new Exception("Duration must be greater than 0 or less than 24 hs");
+        }
 
+        if (userService.isEmptyUnavailabilitiesByUserIdAndRangeTime(unavailability.getUserId(), unavailability.getStartDate(), unavailability.getEndDate())) {
             throw new Exception("Can't create unavailability, this user has already an unavailability created at the same time range");
         }
 
-        if (userService.isEmptyOnCallsByUserIdAndRangeTime(unavailability.getUser().getId(), unavailability.getStartDate(), unavailability.getEndDate()))
+        if (userService.isEmptyOnCallsByUserIdAndRangeTime(unavailability.getUserId(), unavailability.getStartDate(), unavailability.getEndDate()))
             //if(!onCallService.findByDateTimeRange(unavailability.getStartDate(), unavailability.getEndDate()).isEmpty())
             throw new Exception("Can't create unavailability, this user has already an onCall created at the same time range");
 
-        if (userService.validateQuantityUnavailabilityBySpecialization(unavailability.getUser().getSpecialization(), unavailability.getStartDate(), unavailability.getEndDate())) {
-
+        if (userService.validateQuantityUnavailabilityBySpecialization(user.getSpecialization(), unavailability.getStartDate(), unavailability.getEndDate())) {
             throw new Exception("Can't create unavailability, this user is the last one available at his specialization for this range time");
         }
 

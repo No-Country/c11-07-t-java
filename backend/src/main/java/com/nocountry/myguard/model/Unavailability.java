@@ -27,13 +27,25 @@ public class Unavailability {
 
     private int duration;
 
+    private Long monthId;
+
+    private Long userId;
+
     @JsonBackReference(value = "MonthUnavailability")
     @ManyToOne
+    @JoinColumn(name = "monthId", insertable = false, updatable = false)
     private Month month;
 
     @JsonBackReference(value = "UserUnavailability")
     @ManyToOne
+    @JoinColumn(name = "userId", insertable = false, updatable = false)
     private User user;
+
+    public Unavailability(LocalDateTime startDate, LocalDateTime endDate, Long monthId) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.monthId = monthId;
+    }
 
     public void calculateEndDate(LocalDateTime startDate, int duration) {
         this.endDate = startDate.plusHours(duration);

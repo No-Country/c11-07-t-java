@@ -23,23 +23,23 @@ public class Counter {
     private Integer countHsWeekend;
     private Integer countHsWeek;
     private Integer countOnCall;
-    //private Integer monthId;
-    //private Integer userId;
+    private Long monthId;
+    private Long userId;
 
     @JsonBackReference(value = "MonthCounter")
     @ManyToOne
-    //@JoinColumn(name = "monthId", insertable = false, updatable = false)
+    @JoinColumn(name = "monthId", insertable = false, updatable = false)
     private Month month;
 
     @JsonBackReference(value = "CounterUser")
     @ManyToOne
-    //@JoinColumn(name = "userId", insertable = false, updatable = false)
+    @JoinColumn(name = "userId", insertable = false, updatable = false)
     private User user;
 
     @JsonCreator
-    public Counter(User user, Month month) {
-        this.user = user;
-        this.month = month;
+    public Counter(Long userId, Long monthId) {
+        this.userId = userId;
+        this.monthId = monthId;
         this.countHsWeekend = 0;
         this.countHsWeek = 0;
         this.countOnCall = 0;
