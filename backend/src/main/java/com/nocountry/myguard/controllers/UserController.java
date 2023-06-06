@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin("http://localhost:5173/")
+@CrossOrigin
 @RequestMapping("/api/users")
 @Tag(name = "User" , description = "User Controller")
 public class UserController {
@@ -31,7 +31,6 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Get user by id")
     public ResponseEntity<User> findById(
             @Parameter(name = "id", description = "User id to get", required = true)
@@ -47,7 +46,6 @@ public class UserController {
     }
 
     @GetMapping("getByParam")
-    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Get user by param")
     public ResponseEntity<User> findByParam(
             @Parameter(name = "name", description = "User name to get", required = true)
@@ -75,7 +73,6 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Update user by id")
     public ResponseEntity<User> update(
             @Parameter(name = "id", description = "User id to update", required = true)
@@ -94,7 +91,6 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Delete user by id")
     public ResponseEntity<User> Delete(
             @Parameter(name = "id", description = "User id to delete", required = true)
@@ -121,7 +117,6 @@ public class UserController {
     }
 
     @PostMapping("/{professionalId}/specializations")
-    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Add specialization to professional")
     public ResponseEntity<User> addSpecialization2Professional(
             @Parameter(name = "professionalId", description = "Professional id to add specialization to", required = true)

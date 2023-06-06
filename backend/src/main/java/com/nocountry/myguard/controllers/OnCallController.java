@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:5173/")
+@CrossOrigin
 @RequestMapping("/oncalls/")
 @Tag(name = "OnCall" , description = "OnCall Controller")
 public class OnCallController {

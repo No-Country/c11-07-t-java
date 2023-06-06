@@ -56,7 +56,7 @@ public class AuthenticationService {
                 )
         );
         //It will continue to below lines only if authentication was successful
-        var user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        var user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new RuntimeException("User not found"));
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)

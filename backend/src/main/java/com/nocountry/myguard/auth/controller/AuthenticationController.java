@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/auth")
 @RequiredArgsConstructor
-@CrossOrigin("http://localhost:5173/")
+@CrossOrigin
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
@@ -31,18 +31,23 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+
+        try {
+            return ResponseEntity.ok(authenticationService.authenticate(request));
+        } catch (RuntimeException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestParam String email){
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
 
         try {
             return new ResponseEntity<>(authenticationService.forgetPassword(email), HttpStatus.OK);
-        } catch (MessagingException e){
+        } catch (MessagingException e) {
             return new ResponseEntity("Unable to sent set password email. Please try again.", HttpStatus.BAD_REQUEST);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

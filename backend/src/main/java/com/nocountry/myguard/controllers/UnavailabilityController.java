@@ -14,7 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("http://localhost:5173/")
+@CrossOrigin
 @RequestMapping("/unavailability/")
 @Tag(name = "Unavailability" , description = "Unavailability Controller")
 public class UnavailabilityController {

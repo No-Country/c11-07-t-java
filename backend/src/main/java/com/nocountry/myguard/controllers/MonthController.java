@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/months/")
-@CrossOrigin("http://localhost:5173/")
+@CrossOrigin
 @Tag(name = "Month" , description = "Month Controller")
 @OpenAPIDefinition(info = @io.swagger.v3.oas.annotations.info.Info(title = "MyGuard API", version = "1.0", description = "Api of hospital on call management"))
 public class MonthController {
