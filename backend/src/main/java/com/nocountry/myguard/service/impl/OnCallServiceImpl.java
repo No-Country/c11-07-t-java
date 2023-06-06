@@ -31,7 +31,7 @@ public class OnCallServiceImpl implements OnCallService {
     private final UserServiceImpl userService;
 
     @Autowired
-    public OnCallServiceImpl(@Lazy UserServiceImpl userService,OnCallRepository onCallRepository, CounterRepository counterRepository, MonthRepository monthRepository, UserRepository userRepository, @Lazy UnavailabilityServiceImpl unavailabilityService) {
+    public OnCallServiceImpl(@Lazy UserServiceImpl userService, OnCallRepository onCallRepository, CounterRepository counterRepository, MonthRepository monthRepository, UserRepository userRepository, @Lazy UnavailabilityServiceImpl unavailabilityService) {
         this.onCallRepository = onCallRepository;
         this.counterRepository = counterRepository;
         this.monthRepository = monthRepository;
@@ -49,11 +49,11 @@ public class OnCallServiceImpl implements OnCallService {
             throw new Exception("You must assign an end date or a duration to an on call");
         if (onCall.getUserId() == null) throw new Exception("User must be assigned to on call");
 
-        Month month = monthRepository.findById(onCall.getMonthId()).orElseThrow(()-> new Exception("No Month found for the assigned month id"));
+        Month month = monthRepository.findById(onCall.getMonthId()).orElseThrow(() -> new Exception("No Month found for the assigned month id"));
         if (!month.isCorrectMonthByOnCallStartDate(onCall.getStartDate()))
             throw new Exception("Incorrect month assigned by start date");
 
-        User user = userRepository.findById(onCall.getUserId()).orElseThrow(()-> new Exception("No User found for the assigned user id"));
+        User user = userRepository.findById(onCall.getUserId()).orElseThrow(() -> new Exception("No User found for the assigned user id"));
 
 
         onCall.calculateShift(onCall.getStartDate());
@@ -69,6 +69,9 @@ public class OnCallServiceImpl implements OnCallService {
             onCall.calculateDuration(onCall.getStartDate(), onCall.getEndDate());
         }
 
+        if (onCall.getDuration() <= 0 || onCall.getDuration() > 24)
+            throw new Exception("Duration must be greater than 0 and less than or equal to 24 hs");
+
         if (userService.isEmptyOnCallsByUserIdAndRangeTime(onCall.getUserId(), onCall.getStartDate(), onCall.getEndDate()))
             //if(!onCallService.findByDateTimeRange(unavailability.getStartDate(), unavailability.getEndDate()).isEmpty())
             throw new Exception("Can't create on call, this user has already an onCall created at the same time range");
@@ -82,11 +85,11 @@ public class OnCallServiceImpl implements OnCallService {
 
         Optional<Counter> existingCounter = counterRepository.findByUserAndMonth(user, month);
 
-        Counter counter = existingCounter.isEmpty()? new Counter(onCall.getUserId(), onCall.getMonthId()) : existingCounter.get();
+        Counter counter = existingCounter.isEmpty() ? new Counter(onCall.getUserId(), onCall.getMonthId()) : existingCounter.get();
 
-        if(month.isWeekend(onCall.getStartDate())){
+        if (month.isWeekend(onCall.getStartDate())) {
             counter.addHsWeekend(onCall.getDuration());
-        }else {
+        } else {
             counter.addHsWeek(onCall.getDuration());
         }
 
@@ -147,9 +150,9 @@ public class OnCallServiceImpl implements OnCallService {
         month.getOnCalls().remove(onCall);
 
         //Update respective counter
-        if(month.isWeekend(onCall.getStartDate())){
+        if (month.isWeekend(onCall.getStartDate())) {
             counter.reduceHsWeekend(onCall.getDuration());
-        }else {
+        } else {
             counter.reduceHsWeek(onCall.getDuration());
         }
         counter.calculateOnCalls();
@@ -207,7 +210,7 @@ public class OnCallServiceImpl implements OnCallService {
         List<OnCall> onCalls = onCallRepository.findAllByMonthAndUser(month, user);
 
         if (onCalls.isEmpty()) {
-           throw new Exception("No onCall with that user and month");
+            throw new Exception("No onCall with that user and month");
         }
         return onCalls;
     }

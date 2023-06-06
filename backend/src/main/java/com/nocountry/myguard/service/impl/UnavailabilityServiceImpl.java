@@ -65,6 +65,10 @@ public class UnavailabilityServiceImpl implements UnavailabilityService {
             unavailability.calculateDuration(unavailability.getStartDate(), unavailability.getEndDate());
         }
 
+        if (unavailability.getDuration() <= 0 || unavailability.getDuration() > 24) {
+            throw new Exception("Duration must be greater than 0 or less than 24 hs");
+        }
+
         if (userService.isEmptyUnavailabilitiesByUserIdAndRangeTime(unavailability.getUserId(), unavailability.getStartDate(), unavailability.getEndDate())) {
             throw new Exception("Can't create unavailability, this user has already an unavailability created at the same time range");
         }
