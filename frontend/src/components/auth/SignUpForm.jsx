@@ -64,7 +64,7 @@ export const SignUpForm = () => {
             <div>
               <input
                 placeholder="contraseña"
-                type="text"
+                type="password"
                 id="password"
                 value={registerPassword}
                 onChange={onInputChange}

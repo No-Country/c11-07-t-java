@@ -5,6 +5,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './pages.css';
 import { Header, SideNabvar } from '../ui';
+import { useAuthStore } from '../../hooks';
 
 
 
@@ -13,6 +14,8 @@ export const Calendario = () => {
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [eventText, setEventText] = useState('');
+  const {user} = useAuthStore();
+
 
   const handleDateChange = date => {
     setSelectedDate(date);
@@ -44,6 +47,7 @@ export const Calendario = () => {
     <div className="calendario">
     <Header/>
     <SideNabvar/>
+    <h2 className='titulo'>Hola {user.username}!</h2>
     <h2 className='titulo'>Mis Guardias</h2>
      <div className="container">
       <Calendar
