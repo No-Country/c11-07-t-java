@@ -17,9 +17,8 @@ export const useAuthStore = () => {
     const startLogin = async({ username, password }) => {
         dispatch( onChecking() );
         try {
-            const {data} = await axios.post('http://localhost:8080/api/auth/authenticate',{ username, password });
+            const {data} = await axios.post('https://c11-07-t-java-production.up.railway.app/api/auth/authenticate',{ username, password });
             
-            dispatch( onLogin({ name: data.name, uid: data.uid }) );
             localStorage.setItem("token", data.token); //envio el token al localStorage
             localStorage.setItem("token-init", new Date().getTime()); //envio otro token de referencia, si no sirve lo borramos mas adelante
             dispatch(onLogin({username: data.username, password: data.password} ));
