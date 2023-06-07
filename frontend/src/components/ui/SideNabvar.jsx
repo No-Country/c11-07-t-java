@@ -24,7 +24,13 @@ export const SideNabvar = ({ isOpen }) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
             startLogout();
-            Swal.fire('Sesión cerrada', '', 'success')
+            Swal.fire({
+              icon: 'success',
+              title: 'Sesión cerrada',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            //Swal.fire('Sesión cerrada', '', 'success')
         }
     })
   }

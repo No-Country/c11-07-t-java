@@ -6,10 +6,18 @@ import { useNavigate } from 'react-router-dom';
 
 export const useAuthStore = () => {
 
+    function msgAlert(icon, message) {
+        Swal.fire({
+          icon: icon,
+          title: message,
+          showConfirmButton: false,
+          timer: 1500
+        })
+    }
 
     const navigate = useNavigate();
      
-  
+    const API_URL = 'https://c11-07-t-java-production.up.railway.app';
 
     const { status, user, errorMessage } = useSelector( state => state.auth );
     const dispatch = useDispatch();
@@ -17,7 +25,7 @@ export const useAuthStore = () => {
     const startLogin = async({ username, password }) => {
         dispatch( onChecking() );
         try {
-            const {data} = await axios.post('https://c11-07-t-java-production.up.railway.app/api/auth/authenticate',{ username, password });
+            const {data} = await axios.post(API_URL + '/api/auth/authenticate',{ username, password });
             
             localStorage.setItem("token", data.token); //envio el token al localStorage
             localStorage.setItem("token-init", new Date().getTime()); //envio otro token de referencia, si no sirve lo borramos mas adelante
@@ -35,7 +43,7 @@ export const useAuthStore = () => {
      
         dispatch( onChecking() );
         try {
-            const {data} = await axios.post('https://c11-07-t-java-production.up.railway.app/api/auth/register',{ username, email, password });
+            const {data} = await axios.post(API_URL + '/api/auth/register',{ username, email, password });
             dispatch( onLogin({ name: data.name, uid: data.uid }) );
             localStorage.setItem("token", data.token); //envio el token al localStorage
             localStorage.setItem("token-init", new Date().getTime()); //envio otro token de referencia, si no sirve lo borramos mas adelante
@@ -53,7 +61,7 @@ export const useAuthStore = () => {
     const startUpdateUser = async({ id, name, lastName, profesion }) => {
      
      try {
-         await axios.put(`https://c11-07-t-java-production.up.railway.app/api/users/154?id=${id}`,{ name, lastName, profesion  });
+         await axios.put(API_URL + `/api/users/154?id=${id}`,{ name, lastName, profesion  });
          dispatch(updateUser(name, lastName, profesion))
          navigate("/calendar", {
              replace: true
@@ -71,7 +79,7 @@ export const useAuthStore = () => {
         if ( !token ) return dispatch( onLogout() );
 
         try {
-            const { data } = await axios.get('https://c11-07-t-java-production.up.railway.app/api/auth/authenticate');
+            const { data } = await axios.get(API_URL + '/api/auth/authenticate');
             localStorage.setItem('token', data.token );
             localStorage.setItem('token-init-date', new Date().getTime() );
             dispatch(onLogin({username: data.username, password: data.password} ));
