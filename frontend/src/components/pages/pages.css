@@ -104,3 +104,10 @@
 .react-calendar__navigation__label__labelText{
   text-transform: capitalize;
 }
+
+.profile{
+  width: 100vw;
+  height: 65vh;
+  display: grid;
+  place-items: center;
+}
