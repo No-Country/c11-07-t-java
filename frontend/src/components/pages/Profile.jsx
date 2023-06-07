@@ -4,6 +4,7 @@ import "../auth/auth.css";
 import { Header, SideNabvar } from "../ui";
 import { useAuthStore, useForm } from "../../hooks";
 import { Button } from "../util";
+import Swal from "sweetalert2";
 
 const initialProfile = {
   updateName: "",
@@ -15,6 +16,14 @@ export const Profile = () => {
   
   const { user, startUpdateUser } = useAuthStore();
   
+  function msgAlert(icon, message) {
+    Swal.fire({
+      icon: icon,
+      title: message,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
 
   const { updateName, updateLastName, updateProfesional, onInputChange } =
     useForm(initialProfile);
@@ -26,7 +35,7 @@ export const Profile = () => {
     updateLastName.trim() == "" ||
     updateProfesional.trim() == ""
   ) {
-    alert("No puede dejar campos vacios");
+    msgAlert("error", "No se puede dejar campos vacios")
   }
   startUpdateUser({
     id: user.token,
