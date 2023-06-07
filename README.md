@@ -12,7 +12,7 @@ La inspiración para este proyecto surgió al observar la necesidad de un grupo 
 * Diseño UX: Figma.
 * Testing: Postman | Google Sheets
 
-### Conoce nuestro proyecto: [Presentación y Mockups](https://youtu.be/yobLwrEohkk)
+### Conoce nuestro proyecto: [Presentación y Mockups](https://youtu.be/VjNmBancRok)
 
 ### URL del proyecto desplegado 🔗:  [MyGuard](https://c11-07-t-java.vercel.app/)
 
