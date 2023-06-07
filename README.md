@@ -4,7 +4,7 @@
 
 ## Breve descripción del proyecto 📜 (¿o cómo nace la idea?)
 
-El Sistema de Administración de Guardias Hospitalarias es una solución tecnológica diseñada para optimizar y simplificar la asignación y gestión de guardias en un hospital. Este proyecto tiene como objetivo principal mejorar la eficiencia operativa del hospital al garantizar una cobertura adecuada del personal médico en diferentes turnos y áreas, al tiempo que se reducen las cargas administrativas asociadas. 
+La inspiración para este proyecto surgió al observar la necesidad de un grupo de profesionales del ámbito de la salud mental en la provincia de Mendoza. Estos profesionales se encontraban utilizando una hoja de cálculo de Excel para organizar sus turnos de guardia, lo cual les demandaba mucho tiempo y dificultaba la coordinación entre ellos. Con el fin de abordar este desafío, se desarrolló el Sistema de Administración de Guardias Hospitalarias, una solución diseñada para optimizar y simplificar la asignación y gestión de las guardias, cumpliendo asi con el objetivo principal de reducir las cargas administrativas asociadas.
 
 ### Tecnologías 🚀:
 * FrontEnd: Javascript | React | 
