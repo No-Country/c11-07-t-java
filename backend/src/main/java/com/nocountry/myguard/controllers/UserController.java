@@ -42,7 +42,17 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
+    }
 
+    @GetMapping("findbyusername")
+    public ResponseEntity<User> findByUsername(@RequestParam String username){
+        User user = null;
+        if (userService.findByUsername(username).isEmpty()){
+            return ResponseEntity.notFound().build();
+        } else {
+            user = userService.findByUsername(username).get();
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("getByParam")
