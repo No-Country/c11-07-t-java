@@ -76,7 +76,7 @@ public class UserController {
     @Operation(summary = "Update user by id")
     public ResponseEntity<User> update(
             @Parameter(name = "id", description = "User id to update", required = true)
-            @RequestParam Long id,
+            @PathVariable Long id,
             @Parameter(name = "professional", description = "User professional to update", required = true)
             @RequestBody User professional) throws Exception {
 
