@@ -61,12 +61,12 @@ export const useAuthStore = () => {
     const startUpdateUser = async({ id, name, lastName, profesion }) => {
      
      try {
-         await axios.put(API_URL + `/api/users/154?id=${id}`,{ name, lastName, profesion  });
+         await axios.put(API_URL + `/api/users/${id}`,{ name, lastName, profesion  });
          dispatch(updateUser(name, lastName, profesion))
          navigate("/calendar", {
              replace: true
          });
-
+         alert("salio todo bien")
 
      } catch (error) {
         console.log(error)

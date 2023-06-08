@@ -7,7 +7,7 @@ import { LoginForm, SignUpForm } from "./components/auth";
 import { Settings } from "./components/pages/Settings";
 
 export const AppRoutes = () => {
-  const { status, checkAuthToken } = useAuthStore();
+  const { status, checkAuthToken, startLogout } = useAuthStore();
 
   useEffect(() => {
     checkAuthToken();
@@ -16,7 +16,8 @@ export const AppRoutes = () => {
   //const estado = 'not--authenticated'; //ESTA VARIABLE HAY QUE BORRARLA CUANDO SE TERMINA DE USAR Y REEMPLAZAR TODO POR STATUS
 
   if (status == "checking") {
-    return <Loading />;
+     <Loading />;
+
   }
   return (
     <Routes>
