@@ -38,6 +38,8 @@ export const Profile = () => {
     msgAlert("error", "No se puede dejar campos vacios")
   }
   startUpdateUser({
+    username: user.username,
+    password: user.password,
     id: user.token,
     name: updateName,
     lastName: updateLastName,

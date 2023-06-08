@@ -47,7 +47,8 @@ export const useAuthStore = () => {
             dispatch( onLogin({ name: data.name, uid: data.uid }) );
             localStorage.setItem("token", data.token); //envio el token al localStorage
             localStorage.setItem("token-init", new Date().getTime()); //envio otro token de referencia, si no sirve lo borramos mas adelante
-            dispatch(onLogin({username: data.username, password: data.password} ));
+            startLogin(username, password)
+            dispatch(onLogin({username, email} ));
             navigate("/calendar", {
                 replace: true
             });
@@ -58,15 +59,16 @@ export const useAuthStore = () => {
         }
     }
 
-    const startUpdateUser = async({ id, name, lastName, profesion }) => {
+    const startUpdateUser = async({ username, password = "******", id, name, lastName, profesion }) => {
      
      try {
-         await axios.put(API_URL + `/api/users/154?id=${id}`,{ name, lastName, profesion  });
-         dispatch(updateUser(name, lastName, profesion))
+         await axios.put(API_URL + `/api/users/${id}`,{ name, lastName, profesion  });
+         dispatch(updateUser(name, lastName, profesion));
+         dispatch(onLogin({username, password, email, name, lastName, profesion} ));
          navigate("/calendar", {
              replace: true
          });
-
+         alert("salio todo bien")
 
      } catch (error) {
         console.log(error)
