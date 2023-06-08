@@ -16,7 +16,7 @@ export const AppRoutes = () => {
   //const estado = 'not--authenticated'; //ESTA VARIABLE HAY QUE BORRARLA CUANDO SE TERMINA DE USAR Y REEMPLAZAR TODO POR STATUS
 
   if (status == "checking") {
-     <Loading />;
+     return <Loading />;
 
   }
   return (
