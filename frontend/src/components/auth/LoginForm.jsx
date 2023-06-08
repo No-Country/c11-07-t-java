@@ -3,6 +3,7 @@ import "./auth.css";
 import { Button } from "../util";
 import { useAuthStore, useForm } from "../../hooks";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const loginForUser = {
   loginUsername: "",
@@ -15,6 +16,15 @@ export const LoginForm = () => {
     navigate("/register");
   };
 
+  function msgAlert(icon, message) {
+    Swal.fire({
+      icon: icon,
+      title: message,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
   const { startLogin } = useAuthStore();
 
   const { loginUsername, loginPassword, onInputChange } = useForm(loginForUser);
@@ -22,7 +32,7 @@ export const LoginForm = () => {
   const onLoginSubmit = (e) => {
     e.preventDefault();
     if (loginUsername.trim() == "" || loginPassword.trim() == "") {
-      alert("Credenciales incorrectas");
+      msgAlert("error", "Credenciales incorrectas");
     }else{
       startLogin({ username: loginUsername, password: loginPassword });
     }
