@@ -23,9 +23,11 @@
   
   .event-description {
     color: var(--azulNegruzco);
+    text-decoration: none;
   }
   
   .modal {
+    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
     position: fixed;
     top: 0;
     left: 0;
@@ -38,24 +40,53 @@
   }
   
   .modal-content {
-    background-color: var(--verdeOliva);
+    /*background-color: var(--verdeOliva);
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 5px;*/
+    width: 600px;
+    max-width: 100%;
+    background-color: var(--blanco);
+    color: #222;
+    border-radius: 10px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.125em;
   }
   
   .modal h3 {
-    color: var(--blanco);
+    color: var(--azulNegruzco);
+    display: flex;
+    justify-content: center;
+    padding-top: .5em;
+  }
+
+  .group{
+    padding-left: 10%;
+    align-items: center;
   }
   
-  .modal input {
-    width: 100%;
-    padding: 10px;
+  .inText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    width: 90%;
     margin-bottom: 10px;
+  }
+
+  .check{
+    width: 20px;
+    border: none !important;
+    box-shadow: none !important;
   }
   
   .modal-buttons {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    width: 90%;
+    padding-bottom: 2%;
   }
   
   .save-button {
