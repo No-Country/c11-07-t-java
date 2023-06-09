@@ -1,21 +1,19 @@
 
-import axios from 'axios';
-import {  onLogin, onLogout } from '../store';
+
+import {  onAddEvent, onLogin, onLogout } from '../store';
 
 
 
 export const useCalendarStore = () => {
 
 
-    const checkAuthToken = async() => {
-        const token = localStorage.getItem('token');
-        if ( !token ) return dispatch( onLogout() );
+
+
+    const writeCalendar = (evento) => {
 
         try {
-            const { data } = await axios.get('http://localhost:8080/api/auth/authenticate');
-            localStorage.setItem('token', data.token );
-            localStorage.setItem('token-init-date', new Date().getTime() );
-            dispatch(onLogin({username: data.username, password: data.password} ));
+            localStorage.setItem('evento', evento );
+            dispatch(onAddEvent({evento} ));
 
         } catch (error) {
             localStorage.clear();
@@ -25,7 +23,7 @@ export const useCalendarStore = () => {
 
 
     return {
-        checkAuthToken
+        writeCalendar
     }
 
 }
