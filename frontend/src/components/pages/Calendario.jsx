@@ -4,7 +4,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./pages.css";
 import { Header, SideNabvar } from "../ui";
-import { useAuthStore } from "../../hooks";
+import { useAuthStore, useCalendarStore } from "../../hooks";
 import { faHourglass1 } from "@fortawesome/free-solid-svg-icons";
 import { useLocalStorage } from "./useLocalStorage";
 import Swal from "sweetalert2";
@@ -37,21 +37,40 @@ function msgAlert(icon, message) {
     icon: icon,
     title: message,
     showConfirmButton: false,
-    timer: 1500
-  })
+    timer: 1500,
+  });
 }
 
 export const Calendario = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [editData, setEditData] = useState(null)
+  const [editData, setEditData] = useState(null);
   const [selectedDate, setSelectedDate] = useState([]);
   const [text, setText] = useLocalStorage("eventTitle", "");
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [eventText, setEventText] = useLocalStorage("eventText", "");
   const [eventTitle, setEventTitle] = useLocalStorage("eventTitle", "");
-  const [selectedShift, setSelectedShift] = useLocalStorage('selectedShift', '');
+  const [selectedShift, setSelectedShift] = useLocalStorage(
+    "selectedShift",
+    ""
+  );
+
+  const { writeCalendar } = useCalendarStore();
+
+  useEffect(() => {
+    localStorage.setItem("events", JSON.stringify(events));
+  }, [events]);
+
+  useEffect(() => {
+    const storedEvents = localStorage.getItem("events");
+    console.log(storedEvents);
+    if (storedEvents) {
+      setEvents(JSON.parse(storedEvents));
+    }
+  }, [events]);
+
+  
 
   const [dataGuardia, setDataGuardia] = useState({
     id: null,
@@ -59,29 +78,32 @@ export const Calendario = () => {
     description: "",
     shift: "",
     allDay: false,
-  })
+  });
 
   useEffect(() => {
-    if(editData !== null){
-      setDataGuardia(editData)
-    }else{
+    if (editData !== null) {
+      setDataGuardia(editData);
+    } else {
       setFormData({
         id: null,
         title: "",
         description: "",
         shift: "",
         allDay: false,
-      })
+      });
     }
   }, [editData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if(dataGuardia.title.trim() !== '' && dataGuardia.description.trim() !== ''){
-      if(editData !== null){
+    if (
+      dataGuardia.title.trim() !== "" &&
+      dataGuardia.description.trim() !== ""
+    ) {
+      if (editData !== null) {
         editGuardia(dataGuardia);
-      }else{
+      } else {
         dataGuardia.id = Date.now();
         addGuardia(dataGuardia);
         setDataGuardia({
@@ -90,18 +112,18 @@ export const Calendario = () => {
           description: "",
           shift: "",
           allDay: false,
-        })
+        });
       }
-    }else{
+    } else {
       alert("error");
     }
-  }
+  };
 
   const [formData, setFormData] = useState(() => {
     const saveEvent = window.localStorage.getItem("guardiaData");
-    if(saveEvent){
+    if (saveEvent) {
       return JSON.parse(saveEvent);
-    }else{
+    } else {
       return [];
     }
   });
@@ -112,28 +134,27 @@ export const Calendario = () => {
 
   //inserción de datos
   const addGuardia = (formgGuardia) => {
-    setFormData([
-      ...formData,
-      formgGuardia
-    ]);
-  }
+    setFormData([...formData, formgGuardia]);
+  };
 
   //editar data
   const editGuardia = (formgGuardia) => {
-    const newGuardia = formData.map(gu => gu.id === formgGuardia.id ? formgGuardia : gu);
+    const newGuardia = formData.map((gu) =>
+      gu.id === formgGuardia.id ? formgGuardia : gu
+    );
     setFormData(newGuardia);
     setEditData(null);
-  }
+  };
 
   //eliminar data
-  const deleteGuardia = id => {
+  const deleteGuardia = (id) => {
     const isDelete = window.confirm(`¿Eiminar?${id}`);
 
-    if(isDelete) {
-      const newGuardia = formData.filter(gu => gu.id !== id);
+    if (isDelete) {
+      const newGuardia = formData.filter((gu) => gu.id !== id);
       setFormData(newGuardia);
     }
-  }
+  };
 
   const handleChange = (e) => {
     console.log(e.target);
@@ -150,15 +171,11 @@ export const Calendario = () => {
   };
 
   const handleSaveEvent = () => {
-    if (
-      selectedDate && 
-      eventTitle.trim() && 
-      eventText.trim() !== "") {
+    if (selectedDate && eventTitle.trim() && eventText.trim() !== "") {
       const newEvent = {
         date: selectedDate,
         title: eventTitle,
         description: eventText,
-        
       };
 
       //console.log(eventShift);
@@ -167,8 +184,8 @@ export const Calendario = () => {
       setSelectedDate([]);
       setEventText("");
       setShowModal(false);
-    }else{
-      msgAlert("error", "Completa el formulario")
+    } else {
+      msgAlert("error", "Completa el formulario");
     }
   };
 
@@ -211,12 +228,10 @@ export const Calendario = () => {
             <h5>Guardia creada por: {user.username}</h5>
             <h6>Título: {event.title}</h6>
             <br />
-            <h6>Fecha: {event.date.toLocaleDateString()}</h6>
+            <h6>Fecha: {new Date(event.date).toISOString().split("T")[0]}</h6>
             <h6>Hora: {}</h6>
             <h6>Descripción:</h6>
-            <p className="event-description">
-              {event.description}
-            </p>
+            <p className="event-description">{event.description}</p>
           </div>
         ))}
 
@@ -235,7 +250,7 @@ export const Calendario = () => {
                   className="inText"
                   placeholder="Nueva guardia"
                   value={eventTitle}
-                  onChange={e => setEventTitle(e.target.value)}
+                  onChange={(e) => setEventTitle(e.target.value)}
                 />
 
                 <br />
@@ -247,24 +262,26 @@ export const Calendario = () => {
                   className="inText"
                   rows={3}
                   value={eventText}
-                  onChange={e => setEventText(e.target.value)}
+                  onChange={(e) => setEventText(e.target.value)}
                 />
 
                 <br />
                 <h6>
                   <b>Seleccionar Turno</b>
                 </h6>
-                <select 
+                <select
                   onChange={handleOptionChange}
                   value={selectedShift}
                   className="inText"
                   disabled={isChecked}
                 >
-                <option value="" disabled >Seleccionar turno</option>  
-                <option value="08:00-20:00">Mañana -- (08:00 a 20:00)</option>  
-                <option value="20:00-08:00">Noche -- (20:00 a 08:00)</option>  
+                  <option value="" disabled>
+                    Seleccionar turno
+                  </option>
+                  <option value="08:00-20:00">Mañana -- (08:00 a 20:00)</option>
+                  <option value="20:00-08:00">Noche -- (20:00 a 08:00)</option>
                 </select>
-                
+
                 <br />
                 <br />
                 <div className="row">
@@ -290,7 +307,6 @@ export const Calendario = () => {
                   </button>
                 </div>
                 <br />
-
               </div>
             </div>
           </div>

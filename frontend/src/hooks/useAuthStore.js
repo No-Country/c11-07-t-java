@@ -2,9 +2,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import {  onChecking, onLogin, onLogout, updateUser } from '../store';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
 
 
 export const useAuthStore = () => {
+
+
 
     function msgAlert(icon, message) {
         Swal.fire({
@@ -23,6 +27,8 @@ export const useAuthStore = () => {
     const dispatch = useDispatch();
 
     const startLogin = async({ username, password }) => {
+
+        
         dispatch( onChecking() );
         try {
             const {data} = await axios.post(API_URL + '/api/auth/authenticate',{ username, password });
@@ -59,9 +65,18 @@ export const useAuthStore = () => {
         }
     }
 
+    const findUserByUsername = async(username)=>{
+        checkAuthToken();
+        return await axios.get(`https://c11-07-t-java-production.up.railway.app/api/users/findbyusername?username=${username}`)
+    }
+
     const startUpdateUser = async({ username, password = "******", id, name, lastName, profesion }) => {
      
-     try {
+
+        findUserByUsername(username)
+       
+        
+   try {
          await axios.put(API_URL + `/api/users/${id}`,{ name, lastName, profesion  });
          dispatch(updateUser(name, lastName, profesion));
          dispatch(onLogin({username, password, email, name, lastName, profesion} ));
@@ -87,13 +102,12 @@ export const useAuthStore = () => {
             dispatch(onLogin({username: data.username, password: data.password} ));
 
         } catch (error) {
-            localStorage.clear();
+
             dispatch( onLogout() );
         }
     }
 
     const startLogout = () => {
-        localStorage.clear();
         dispatch(onLogout());
     }
 
@@ -104,7 +118,7 @@ export const useAuthStore = () => {
         errorMessage,
         status, 
         user, 
-
+        API_URL,
         //* Métodos
         checkAuthToken,
         startLogin,
