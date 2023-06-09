@@ -147,7 +147,6 @@ export const Calendario = () => {
 
   const handleAddEvent = () => {
     setShowModal(true);
-    return;
   };
 
   const handleSaveEvent = () => {
