@@ -1,6 +1,7 @@
 -- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 
+
 CREATE SCHEMA `myguard` ;
 USE `myguard`;
 
@@ -48,7 +49,7 @@ CREATE TABLE `counter` (
 
 LOCK TABLES `counter` WRITE;
 /*!40000 ALTER TABLE `counter` DISABLE KEYS */;
-INSERT INTO `counter` VALUES (1,12,0,0,1,1),(2,0,24,1,1,6);
+INSERT INTO `counter` VALUES (1,12,0,0,1,1),(2,0,24,1,1,6),(52,0,12,0,1,5),(53,0,12,0,1,3),(102,12,0,0,1,4);
 /*!40000 ALTER TABLE `counter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,7 +71,7 @@ CREATE TABLE `counter_seq` (
 
 LOCK TABLES `counter_seq` WRITE;
 /*!40000 ALTER TABLE `counter_seq` DISABLE KEYS */;
-INSERT INTO `counter_seq` VALUES (101);
+INSERT INTO `counter_seq` VALUES (201);
 /*!40000 ALTER TABLE `counter_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +152,7 @@ CREATE TABLE `on_call` (
 
 LOCK TABLES `on_call` WRITE;
 /*!40000 ALTER TABLE `on_call` DISABLE KEYS */;
-INSERT INTO `on_call` VALUES (1,12,'2023-06-02 08:00:00.000000','night','2023-06-01 20:00:00.000000',1,1),(2,12,'2023-06-03 20:00:00.000000','day','2023-06-03 08:00:00.000000',1,6),(3,12,'2023-06-04 08:00:00.000000','night','2023-06-03 20:00:00.000000',1,6);
+INSERT INTO `on_call` VALUES (1,12,'2023-06-02 08:00:00.000000','night','2023-06-01 20:00:00.000000',1,1),(2,12,'2023-06-03 20:00:00.000000','day','2023-06-03 08:00:00.000000',1,6),(3,12,'2023-06-04 08:00:00.000000','night','2023-06-03 20:00:00.000000',1,6),(52,12,'2023-06-03 20:00:00.000000','day','2023-06-03 08:00:00.000000',1,5),(53,12,'2023-06-03 20:00:00.000000','day','2023-06-03 08:00:00.000000',1,3),(102,12,'2023-06-02 08:00:00.000000','night','2023-06-01 20:00:00.000000',1,4),(152,36,'2023-06-11 20:00:00.000000','day','2023-06-10 08:00:00.000000',1,4);
 /*!40000 ALTER TABLE `on_call` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,7 +174,7 @@ CREATE TABLE `on_call_seq` (
 
 LOCK TABLES `on_call_seq` WRITE;
 /*!40000 ALTER TABLE `on_call_seq` DISABLE KEYS */;
-INSERT INTO `on_call_seq` VALUES (101);
+INSERT INTO `on_call_seq` VALUES (251);
 /*!40000 ALTER TABLE `on_call_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,6 +206,7 @@ CREATE TABLE `unavailability` (
 
 LOCK TABLES `unavailability` WRITE;
 /*!40000 ALTER TABLE `unavailability` DISABLE KEYS */;
+INSERT INTO `unavailability` VALUES (53,12,'2023-06-01 20:00:00.000000','2023-06-01 08:00:00.000000',1,4),(202,12,'2023-06-01 20:00:00.000000','2023-06-01 08:00:00.000000',1,7),(204,12,'2023-06-01 20:00:00.000000','2023-06-01 08:00:00.000000',1,6);
 /*!40000 ALTER TABLE `unavailability` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,7 +228,7 @@ CREATE TABLE `unavailability_seq` (
 
 LOCK TABLES `unavailability_seq` WRITE;
 /*!40000 ALTER TABLE `unavailability_seq` DISABLE KEYS */;
-INSERT INTO `unavailability_seq` VALUES (1);
+INSERT INTO `unavailability_seq` VALUES (301);
 /*!40000 ALTER TABLE `unavailability_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,7 +260,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'john.doe@example.com','123456','Doe','John','$2a$10$aPIt9vbkOTE3lXwt31Gx5uCjxTV/y05j22GT7dlokthm4z0ZqDepm','35512874','USER','PSYCHOLOGY','john.doe'),(2,'psuarez69@gmail.com','234234','Suarez','Pedro','$2a$10$vLzxwNZ9A3t93Kx4Ki2EfuBaUfTi/USfw.T.sExN3irTD3v/2Fe9O','4100334344','USER','PSYCHOLOGY','pSuarez'),(3,'jane.smith@example.com','789012','Smith','Jane','$2a$10$x9onETLlukMCNviwwaawXO/trFaA0JrLyPsRzsM7n39CA4Xd4bZ0a','12345678','USER','PSYCHOLOGY','jane.smith'),(4,'alex.wilson@example.com','987654','Wilson','Alex','$2a$10$sfFzyK0ljD0TxdKBsLYX0uWAs53OLVhlEJkdHpMDpWelMWFlDtA2e','87654321','USER','PSYCHIATRY','alex.wilson'),(5,'sarah.johnson@example.com','456789','Johnson','Sarah','$2a$10$9c2mRPK201rbbx.llAzFdegJzBJcbulZnmQAb0fZ9zXMcb5hNYq7q','78901234','USER','SOCIAL_WORK','sarah.johnson'),(6,'michael.brown@example.com','345678','Brown','Michael','$2a$10$4sLEhoDMRhkikVfVzVnNHejyYvK5NHf74ziLd48WBjlKplgnSBYiG','56789012','USER','PSYCHIATRY','michael.brown');
+INSERT INTO `user` VALUES (1,'john.doe@example.com','123456','Doe','John','$2a$10$aPIt9vbkOTE3lXwt31Gx5uCjxTV/y05j22GT7dlokthm4z0ZqDepm','35512874','USER','PSYCHOLOGY','john.doe'),(2,'psuarez69@gmail.com','234234','Suarez','Pedro','$2a$10$vLzxwNZ9A3t93Kx4Ki2EfuBaUfTi/USfw.T.sExN3irTD3v/2Fe9O','4100334344','USER','PSYCHOLOGY','pSuarez'),(3,'jane.smith@example.com','789012','Smith','Jane','$2a$10$x9onETLlukMCNviwwaawXO/trFaA0JrLyPsRzsM7n39CA4Xd4bZ0a','12345678','USER','PSYCHOLOGY','jane.smith'),(4,'alex.wilson@example.com','987654','Wilson','Alex','$2a$10$sfFzyK0ljD0TxdKBsLYX0uWAs53OLVhlEJkdHpMDpWelMWFlDtA2e','87654321','USER','PSYCHIATRY','alex.wilson'),(5,'sarah.johnson@example.com','456789','Johnson','Sarah','$2a$10$9c2mRPK201rbbx.llAzFdegJzBJcbulZnmQAb0fZ9zXMcb5hNYq7q','78901234','USER','SOCIAL_WORK','sarah.johnson'),(6,'michael.brown@example.com','345678','Brown','Michael','$2a$10$4sLEhoDMRhkikVfVzVnNHejyYvK5NHf74ziLd48WBjlKplgnSBYiG','56789012','USER','PSYCHIATRY','michael.brown'),(7,'robert.brown@example.com','3453453','Brown','Robert','$2a$10$bgneog6AO/H9e/QtkfT.FOXKcqwIfGV6ckQprY1teOXpcJ/ut9BZC',NULL,'USER','PSYCHIATRY','Robert.brown'),(52,'carlos.termo@example.com','2345','Termo','Carlos','$2a$10$sgWRS5RgFYEx8SenaUslHuHm1eWPEXFrKXQYe.KO4HANfNW17QLZW','39000993','USER','PSYCHIATRY','cTermo');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,7 +282,7 @@ CREATE TABLE `user_seq` (
 
 LOCK TABLES `user_seq` WRITE;
 /*!40000 ALTER TABLE `user_seq` DISABLE KEYS */;
-INSERT INTO `user_seq` VALUES (1);
+INSERT INTO `user_seq` VALUES (151);
 /*!40000 ALTER TABLE `user_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -293,4 +295,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-29 22:40:50
+-- Dump completed on 2023-06-03  0:07:57

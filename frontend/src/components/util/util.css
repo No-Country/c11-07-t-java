@@ -1,19 +1,15 @@
-.container-logo{
-    margin: auto;
-}
 .logo{
     width: 60%;
     height: auto;
-    
+    margin-bottom: 1rem;
 }
 @media (min-width: 769px) and (max-width: 1024px) {
-    .logo{
-        width: 65%;
-    }
+  .logo{
+      width: 65%;
   }
+}
 @media (min-width: 577px) and (max-width: 768px) {
-    .logo{
-        width: 95%;
-    }
-   
+  .logo{
+      width: 95%;
+  }
 }

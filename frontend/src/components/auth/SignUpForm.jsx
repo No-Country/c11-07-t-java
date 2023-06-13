@@ -1,6 +1,6 @@
 import { SideNabvar, Header } from "../ui";
 import { Button } from "../util";
-import "./loginForm.css";
+import "./auth.css";
 import { useAuthStore, useForm } from "../../hooks";
 
 const registerForUser = {
@@ -64,7 +64,7 @@ export const SignUpForm = () => {
             <div>
               <input
                 placeholder="contraseña"
-                type="text"
+                type="password"
                 id="password"
                 value={registerPassword}
                 onChange={onInputChange}

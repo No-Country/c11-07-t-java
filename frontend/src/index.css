@@ -6,15 +6,26 @@
 body{
   width: 100vw;
   height: 100vh;
-  background-color: var(--blancoVerdoso);
+  /* background-color: var(--blancoVerdoso); */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+::-webkit-scrollbar{
+  width: .5vw;
+  height: .5vw;
+  border-radius: 10%;
+}
+::-webkit-scrollbar-track{
+  background: var(--blancoVerdoso);
+}
+::-webkit-scrollbar-thumb{
+  background: var(--blanco);
+}
 
 /*GLOBAL VAR*/
 :root {
   --verdeLimon: #6FD513;
-  --verdeOliva: olive;
+  --verdeOliva: #29AE3D;
   --azulNegruzco: #18171C;
   --verdeOpaco: #AEA029;
   --verdeClaro: #D7F87F; 

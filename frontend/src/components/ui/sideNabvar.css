@@ -1,6 +1,5 @@
 
 .sidenav{
-    background-color: var(--blancoVerdoso);
     margin-top:92px;
     left: -58px;
 
@@ -11,8 +10,90 @@
     font-weight: 700;
     text-decoration: none;
     margin-left: 1rem;
+    padding: 2em;
   }
   .sidenav---sidenav---_2tBP{
     min-width: 0px;
-    
+    background-color: whitesmoke;
+  
   }
+
+  .iconColor{
+    padding: .5rem;
+  }
+
+  .texto-logout {
+    color: black !important;
+    font-weight: 400;
+    text-decoration: none;
+    margin-left: 1rem;
+    padding: 1.5em;
+  }
+
+  @media screen and (min-width: 150px) and (max-width: 350px){
+    .align-bottom{
+      padding-top: 50vh;
+    }
+  }
+
+  @media screen and (min-width: 351px) and (max-width: 550px){
+    .align-bottom{
+      padding-top: 50vh;
+    }
+  }
+
+  @media screen and (min-width: 551px) and (max-width: 768px){
+    .align-bottom{
+      padding-top: 55vh;
+    }
+  }
+
+  @media screen and (min-width: 769px) and (max-width: 1024px){
+    .align-bottom{
+      padding-top: 55vh;
+    }
+  }
+
+  @media screen and (min-width: 1025px) and (max-width: 1200px){
+    .align-bottom{
+      padding-top: 60vh;
+    }
+  }
+
+  @media screen and (min-width: 1201px) and (max-width: 1440px){
+    .align-bottom{
+      padding-top: 60vh;
+    }
+  }
+
+  @media screen and (min-width: 1441px) and (max-width: 2048px){
+    .align-bottom{
+      padding-top: 70vh;
+    }
+  }
+
+  /*@media (min-width: 1440px){
+    .align-bottom{
+      padding-top: 34vw;
+    }
+  }
+
+  @media (min-width: 1200px) and (max-width: 1439px){
+    .align-bottom{
+      padding-top: 45vw;
+    }
+  }
+
+  @media (min-width: 992px) and (max-width: 1399px){
+    .align-bottom{
+      padding-top: 50vw;
+    }
+  }
+
+  @media (min-width: 576px) and (max-width: 991px){
+    .align-bottom{
+      padding-top: 55vw;
+    }
+  }*/
+  
+

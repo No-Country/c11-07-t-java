@@ -1,8 +1,9 @@
 import { Logo } from "../util";
-import "./loginForm.css";
+import "./auth.css";
 import { Button } from "../util";
 import { useAuthStore, useForm } from "../../hooks";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const loginForUser = {
   loginUsername: "",
@@ -15,6 +16,15 @@ export const LoginForm = () => {
     navigate("/register");
   };
 
+  function msgAlert(icon, message) {
+    Swal.fire({
+      icon: icon,
+      title: message,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
   const { startLogin } = useAuthStore();
 
   const { loginUsername, loginPassword, onInputChange } = useForm(loginForUser);
@@ -22,9 +32,11 @@ export const LoginForm = () => {
   const onLoginSubmit = (e) => {
     e.preventDefault();
     if (loginUsername.trim() == "" || loginPassword.trim() == "") {
-      alert("Credenciales incorrectas");
+      msgAlert("error", "Credenciales incorrectas");
+    }else{
+      startLogin({ username: loginUsername, password: loginPassword });
     }
-    startLogin({ username: loginUsername, password: loginPassword });
+    
   };
 
   return (
@@ -37,10 +49,10 @@ export const LoginForm = () => {
           <h1>Bienvenido</h1>
           <h3>Iniciar Sesion</h3>
         </div>
-        <form onSubmit={onLoginSubmit}>
+         <form onSubmit={onLoginSubmit}>
           <div>
             <input
-              placeholder="usuario"
+              placeholder="Usuario"
               type="text"
               onChange={onInputChange}
               name="loginUsername"
@@ -56,8 +68,8 @@ export const LoginForm = () => {
               value={loginPassword}
             />
           </div>
-          <p>Olvidaste tu contraseña?</p>
-          <p onClick={register}>Registrarse</p>
+          <a href="#" className="link">Olvidaste tu contraseña?</a>
+          <p className="link" onClick={register}>Registrarse</p>
           <div>
             <Button title={"Iniciar Sesion"} />
           </div>

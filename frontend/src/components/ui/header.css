@@ -1,6 +1,6 @@
 .container-header {
     height: 4.5rem;
-    background-color: var(--blancoVerdoso);
+    /* background-color: var(--blancoVerdoso); */
     width: 95%;
     margin: auto;
 }
@@ -21,7 +21,6 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-left: 610px;
     
 
 }
@@ -41,16 +40,6 @@ header {
   .toggle-icon:hover {
     color: #666;
   }
-  @media (min-width: 769px) and (max-width: 1024px) {
-    
-  }
-@media  (max-width: 768px) {
-    
-    .container-logo{
-        margin-left: 135px;
-    }
-}
-
 
 .loading{
     width: 100vw;

@@ -1,0 +1,144 @@
+
+.container {
+    /* background-color: var(--blanco);
+    background-color: var(--blancoVerdoso); */
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+    min-height: 70vh;
+  }
+  
+  .event {
+    background-color: var(--blancoVerdoso);
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  
+  .event-date {
+    color: var(--azulNegruzco);
+  }
+  
+  .event-description {
+    color: var(--azulNegruzco);
+    text-decoration: none;
+  }
+  
+  .modal {
+    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    /*background-color: var(--verdeOliva);
+    padding: 20px;
+    border-radius: 5px;*/
+    width: 600px;
+    max-width: 100%;
+    background-color: var(--blanco);
+    color: #222;
+    border-radius: 10px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.125em;
+  }
+  
+  .modal h3 {
+    color: var(--azulNegruzco);
+    display: flex;
+    justify-content: center;
+    padding-top: .5em;
+  }
+
+  .group{
+    padding-left: 10%;
+    align-items: center;
+  }
+  
+  .inText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    width: 90%;
+    margin-bottom: 10px;
+  }
+
+  .check{
+    width: 20px;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    width: 90%;
+    padding-bottom: 2%;
+  }
+  
+  .save-button {
+    background-color: var(--verdeLimon);
+    color: var(--blanco);
+    border: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+  
+ 
+.cancel-button {
+  background-color: var(--azulNegruzco);
+  color: var(--blanco);
+  border: none;
+  margin-top: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+.react-calendar{
+  width: 60rem;
+  height: 20rem;
+  background-color: transparent;
+  border: none;
+}
+.titulo{
+  text-align: center;
+  font-weight: bold;
+
+}
+.react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus{
+  background: var(--verdeLimon);
+}
+.react-calendar__navigation__label__labelText{
+  text-transform: capitalize;
+}
+
+.profile{
+  width: 100vw;
+  height: 65vh;
+  display: grid;
+  place-items: center;
+}
