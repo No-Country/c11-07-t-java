@@ -21,7 +21,7 @@ public interface OnCallService {
     List<OnCall> findAllOnCallByDay(int day);
 
 
-    List<OnCall> findAllByMonth(int month);
+    List<OnCall> findAllByMonth(Long month) throws Exception;
 
     int getNumberOfOnCallByMonth(Long monthId, Long UserId) throws Exception;
 

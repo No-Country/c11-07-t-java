@@ -109,4 +109,31 @@ public class OnCallController {
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(onCallService.findAllOnCallByDay(day));
     }
+
+
+    @GetMapping("/countByMonth/{monthId}")
+    public ResponseEntity<Integer> getNumberOfOnCallByMonth(@PathVariable Long monthId, @RequestParam Long userId) throws Exception {
+
+        if (monthId == null || userId == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(onCallService.getNumberOfOnCallByMonth(monthId, userId));
+    }
+
+    @GetMapping("/getAllByMonth/{monthId}")
+    public ResponseEntity<List<OnCall>> findAllByMonth(@PathVariable Long monthId) throws Exception {
+
+        if (monthId == null)
+            return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(onCallService.findAllByMonth(monthId));
+    }
+    @GetMapping("/getAllByMonthAndUser/{monthId}")
+    public ResponseEntity<List<OnCall>> findAllByMonthAndUser(@PathVariable Long monthId, @RequestParam Long userId) throws Exception {
+
+        if (monthId == null || userId == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(onCallService.findAllByMonthAndUser(monthId, userId));
+    }
+
 }
